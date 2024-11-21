@@ -1,30 +1,16 @@
 import React from "react";
 import { Button, Form, Input, message } from "antd";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
+import { authServices } from "../../services/authServices";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { userService } from "../../../service/userService";
-import { setLoginData } from "../../../redux/userSlice";
 
-export default function FormLogin() {
+export default function TempFormLogin() {
   let navigate = useNavigate();
-  let dispatch = useDispatch();
-
   const onFinish = (values) => {
-    console.log("🚀 ~ onFinish ~ values:", values);
-    userService
-      .loginAction(values)
+    authServices
+      .login(values)
       .then((result) => {
-        console.log("resultlogin:", result);
-        dispatch(setLoginData(result.data.content));
-        let loginJson = JSON.stringify(result.data.content);
-        localStorage.setItem("USER_LOGIN", loginJson);
         message.success("Login success");
-        if (result.data.content.maLoaiNguoiDung === "QuanTri") {
-          navigate("/admin/list-user");
-        } else {
-          navigate("/");
-        }
+        navigate("/admin/QuanLyNguoiDung");
       })
       .catch((err) => {
         console.log(err);
@@ -35,59 +21,42 @@ export default function FormLogin() {
     console.log("Failed:", errorInfo);
   };
   return (
-    <Form
-      name="basic"
-      layout="vertical"
-      labelCol={{
-        span: 8,
-      }}
-      wrapperCol={{
-        span: 24,
-      }}
-      initialValues={{
-        taiKhoan: "mafia",
-        matKhau: "8386",
-      }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      autoComplete="off"
-    >
-      <Form.Item
-        label="Username"
-        name="taiKhoan"
-        rules={[
-          {
-            required: true,
-            message: "Please input your username!",
-          },
-        ]}
+    <div>
+      <h1>TempFormLogin</h1>
+      <Form
+        layout="vertical"
+        name="basic"
+        labelCol={{
+          span: 8,
+        }}
+        wrapperCol={{
+          span: 16,
+        }}
+        style={{
+          maxWidth: 600,
+        }}
+        initialValues={{
+          email: "string2@gmail.com",
+          password: "string123",
+        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
       >
-        <Input prefix={<UserOutlined />} placeholder="Username" />
-      </Form.Item>
+        <Form.Item label="Email" name="email">
+          <Input />
+        </Form.Item>
 
-      <Form.Item
-        label="Password"
-        name="matKhau"
-        rules={[
-          {
-            required: true,
-            message: "Please input your password!",
-          },
-        ]}
-      >
-        <Input.Password prefix={<LockOutlined />} placeholder="Password" />
-      </Form.Item>
+        <Form.Item label="Password" name="password">
+          <Input.Password />
+        </Form.Item>
 
-      <Form.Item
-      // wrapperCol={{
-      //   offset: 11,
-      //   span: 24,
-      // }}
-      >
-        <Button block type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+        <Form.Item label={null}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 }
