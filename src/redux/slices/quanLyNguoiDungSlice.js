@@ -3,12 +3,22 @@ import { nguoiDungServices } from "../../services/nguoiDungServices";
 
 const initialState = {
   listUser: [],
+  userInfo: null,
+  isModalOpen: false,
+  isModalEditOpen: false,
 };
 
 export let fetchListUserAction = createAsyncThunk(
   "quanLyNguoiDungSlice/fetchListUserAction",
   async () => {
     let result = await nguoiDungServices.getListUser();
+    return result.data.content;
+  }
+);
+export let fetchUserInfoAction = createAsyncThunk(
+  "quanLyNguoiDungSlice/fetchUserInfoAction",
+  async (userId) => {
+    let result = await nguoiDungServices.getUserInfo(userId);
     return result.data.content;
   }
 );
@@ -19,6 +29,12 @@ const quanLyNguoiDungSlice = createSlice({
     setListUserAction: (state, action) => {
       state.listUser = action.payload;
     },
+    setIsModalOpenAction: (state, action) => {
+      state.isModalOpen = action.payload;
+    },
+    setIsModalEditOpenAction: (state, action) => {
+      state.isModalEditOpen = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // fetchListUserAction
@@ -26,11 +42,22 @@ const quanLyNguoiDungSlice = createSlice({
       state.listUser = action.payload;
     });
     builder.addCase(fetchListUserAction.rejected, () => {
-      throw Error("request listUser fail");
+      throw Error("Request listUser fail");
+    });
+    // fetchUserInfoAction
+    builder.addCase(fetchUserInfoAction.fulfilled, (state, action) => {
+      state.userInfo = action.payload;
+    });
+    builder.addCase(fetchUserInfoAction.rejected, () => {
+      throw Error("Request userInfo fail");
     });
   },
 });
 
-export const { setListUserAction } = quanLyNguoiDungSlice.actions;
+export const {
+  setListUserAction,
+  setIsModalOpenAction,
+  setIsModalEditOpenAction,
+} = quanLyNguoiDungSlice.actions;
 
 export default quanLyNguoiDungSlice.reducer;

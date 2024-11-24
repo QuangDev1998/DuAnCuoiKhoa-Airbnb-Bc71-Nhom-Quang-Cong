@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 let loginJson = localStorage.getItem("USER_LOGIN");
 const initialState = {
   loginData: loginJson ? JSON.parse(loginJson) : null,
+  token: null,
 };
 
 const userSlice = createSlice({
@@ -10,6 +11,7 @@ const userSlice = createSlice({
   reducers: {
     setLoginData: (state, action) => {
       state.loginData = action.payload;
+      state.token = action.payload.token;
     },
   },
 });

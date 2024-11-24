@@ -11,14 +11,21 @@ import {
   message,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsModalOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
+import {
+  fetchUserInfoAction,
+  setIsModalEditOpenAction,
+} from "../../redux/slices/quanLyNguoiDungSlice";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import dayjs from "dayjs";
 
-export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
-  const { isModalOpen } = useSelector((state) => state.quanLyNguoiDungSlice);
+export default function ModalEditQLNguoiDung({ fetchSearchUser, valueInput }) {
+  const { isModalEditOpen } = useSelector(
+    (state) => state.quanLyNguoiDungSlice
+  );
+  const { userInfo } = useSelector((state) => state.quanLyNguoiDungSlice);
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
+
   const onChangeRadio = (e) => {
     setRadioValue(e.target.value);
   };
@@ -26,27 +33,40 @@ export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
   const dispatch = useDispatch();
 
   const hideModal = () => {
-    dispatch(setIsModalOpenAction(false));
+    dispatch(setIsModalEditOpenAction(false));
   };
   const handleOk = (values) => {
     values.birthday = dayjs(values.birthday).format("DD-MM-YYYY");
     nguoiDungServices
-      .createUser(values)
+      .editUser(userInfo.id, values)
       .then((result) => {
-        message.success("Thêm thành công");
+        message.success("Cập nhật thành công");
+        dispatch(fetchUserInfoAction(userInfo.id));
         fetchSearchUser(valueInput);
       })
       .catch((err) => {
-        message.error("Thêm thất bại");
+        message.error("Cập nhật thất bại");
       });
   };
-
+  const renderInitialValues = () => {
+    if (userInfo) {
+      return {
+        id: userInfo.id,
+        name: userInfo.name,
+        phone: userInfo.phone,
+        email: userInfo.email,
+        gender: userInfo.gender,
+        birthday: dayjs(userInfo.birthday),
+        role: userInfo.role,
+      };
+    }
+  };
   return (
     <div>
       <Modal
         closable={false}
-        open={isModalOpen}
-        okText="Thêm"
+        open={isModalEditOpen}
+        okText="Cập nhật"
         cancelText="Hủy"
         okButtonProps={{
           autoFocus: true,
@@ -64,32 +84,22 @@ export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
             form={form}
             name="form_in_modal"
             clearOnDestroy
+            initialValues={renderInitialValues()}
             onFinish={(values) => handleOk(values)}
           >
             {dom}
           </Form>
         )}
       >
-        <h1 className="my-3 text-2xl text-center">Thêm người dùng</h1>
+        <h1 className="my-3 text-2xl text-center">Cập nhật người dùng</h1>
         <Row gutter={24}>
           {/* Col left */}
           <Col className="gutter-row" span={12}>
-            {/* name */}
-            <Form.Item
-              name="name"
-              label="Tên người dùng"
-              tooltip="Tên hiển thị với mọi người"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng nhập tên người dùng!",
-                  whitespace: true,
-                },
-              ]}
-              hasFeedback
-            >
-              <Input />
+            {/* id */}
+            <Form.Item name="id" label="Mã người dùng">
+              <Input disabled />
             </Form.Item>
+
             {/* phone */}
             <Form.Item
               name="phone"
@@ -149,6 +159,22 @@ export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
           </Col>
           {/* Col right */}
           <Col className="gutter-row" span={12}>
+            {/* name */}
+            <Form.Item
+              name="name"
+              label="Tên người dùng"
+              tooltip="Tên hiển thị với mọi người"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng nhập tên người dùng!",
+                  whitespace: true,
+                },
+              ]}
+              hasFeedback
+            >
+              <Input />
+            </Form.Item>
             {/* email */}
             <Form.Item
               name="email"
@@ -167,20 +193,7 @@ export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
             >
               <Input />
             </Form.Item>
-            {/* password */}
-            <Form.Item
-              name="password"
-              label="Mật khẩu"
-              rules={[
-                {
-                  required: true,
-                  message: "Vui lòng nhập mật khẩu!",
-                },
-              ]}
-              hasFeedback
-            >
-              <Input.Password />
-            </Form.Item>
+
             {/* birthday */}
             <Form.Item
               name="birthday"

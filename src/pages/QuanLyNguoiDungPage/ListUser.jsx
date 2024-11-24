@@ -2,9 +2,14 @@ import React from "react";
 import { Table, Avatar, Tag, Popconfirm } from "antd";
 import { DeleteOutlined, EditOutlined, UserOutlined } from "@ant-design/icons";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
-import { fetchListUserAction } from "../../redux/slices/quanLyNguoiDungSlice";
+import {
+  fetchListUserAction,
+  fetchUserInfoAction,
+  setIsModalEditOpenAction,
+} from "../../redux/slices/quanLyNguoiDungSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
+import dayjs from "dayjs";
 
 export default function ListUser({ fetchSearchUser, valueInput }) {
   const { listUser } = useSelector((state) => state.quanLyNguoiDungSlice);
@@ -51,6 +56,9 @@ export default function ListUser({ fetchSearchUser, valueInput }) {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      render: (_, dataObject) => {
+        return <p className="underline">{dataObject.email}</p>;
+      },
     },
     {
       title: "Người dùng ",
@@ -71,6 +79,18 @@ export default function ListUser({ fetchSearchUser, valueInput }) {
       render: (_, dataObject) => {
         return (
           <div>
+            <EditOutlined
+              onClick={() => {
+                dispatch(fetchUserInfoAction(dataObject.id))
+                  .then((result) => {
+                    dispatch(setIsModalEditOpenAction(true));
+                  })
+                  .catch((err) => {
+                    console.log(err);
+                  });
+              }}
+              className=" text-2xl hover:cursor-pointer mr-2"
+            />
             <Popconfirm
               title="Xoá người dùng"
               description="Bạn có chắc muốn xóa người dùng?"
@@ -81,10 +101,8 @@ export default function ListUser({ fetchSearchUser, valueInput }) {
                 danger: "danger",
               }}
             >
-              <DeleteOutlined className=" text-2xl hover:cursor-pointer mr-2" />
+              <DeleteOutlined className=" text-2xl hover:cursor-pointer " />
             </Popconfirm>
-
-            <EditOutlined className=" text-2xl hover:cursor-pointer" />
           </div>
         );
       },
@@ -94,9 +112,10 @@ export default function ListUser({ fetchSearchUser, valueInput }) {
     return listUser.map((user) => {
       return {
         key: user.id,
+        avatar: user.avatar,
         id: user.id,
         name: user.name,
-        birthday: user.birthday,
+        birthday: dayjs(user.birthday).format("DD/MM/YYYY"),
         email: user.email,
         role: user.role,
       };

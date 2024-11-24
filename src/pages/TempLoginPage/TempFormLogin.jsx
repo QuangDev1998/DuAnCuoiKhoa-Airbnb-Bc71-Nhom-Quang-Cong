@@ -2,14 +2,20 @@ import React from "react";
 import { Button, Form, Input, message } from "antd";
 import { authServices } from "../../services/authServices";
 import { useNavigate } from "react-router-dom";
+import { setLoginData } from "../../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
 
 export default function TempFormLogin() {
   let navigate = useNavigate();
+  let dispatch = useDispatch();
   const onFinish = (values) => {
     authServices
       .login(values)
       .then((result) => {
         message.success("Login success");
+        dispatch(setLoginData(result.data.content));
+        let loginJson = JSON.stringify(result.data.content);
+        localStorage.setItem("USER_LOGIN", loginJson);
         navigate("/admin/QuanLyNguoiDung");
       })
       .catch((err) => {
