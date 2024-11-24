@@ -44,8 +44,8 @@ export default function QuanLyNguoiDungPage() {
   };
   return (
     <div>
-      <div className="flex justify-around">
-        <h1 className="text-2xl">Quản lý User</h1>
+      <div className="flex justify-around py-5">
+        <h1 className="text-2xl font-bold">Quản lý User</h1>
         <button
           onClick={() => dispatch(setIsModalOpenAction(true))}
           className="py-2 px-3 cursor-pointer text-white rounded-md shadow-md"
@@ -53,7 +53,7 @@ export default function QuanLyNguoiDungPage() {
             backgroundColor: "rgb(254 107 110)",
           }}
         >
-          + Thêm người dùng
+          + Thêm người dùng mới
         </button>
       </div>
       <Input

@@ -70,7 +70,7 @@ export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
           </Form>
         )}
       >
-        <h1 className="my-3 text-2xl text-center">Thêm người dùng</h1>
+        <h1 className="my-3 text-2xl text-center">Thêm người dùng mới</h1>
         <Row gutter={24}>
           {/* Col left */}
           <Col className="gutter-row" span={12}>
