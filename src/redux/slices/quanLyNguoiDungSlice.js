@@ -1,5 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { nguoiDungServices } from "../../services/nguoiDungServices";
+import { createSlice } from "@reduxjs/toolkit";
+import {
+  fetchListUserAction,
+  fetchUserInfoAction,
+} from "../thunks/quanLyNguoiDungThunks";
 
 const initialState = {
   listUser: [],
@@ -8,20 +11,6 @@ const initialState = {
   isModalEditOpen: false,
 };
 
-export let fetchListUserAction = createAsyncThunk(
-  "quanLyNguoiDungSlice/fetchListUserAction",
-  async () => {
-    let result = await nguoiDungServices.getListUser();
-    return result.data.content;
-  }
-);
-export let fetchUserInfoAction = createAsyncThunk(
-  "quanLyNguoiDungSlice/fetchUserInfoAction",
-  async (userId) => {
-    let result = await nguoiDungServices.getUserInfo(userId);
-    return result.data.content;
-  }
-);
 const quanLyNguoiDungSlice = createSlice({
   name: "quanLyNguoiDungSlice",
   initialState,

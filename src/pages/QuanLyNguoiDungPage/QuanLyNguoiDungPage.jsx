@@ -4,13 +4,13 @@ import { Input } from "antd";
 
 import ListUser from "./ListUser";
 import {
-  fetchListUserAction,
   setIsModalOpenAction,
   setListUserAction,
 } from "../../redux/slices/quanLyNguoiDungSlice";
 import { useDispatch } from "react-redux";
 import ModalQLNguoiDung from "./ModalQLNguoiDung";
 import ModalEditQLNguoiDung from "./ModalEditQLNguoiDung";
+import { fetchListUserAction } from "../../redux/thunks/quanLyNguoiDungThunks";
 
 export default function QuanLyNguoiDungPage() {
   const dispatch = useDispatch();

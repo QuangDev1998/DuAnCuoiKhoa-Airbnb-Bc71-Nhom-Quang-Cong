@@ -11,12 +11,11 @@ import {
   message,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchUserInfoAction,
-  setIsModalEditOpenAction,
-} from "../../redux/slices/quanLyNguoiDungSlice";
+
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import dayjs from "dayjs";
+import { setIsModalEditOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
+import { fetchUserInfoAction } from "../../redux/thunks/quanLyNguoiDungThunks";
 
 export default function ModalEditQLNguoiDung({ fetchSearchUser, valueInput }) {
   const { isModalEditOpen } = useSelector(

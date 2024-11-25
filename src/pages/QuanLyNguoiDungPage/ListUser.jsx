@@ -2,14 +2,14 @@ import React from "react";
 import { Table, Avatar, Tag, Popconfirm } from "antd";
 import { DeleteOutlined, EditOutlined, UserOutlined } from "@ant-design/icons";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
-import {
-  fetchListUserAction,
-  fetchUserInfoAction,
-  setIsModalEditOpenAction,
-} from "../../redux/slices/quanLyNguoiDungSlice";
+import { setIsModalEditOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import dayjs from "dayjs";
+import {
+  fetchListUserAction,
+  fetchUserInfoAction,
+} from "../../redux/thunks/quanLyNguoiDungThunks";
 
 export default function ListUser({ fetchSearchUser, valueInput }) {
   const { listUser } = useSelector((state) => state.quanLyNguoiDungSlice);
