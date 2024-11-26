@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
-export let fetchListUserAction = createAsyncThunk(
+export const fetchListUserAction = createAsyncThunk(
   "quanLyNguoiDungSlice/fetchListUserAction",
   async () => {
     try {
@@ -11,7 +11,7 @@ export let fetchListUserAction = createAsyncThunk(
     }
   }
 );
-export let fetchUserInfoAction = createAsyncThunk(
+export const fetchUserInfoAction = createAsyncThunk(
   "quanLyNguoiDungSlice/fetchUserInfoAction",
   async (userId, thunkAPI) => {
     try {

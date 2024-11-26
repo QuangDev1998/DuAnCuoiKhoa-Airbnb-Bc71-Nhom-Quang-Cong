@@ -1,5 +1,5 @@
 import { http } from "./config";
 
-export let authServices = {
+export const authServices = {
   login: (user) => http.post("/api/auth/signin", user),
 };

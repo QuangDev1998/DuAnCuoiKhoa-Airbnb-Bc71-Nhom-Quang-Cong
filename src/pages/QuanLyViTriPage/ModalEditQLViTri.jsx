@@ -1,15 +1,15 @@
 import React from "react";
 import { Modal, Form, Input, message, Upload } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setIsModalEditOpenAction,
-  fetchViTriInfoAction,
-} from "../../redux/slices/quanLyViTriSlice";
+import { setIsModalEditOpenAction } from "../../redux/slices/quanLyViTriSlice";
 import { viTriServices } from "../../services/viTriServices";
+import { fetchViTriInfoAction } from "../../redux/thunks/quanLyViTriThunks";
 
 export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
-  const { isModalEditOpen } = useSelector((state) => state.quanLyViTriSlice);
-  const { viTriInfo } = useSelector((state) => state.quanLyViTriSlice);
+  const { isModalEditOpen, viTriInfo } = useSelector(
+    (state) => state.quanLyViTriSlice
+  );
+
   const { token } = useSelector((state) => state.userSlice.loginData);
   const [form] = Form.useForm();
 
@@ -43,11 +43,13 @@ export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
             message.success("Cập nhật thành công");
           })
           .catch((err) => {
-            console.log("Cập nhật thất bại");
+            console.log(err);
+            message.error("Cập nhật thất bại");
           });
       })
       .catch((err) => {
         console.log(err);
+        message.error("Cập nhật thất bại");
       });
   };
   const renderInitialValues = () => {
@@ -94,8 +96,9 @@ export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
         <h1 className="my-3 text-2xl text-center">Cập nhật vị trí</h1>
         hinhAnh
         <img src={viTriInfo?.hinhAnh} alt="" className="h-48 w-full" />
+        {/* hinhAnh */}
         <Form.Item
-          label="Thêm hình"
+          label=""
           name="hinhAnh"
           valuePropName="fileList"
           getValueFromEvent={normFile}
@@ -116,7 +119,7 @@ export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
               className="border-2 border-solid py-2 px-3 rounded-md"
               type="button"
             >
-              Change
+              Đổi hình
             </button>
           </Upload>
         </Form.Item>

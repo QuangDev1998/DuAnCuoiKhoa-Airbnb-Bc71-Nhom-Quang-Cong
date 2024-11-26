@@ -1,22 +1,22 @@
 import React, { useRef, useState } from "react";
 import { Input } from "antd";
 import { useDispatch } from "react-redux";
-import ListViTri from "./ListViTri";
+import ListPhong from "./ListPhong";
+import { fetchListPhongAction } from "../../redux/thunks/quanLyPhongThunks";
+import { phongServices } from "../../services/phongServices";
 import {
   setIsModalOpenAction,
-  setListViTriAction,
-} from "../../redux/slices/quanLyViTriSlice";
-import { viTriServices } from "../../services/viTriServices";
-import ModalQLViTri from "./ModalQLViTri";
-import ModalEditQLViTri from "./ModalEditQLViTri";
-import { fetchListViTriAction } from "../../redux/thunks/quanLyViTriThunks";
+  setListPhongAction,
+} from "../../redux/slices/quanLyPhongSlice";
+import ModalQLPhong from "./ModalQLPhong";
+import ModalEditQLPhong from "./ModalEditQLPhong";
 
-export default function QuanLyViTriPage() {
+export default function QuanLyPhongPage() {
   const [valueInput, setvalueInput] = useState("");
   const searchRef = useRef(null);
   const dispatch = useDispatch();
 
-  //  debounce
+  // debounce
   const handleChangeSearch = (e) => {
     let { value } = e.target;
     setvalueInput(value);
@@ -24,17 +24,17 @@ export default function QuanLyViTriPage() {
       clearTimeout(searchRef.current);
     }
     searchRef.current = setTimeout(() => {
-      fetchSearchViTri(value);
+      fetchSearchPhong(value);
     }, 1000);
   };
-  const fetchSearchViTri = (keyword) => {
+  const fetchSearchPhong = (keyword) => {
     if (keyword === "") {
-      dispatch(fetchListViTriAction());
+      dispatch(fetchListPhongAction());
     } else {
-      viTriServices
-        .findViTri(keyword)
+      phongServices
+        .findPhong(keyword)
         .then((result) => {
-          dispatch(setListViTriAction(result.data.content.data));
+          dispatch(setListPhongAction(result.data.content.data));
         })
         .catch((err) => {
           console.log(err);
@@ -45,7 +45,7 @@ export default function QuanLyViTriPage() {
   return (
     <div>
       <div className="flex justify-around py-5">
-        <h1 className="text-2xl font-bold">Quản lý vị trí</h1>
+        <h1 className="text-2xl font-bold">Quản lý phòng</h1>
         <button
           onClick={() => dispatch(setIsModalOpenAction(true))}
           className="py-2 px-3 cursor-pointer text-white rounded-md shadow-md"
@@ -53,23 +53,22 @@ export default function QuanLyViTriPage() {
             backgroundColor: "rgb(254 107 110)",
           }}
         >
-          + Thêm vị trí mới
+          + Thêm phòng mới
         </button>
       </div>
       <Input
         className="p-2.5 my-3"
-        placeholder="Tìm tên vị trí"
+        placeholder="Tìm tên phòng"
         onChange={handleChangeSearch}
         value={valueInput}
       />
-
-      <ListViTri fetchSearchViTri={fetchSearchViTri} valueInput={valueInput} />
-      <ModalQLViTri
-        fetchSearchViTri={fetchSearchViTri}
+      <ListPhong fetchSearchPhong={fetchSearchPhong} valueInput={valueInput} />
+      <ModalQLPhong
+        fetchSearchPhong={fetchSearchPhong}
         valueInput={valueInput}
       />
-      <ModalEditQLViTri
-        fetchSearchViTri={fetchSearchViTri}
+      <ModalEditQLPhong
+        fetchSearchPhong={fetchSearchPhong}
         valueInput={valueInput}
       />
     </div>

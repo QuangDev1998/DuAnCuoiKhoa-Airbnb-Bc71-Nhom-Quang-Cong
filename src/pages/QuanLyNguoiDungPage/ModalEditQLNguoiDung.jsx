@@ -18,10 +18,9 @@ import { setIsModalEditOpenAction } from "../../redux/slices/quanLyNguoiDungSlic
 import { fetchUserInfoAction } from "../../redux/thunks/quanLyNguoiDungThunks";
 
 export default function ModalEditQLNguoiDung({ fetchSearchUser, valueInput }) {
-  const { isModalEditOpen } = useSelector(
+  const { isModalEditOpen, userInfo } = useSelector(
     (state) => state.quanLyNguoiDungSlice
   );
-  const { userInfo } = useSelector((state) => state.quanLyNguoiDungSlice);
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
 
@@ -39,9 +38,9 @@ export default function ModalEditQLNguoiDung({ fetchSearchUser, valueInput }) {
     nguoiDungServices
       .editUser(userInfo.id, values)
       .then((result) => {
-        message.success("Cập nhật thành công");
         dispatch(fetchUserInfoAction(userInfo.id));
         fetchSearchUser(valueInput);
+        message.success("Cập nhật thành công");
       })
       .catch((err) => {
         message.error("Cập nhật thất bại");

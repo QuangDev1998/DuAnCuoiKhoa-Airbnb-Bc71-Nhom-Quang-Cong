@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import TempHeader from "./components/TempHeader/TempHeader";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -6,6 +5,7 @@ import TempLoginPage from "./pages/TempLoginPage/TempLoginPage";
 import AdminLayout from "./templates/AdminLayout";
 import QuanLyNguoiDungPage from "./pages/QuanLyNguoiDungPage/QuanLyNguoiDungPage";
 import QuanLyViTriPage from "./pages/QuanLyViTriPage/QuanLyViTriPage";
+import QuanLyPhongPage from "./pages/QuanLyPhongPage/QuanLyPhongPage";
 
 function App() {
   return (
@@ -21,6 +21,10 @@ function App() {
           <Route
             path="/admin/QuanLyViTri"
             element={<AdminLayout content={<QuanLyViTriPage />} />}
+          />
+          <Route
+            path="/admin/QuanLyPhong"
+            element={<AdminLayout content={<QuanLyPhongPage />} />}
           />
         </Routes>
       </BrowserRouter>

@@ -1,6 +1,6 @@
 import { http } from "./config";
 
-export let nguoiDungServices = {
+export const nguoiDungServices = {
   getListUser: () => http.get(`/api/users`),
   searchUser: (keyword) => http.get(`/api/users/search/${keyword}`),
   deleteUser: (id) => http.delete(`/api/users?id=${id}`),

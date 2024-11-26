@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { setIsModalEditOpenAction } from "../../redux/slices/quanLyViTriSlice";
+import { message, Popconfirm, Table } from "antd";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+
+import { viTriServices } from "../../services/viTriServices";
 import {
   fetchListViTriAction,
   fetchViTriInfoAction,
-  setIsModalEditOpenAction,
-} from "../../redux/slices/quanLyViTriSlice";
-import { message, Popconfirm, Table } from "antd";
-import { DeleteOutlined, EditOutlined, UserOutlined } from "@ant-design/icons";
-
-import { viTriServices } from "../../services/viTriServices";
+} from "../../redux/thunks/quanLyViTriThunks";
 
 export default function ListViTri({ fetchSearchViTri, valueInput }) {
   const { token } = useSelector((state) => state.userSlice.loginData);

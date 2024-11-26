@@ -9,6 +9,7 @@ export default function ModalQLViTri({ fetchSearchViTri, valueInput }) {
   const { isModalOpen } = useSelector((state) => state.quanLyViTriSlice);
   const { token } = useSelector((state) => state.userSlice.loginData);
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
   const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -16,8 +17,6 @@ export default function ModalQLViTri({ fetchSearchViTri, valueInput }) {
     }
     return e?.fileList;
   };
-
-  const dispatch = useDispatch();
 
   const hideModal = () => {
     dispatch(setIsModalOpenAction(false));
@@ -35,13 +34,16 @@ export default function ModalQLViTri({ fetchSearchViTri, valueInput }) {
           .uploadHinhViTri(formData, result.data.content.id, token)
           .then((result) => {
             fetchSearchViTri(valueInput);
+            message.success("Thêm thành công");
           })
           .catch((err) => {
             console.log(err);
+            message.error("Thêm thất bại");
           });
       })
       .catch((err) => {
         console.log(err);
+        message.error("Thêm thất bại");
       });
   };
 
@@ -95,11 +97,7 @@ export default function ModalQLViTri({ fetchSearchViTri, valueInput }) {
             accept="image/png, image/jpeg"
           >
             <button
-              style={{
-                border: "solid",
-                borderWidth: "1px",
-                background: "none",
-              }}
+              className="border-2 border-solid py-2 px-3 rounded-md"
               type="button"
             >
               <PlusOutlined />
