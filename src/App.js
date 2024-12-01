@@ -6,6 +6,7 @@ import AdminLayout from "./templates/AdminLayout";
 import QuanLyNguoiDungPage from "./pages/QuanLyNguoiDungPage/QuanLyNguoiDungPage";
 import QuanLyViTriPage from "./pages/QuanLyViTriPage/QuanLyViTriPage";
 import QuanLyPhongPage from "./pages/QuanLyPhongPage/QuanLyPhongPage";
+import QuanLyBookingPage from "./pages/QuanLyBookingPage/QuanLyBookingPage";
 
 function App() {
   return (
@@ -25,6 +26,10 @@ function App() {
           <Route
             path="/admin/QuanLyPhong"
             element={<AdminLayout content={<QuanLyPhongPage />} />}
+          />
+          <Route
+            path="/admin/QuanLyBooking"
+            element={<AdminLayout content={<QuanLyBookingPage />} />}
           />
         </Routes>
       </BrowserRouter>

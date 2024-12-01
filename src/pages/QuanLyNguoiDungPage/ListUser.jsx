@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Avatar, Tag, Popconfirm } from "antd";
+import { Table, Avatar, Tag, Popconfirm, message } from "antd";
 import { DeleteOutlined, EditOutlined, UserOutlined } from "@ant-design/icons";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import { setIsModalEditOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
@@ -126,8 +126,12 @@ export default function ListUser({ fetchSearchUser, valueInput }) {
       .deleteUser(id)
       .then((result) => {
         fetchSearchUser(valueInput);
+        message.success("Xóa thành công");
       })
-      .catch((err) => {});
+      .catch((err) => {
+        console.log(err);
+        message.error("Xóa thất bại");
+      });
   };
 
   const confirm = (id) => {

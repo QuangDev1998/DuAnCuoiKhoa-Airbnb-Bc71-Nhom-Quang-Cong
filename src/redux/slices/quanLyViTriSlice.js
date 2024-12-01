@@ -30,15 +30,15 @@ const quanLyViTriSlice = createSlice({
     builder.addCase(fetchListViTriAction.fulfilled, (state, action) => {
       state.listViTri = action.payload;
     });
-    builder.addCase(fetchListViTriAction.rejected, () => {
-      throw Error("Request listViTri fail ");
+    builder.addCase(fetchListViTriAction.rejected, (state, action) => {
+      console.log(action.payload);
     });
     // fetchViTriInfoAction
     builder.addCase(fetchViTriInfoAction.fulfilled, (state, action) => {
       state.viTriInfo = action.payload;
     });
-    builder.addCase(fetchViTriInfoAction.rejected, () => {
-      throw Error("Request viTriInfo fail ");
+    builder.addCase(fetchViTriInfoAction.rejected, (state, action) => {
+      console.log(action.payload);
     });
   },
 });

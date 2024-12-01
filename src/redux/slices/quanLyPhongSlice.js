@@ -30,15 +30,15 @@ const quanLyPhongSlice = createSlice({
     builder.addCase(fetchListPhongAction.fulfilled, (state, action) => {
       state.listPhong = action.payload;
     });
-    builder.addCase(fetchListPhongAction.rejected, () => {
-      throw Error("Request listPhong fail ");
+    builder.addCase(fetchListPhongAction.rejected, (state, action) => {
+      console.log(action.payload);
     });
     // fetchPhongInfoAction
     builder.addCase(fetchPhongInfoAction.fulfilled, (state, action) => {
       state.phongInfo = action.payload;
     });
-    builder.addCase(fetchPhongInfoAction.rejected, () => {
-      throw Error("Request phongInfo fail ");
+    builder.addCase(fetchPhongInfoAction.rejected, (state, action) => {
+      console.log(action.payload);
     });
   },
 });

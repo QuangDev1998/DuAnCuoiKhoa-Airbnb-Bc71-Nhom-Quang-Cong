@@ -30,15 +30,15 @@ const quanLyNguoiDungSlice = createSlice({
     builder.addCase(fetchListUserAction.fulfilled, (state, action) => {
       state.listUser = action.payload;
     });
-    builder.addCase(fetchListUserAction.rejected, () => {
-      throw Error("Request listUser fail");
+    builder.addCase(fetchListUserAction.rejected, (state, action) => {
+      console.log(action.payload);
     });
     // fetchUserInfoAction
     builder.addCase(fetchUserInfoAction.fulfilled, (state, action) => {
       state.userInfo = action.payload;
     });
-    builder.addCase(fetchUserInfoAction.rejected, () => {
-      throw Error("Request userInfo fail");
+    builder.addCase(fetchUserInfoAction.rejected, (state, action) => {
+      console.log(action.payload);
     });
   },
 });

@@ -1,0 +1,16 @@
+$primary-color: rgb(254, 107, 110);
+$secondary-color: rgb(158, 62, 78);
+
+.text-primary {
+  color: $primary-color;
+}
+.text-primary {
+  color: $secondary-color;
+}
+
+.bg-main {
+  background-color: $primary-color;
+}
+.bg-secondary {
+  background-color: $secondary-color;
+}

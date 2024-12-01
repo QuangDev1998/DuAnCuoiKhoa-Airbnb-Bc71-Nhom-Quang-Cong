@@ -23,6 +23,7 @@ export default function ModalQLViTri({ fetchSearchViTri, valueInput }) {
   };
   const handleOk = (values) => {
     values.hinhAnh = values.hinhAnh[0].originFileObj;
+    console.log(values);
     let formData = new FormData();
     formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
     const valuesClone = { ...values };

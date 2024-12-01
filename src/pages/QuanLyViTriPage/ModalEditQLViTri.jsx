@@ -156,8 +156,8 @@ export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
           hasFeedback
         >
           <Input />
-          {/* quocGia */}
         </Form.Item>
+        {/* quocGia */}
         <Form.Item
           name="quocGia"
           label="Quốc gia"
