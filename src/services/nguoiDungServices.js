@@ -11,4 +11,8 @@ export const nguoiDungServices = {
       `/api/users/phan-trang-tim-kiem?pageIndex=1&pageSize=10&keyword=${keyword}`
     ),
   editUser: (id, userInfo) => http.put(`/api/users/${id}`, userInfo),
+  uploadHinhUser: (formFile, tokenBearer) =>
+    http.post(`/api/users/upload-avatar`, formFile, {
+      headers: { token: tokenBearer },
+    }),
 };

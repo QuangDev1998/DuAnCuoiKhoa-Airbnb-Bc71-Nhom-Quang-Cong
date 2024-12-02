@@ -14,6 +14,7 @@ import { setIsModalEditOpenAction } from "../../redux/slices/quanLyPhongSlice";
 export default function ListPhong({ fetchSearchPhong, valueInput }) {
   const { token } = useSelector((state) => state.userSlice.loginData);
   const { listPhong } = useSelector((state) => state.quanLyPhongSlice);
+  const { listViTri } = useSelector((state) => state.quanLyViTriSlice);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchListPhongAction());
@@ -97,26 +98,12 @@ export default function ListPhong({ fetchSearchPhong, valueInput }) {
       },
     },
   ];
-  const getTinhThanh = (maViTri) => {
-    switch (maViTri) {
-      case 1:
-        return "Quận 1";
-      case 2:
-        return "Cái Răng";
-      case 3:
-        return "Hòn Rùa";
-      case 4:
-        return "Hoàn Kiếm";
-      case 5:
-        return "Hòn Tằm";
-      case 6:
-        return "Hải Châu";
-      case 7:
-        return "Langbiang";
-      case 8:
-        return "Mũi Né";
-      default:
-        return "";
+
+  // từ maViTri => tenViTri
+  const renderTinhThanh = (id) => {
+    const index = listViTri.findIndex((viTri) => viTri.id === id);
+    if (index !== -1) {
+      return listViTri[index].tenViTri;
     }
   };
   const renderListPhong = () => {
@@ -126,7 +113,7 @@ export default function ListPhong({ fetchSearchPhong, valueInput }) {
         id: phong.id,
         tenPhong: phong.tenPhong,
         moTa: phong.moTa,
-        tinhThanh: getTinhThanh(phong.maViTri),
+        tinhThanh: renderTinhThanh(phong.maViTri),
         hinhAnh: phong.hinhAnh,
       };
     });

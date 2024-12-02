@@ -7,6 +7,7 @@ import QuanLyNguoiDungPage from "./pages/QuanLyNguoiDungPage/QuanLyNguoiDungPage
 import QuanLyViTriPage from "./pages/QuanLyViTriPage/QuanLyViTriPage";
 import QuanLyPhongPage from "./pages/QuanLyPhongPage/QuanLyPhongPage";
 import QuanLyBookingPage from "./pages/QuanLyBookingPage/QuanLyBookingPage";
+import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <TempHeader />
         <Routes>
           <Route path="/login" element={<TempLoginPage />} />
+          <Route path="/info-user" element={<InfoUserPage />} />
           <Route
             path="/admin/QuanLyNguoiDung"
             element={<AdminLayout content={<QuanLyNguoiDungPage />} />}
