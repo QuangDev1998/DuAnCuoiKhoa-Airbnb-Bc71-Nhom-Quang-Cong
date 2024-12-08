@@ -45,12 +45,14 @@ export default function InfoUserPage() {
         ></div>
       </div>
       {/* info */}
-      <div className="flex gap-10 py-5">
+      <div className="grid lg:flex gap-10 py-5">
         {/* info left */}
         <div
-          className="sticky top-0 basis-1/4 p-5 border-solid border rounded-md"
+          className="block lg:sticky space-y-3 top-0 basis-1/4 p-5 border-solid border rounded-md"
           style={{
-            height: "500px",
+            // height: "500px",
+            minHeight: "500px",
+            maxHeight: "100vh",
           }}
         >
           {/* avatar */}
@@ -71,7 +73,7 @@ export default function InfoUserPage() {
           </div>
           <div className="w-full flex justify-center">
             <button
-              className="py-1 px-2 my-2 border-2 rounded-md"
+              className="button-primary my-3"
               onClick={() => {
                 dispatch(setIsModalUpHinhOpenAction(true));
               }}
@@ -92,9 +94,7 @@ export default function InfoUserPage() {
               <p className="my-5">
                 Xác minh danh tính của bạn với huy hiệu xác minh danh tính.
               </p>
-              <button className="mb-5 py-1 px-2 border  rounded-md text-white bg-primary">
-                Nhận huy hiệu
-              </button>
+              <button className="mb-5 button-primary">Nhận huy hiệu</button>
             </div>
             <div>
               <h1 className="font-bold text-xl">ADMIN ĐÃ XÁC NHẬN</h1>
@@ -110,13 +110,13 @@ export default function InfoUserPage() {
           </div>
         </div>
         {/* info right */}
-        <div className="basis-3/4">
+        <div className="basis-3/4 space-y-3">
           <h1 className="text-xl font-bold">
             Xin chào, tôi là {infoUser.name}
           </h1>
           <p className="text-sm text-gray-500">Bắt đầu tham gia vào 2024</p>
           <button
-            className="py-1 px-2 border-2 rounded-md"
+            className="button-primary"
             onClick={() => {
               dispatch(setIsModalEditOpenAction(true));
             }}

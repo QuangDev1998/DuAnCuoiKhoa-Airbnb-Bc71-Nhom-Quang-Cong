@@ -5,6 +5,7 @@ import quanLyViTriSlice from "./slices/quanLyViTriSlice";
 import quanLyPhongSlice from "./slices/quanLyPhongSlice";
 import quanLyBookingSlice from "./slices/quanLyBookingSlice";
 import infoUserSlice from "./slices/infoUserSlice";
+import detailRoomSlice from "./slices/detailRoomSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     quanLyPhongSlice,
     quanLyBookingSlice,
     infoUserSlice,
+    detailRoomSlice,
   },
 });

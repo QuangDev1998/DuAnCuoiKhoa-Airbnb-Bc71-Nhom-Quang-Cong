@@ -6,7 +6,10 @@ export default function TempHeader() {
   return (
     <div>
       TempHeader
-      <button onClick={() => navigate("/login")}>Login</button>
+      <button onClick={() => navigate("/login")} className="mx-2">
+        Login
+      </button>
+      <button onClick={() => navigate("/info-user")}>InfoUser</button>
     </div>
   );
 }

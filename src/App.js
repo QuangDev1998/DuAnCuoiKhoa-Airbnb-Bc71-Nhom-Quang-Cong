@@ -8,6 +8,7 @@ import QuanLyViTriPage from "./pages/QuanLyViTriPage/QuanLyViTriPage";
 import QuanLyPhongPage from "./pages/QuanLyPhongPage/QuanLyPhongPage";
 import QuanLyBookingPage from "./pages/QuanLyBookingPage/QuanLyBookingPage";
 import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
+import DetailRoomPage from "./pages/DetailRoomPage/DetailRoomPage";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             path="/admin/QuanLyBooking"
             element={<AdminLayout content={<QuanLyBookingPage />} />}
           />
+          <Route path="/room-detail/:id" element={<DetailRoomPage />} />
         </Routes>
       </BrowserRouter>
     </div>
