@@ -43,7 +43,7 @@ export default function ListBookedRoom({ idUser }) {
           <Card
             hoverable
             onClick={() => {
-              navigate(`/room-detail/${room.id}`);
+              navigate(`/room-booking/${room.id}`);
             }}
           >
             <div className="grid grid-cols1 md:grid-cols-2 gap-5">

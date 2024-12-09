@@ -12,8 +12,9 @@ import { Image } from "antd";
 import InfoRoomLeft from "./InfoRoomLeft";
 import InfoRoomRight from "./InfoRoomRight";
 import Comment from "./Comment";
+import ModalCalendar from "./ModalCalendar";
 
-export default function DetailRoomPage() {
+export default function BookingPage() {
   const { infoRoom } = useSelector((state) => state.detailRoomSlice);
   const dispatch = useDispatch();
   const params = useParams();
@@ -46,6 +47,7 @@ export default function DetailRoomPage() {
         {/* comment list */}
         <Comment idRoom={idRoom} />
       </div>
+      <ModalCalendar />
     </div>
   );
 }

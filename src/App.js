@@ -1,4 +1,6 @@
 import "./App.css";
+import "react-date-range/dist/styles.css";
+import "react-date-range/dist/theme/default.css";
 import TempHeader from "./components/TempHeader/TempHeader";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TempLoginPage from "./pages/TempLoginPage/TempLoginPage";
@@ -8,7 +10,7 @@ import QuanLyViTriPage from "./pages/QuanLyViTriPage/QuanLyViTriPage";
 import QuanLyPhongPage from "./pages/QuanLyPhongPage/QuanLyPhongPage";
 import QuanLyBookingPage from "./pages/QuanLyBookingPage/QuanLyBookingPage";
 import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
-import DetailRoomPage from "./pages/DetailRoomPage/DetailRoomPage";
+import BookingPage from "./pages/BookingPage/BookingPage";
 
 function App() {
   return (
@@ -34,7 +36,7 @@ function App() {
             path="/admin/QuanLyBooking"
             element={<AdminLayout content={<QuanLyBookingPage />} />}
           />
-          <Route path="/room-detail/:id" element={<DetailRoomPage />} />
+          <Route path="/room-booking/:id" element={<BookingPage />} />
         </Routes>
       </BrowserRouter>
     </div>
