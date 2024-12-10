@@ -1,3 +1,7 @@
+.container {
+  width: 80%;
+  margin: 0 auto;
+}
 .text-primary {
   color: rgb(254, 107, 110);
 }
@@ -54,4 +58,4 @@
 }
 .button-secondary:hover {
   opacity: 80%;
-}/*# sourceMappingURL=App.css.map */
+} /*# sourceMappingURL=App.css.map */

@@ -4,64 +4,91 @@ import { authServices } from "../../services/authServices";
 import { useNavigate } from "react-router-dom";
 import { setLoginData } from "../../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
+import { CloseOutlined } from "@ant-design/icons";
 
-export default function TempFormLogin() {
+export default function TempFormLogin({ onLoginSuccess }) {
   let navigate = useNavigate();
   let dispatch = useDispatch();
+
   const onFinish = (values) => {
     authServices
       .login(values)
       .then((result) => {
-        message.success("Login success");
+        message.success("Đăng nhập thành công!");
         dispatch(setLoginData(result.data.content));
         let loginJson = JSON.stringify(result.data.content);
         localStorage.setItem("USER_LOGIN", loginJson);
+
+        // Gọi hàm đóng Modal
+        if (onLoginSuccess) {
+          onLoginSuccess();
+        }
+
+        // Điều hướng đến trang quản lý người dùng
         navigate("/admin/QuanLyNguoiDung");
       })
       .catch((err) => {
-        console.log(err);
-        message.error("Login fail");
+        console.error(err);
+        message.error("Đăng nhập thất bại, vui lòng thử lại!");
       });
   };
+
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    console.error("Failed:", errorInfo);
   };
+
   return (
     <div>
-      <h1>TempFormLogin</h1>
+      {/* Tiêu đề */}
+      <h2 className="text-xl font-semibold text-center mb-6">
+        Đăng nhập Airbnb
+      </h2>
+
       <Form
         layout="vertical"
         name="basic"
-        labelCol={{
-          span: 8,
-        }}
-        wrapperCol={{
-          span: 16,
-        }}
-        style={{
-          maxWidth: 600,
-        }}
+        onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
+        autoComplete="off"
         initialValues={{
           email: "string2@gmail.com",
           password: "string123",
         }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-        autoComplete="off"
       >
-        <Form.Item label="Email" name="email">
-          <Input />
+        {/* Email */}
+        <Form.Item
+          label="Email"
+          name="email"
+          rules={[{ required: true, message: "Vui lòng nhập email!" }]}
+        >
+          <Input placeholder="Vui lòng nhập tài khoản" />
         </Form.Item>
 
-        <Form.Item label="Password" name="password">
-          <Input.Password />
+        {/* Mật khẩu */}
+        <Form.Item
+          label="Mật khẩu"
+          name="password"
+          rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
+        >
+          <Input.Password placeholder="Vui lòng nhập mật khẩu" />
         </Form.Item>
 
-        <Form.Item label={null}>
-          <Button type="primary" htmlType="submit">
-            Submit
+        {/* Button Đăng ký và Đăng nhập */}
+        <div className="flex justify-between mt-4">
+          <Button
+            className="bg-red-500 hover:bg-red-600 text-white font-medium px-6 rounded-md"
+            onClick={() => message.info("Chuyển sang đăng ký")}
+          >
+            Đăng ký
           </Button>
-        </Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            className="bg-black hover:bg-gray-800 text-white font-medium px-6 rounded-md"
+          >
+            Đăng nhập
+          </Button>
+        </div>
       </Form>
     </div>
   );
