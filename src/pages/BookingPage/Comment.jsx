@@ -6,10 +6,10 @@ import dayjs from "dayjs";
 import { binhLuanServices } from "../../services/binhLuanServices";
 
 export default function Comment({ idRoom }) {
-  const { listComment, infoRoom } = useSelector(
-    (state) => state.detailRoomSlice
-  );
-  const { token, user } = useSelector((state) => state.userSlice.loginData);
+  const { listComment } = useSelector((state) => state.detailRoomSlice);
+  const loginData = useSelector((state) => state.userSlice?.loginData);
+  const token = loginData?.token;
+  const user = loginData?.user;
 
   const { TextArea } = Input;
   const dispatch = useDispatch();
@@ -81,69 +81,74 @@ export default function Comment({ idRoom }) {
     );
   };
   return (
-    <div className="py-10 divide-y-2">
+    <div className="py-5 divide-y-2">
       {/* comment */}
-      <div>
-        <div className="flex gap-3 items-center ">
-          <div>
-            {user.avatar ? (
-              <img
-                src={user.avatar}
-                alt=""
-                className="h-12 w-12 object-cover rounded-full"
-              />
-            ) : (
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
-                alt=""
-                className=" h-12 w-12 object-cover rounded-full"
-              />
-            )}
+      {user ? (
+        <div>
+          <div className="flex gap-3 items-center ">
+            <div>
+              {user.avatar ? (
+                <img
+                  src={user.avatar}
+                  alt=""
+                  className="h-12 w-12 object-cover rounded-full"
+                />
+              ) : (
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
+                  alt=""
+                  className=" h-12 w-12 object-cover rounded-full"
+                />
+              )}
+            </div>
+            <h1 className="text-lg font-bold">{user.name}</h1>
           </div>
-          <h1 className="text-lg font-bold">{user.name}</h1>
+
+          <Form
+            name="basic"
+            onFinish={onFinish}
+            onFinishFailed={onFinishFailed}
+            autoComplete="off"
+          >
+            <Form.Item
+              name="saoBinhLuan"
+              rules={[
+                {
+                  required: true,
+                  message: "Vui lòng chọn số sao",
+                },
+              ]}
+            >
+              <Rate />
+            </Form.Item>
+            <Form.Item
+              name="noiDung"
+              rules={[
+                {
+                  required: true,
+                  message: "Bạn chưa có nội dung đánh giá!",
+                },
+              ]}
+            >
+              <TextArea
+                placeholder="Viết bình luận..."
+                style={{
+                  height: 80,
+                }}
+              />
+            </Form.Item>
+
+            <Form.Item>
+              <button className="button-primary" type="submit">
+                Đánh giá
+              </button>
+            </Form.Item>
+          </Form>
         </div>
+      ) : (
+        <div>Đăng nhập để bình luận</div>
+      )}
 
-        <Form
-          name="basic"
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
-        >
-          <Form.Item
-            name="saoBinhLuan"
-            rules={[
-              {
-                required: true,
-                message: "Vui lòng chọn số sao",
-              },
-            ]}
-          >
-            <Rate />
-          </Form.Item>
-          <Form.Item
-            name="noiDung"
-            rules={[
-              {
-                required: true,
-                message: "Bạn chưa có nội dung đánh giá!",
-              },
-            ]}
-          >
-            <TextArea
-              placeholder="Viết bình luận..."
-              style={{
-                height: 80,
-              }}
-            />
-          </Form.Item>
-
-          <Form.Item>
-            <button className="button-primary" type="submit">
-              Đánh giá
-            </button>
-          </Form.Item>
-        </Form>
-      </div>
       {/* list comment */}
       <div className="py-5">
         <h1 className="text-xl font-bold">Bình luận</h1>
