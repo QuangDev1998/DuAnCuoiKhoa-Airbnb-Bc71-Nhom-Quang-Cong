@@ -11,6 +11,8 @@ import QuanLyPhongPage from "./pages/QuanLyPhongPage/QuanLyPhongPage";
 import QuanLyBookingPage from "./pages/QuanLyBookingPage/QuanLyBookingPage";
 import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
+import HomePage from "./pages/HomePage/HomePage";
+import Layout from "./templates/Layout";
 
 function App() {
   return (
@@ -18,6 +20,7 @@ function App() {
       <BrowserRouter>
         <TempHeader />
         <Routes>
+          <Route path="/" element={<Layout content={<HomePage />} />} />
           <Route path="/login" element={<TempLoginPage />} />
           <Route path="/info-user" element={<InfoUserPage />} />
           <Route

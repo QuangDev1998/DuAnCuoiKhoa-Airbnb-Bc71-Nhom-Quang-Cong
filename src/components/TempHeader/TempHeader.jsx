@@ -5,6 +5,7 @@ import { message, Modal } from "antd";
 import TempFormLogin from "../../pages/TempLoginPage/TempFormLogin"; // Form đăng nhập
 import TempFormRegister from "../../pages/TempLoginPage/TempFormRegister"; // Form đăng ký (nếu có)
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import airbnbLogo from "../../assets/image/airbnb-1.aabeefedaf30b8c7011a022cdb5a6425.png";
 
 export default function Header() {
   const user = useSelector((state) => state.userSlice.loginData); // Kiểm tra trạng thái đăng nhập
@@ -56,18 +57,19 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="bg-white fixed w-full z-20 bg-opacity-90">
-      <div className="container flex justify-between h-16 mx-auto">
+    <header className="fixed top-0 left-0 w-full z-50 bg-transparent">
+      <div className="container flex justify-between h-28 mx-auto">
         {/* Logo */}
         <a
           onClick={handleGohome}
-          className="text-2xl self-center px-8 font-bold text-red-600 cursor-pointer"
+          className="flex items-center text-2xl self-center px-8 font-bold  cursor-pointer"
         >
           <img
-            src="/static/media/airbnb-1.aabeefedaf30b8c7011a022cdb5a6425.svg"
-            alt="Logo"
+            src={airbnbLogo}
+            alt="Airbnb logo"
+            className="w-10 h-10 object-contain mr-2"
           />
-          <span>airbnb</span>
+          <span className="text-primary text-4xl">airbnb</span>
         </a>
 
         {/* Menu items for desktop view */}
@@ -81,22 +83,22 @@ export default function Header() {
             </NavLink>
           </li>
           <li className="flex">
-            <a className="flex items-center px-4 font-normal hover:text-red-600 transition cursor-pointer">
+            <a className="flex items-center px-3 font-normal  text-white hover:text-red-600 transition cursor-pointer ">
               About
             </a>
           </li>
           <li className="flex">
-            <a className="flex items-center px-4 font-normal hover:text-red-600 transition cursor-pointer">
+            <a className="flex items-center px-3 font-normal  text-white hover:text-red-600 transition cursor-pointer">
               Services
             </a>
           </li>
           <li className="flex">
-            <a className="flex items-center px-4 font-normal hover:text-red-600 transition cursor-pointer">
+            <a className="flex items-center px-3 font-normal  text-white hover:text-red-600 transition cursor-pointer">
               Pricing
             </a>
           </li>
           <li className="flex">
-            <a className="flex items-center px-4 font-normal hover:text-red-600 transition cursor-pointer">
+            <a className="flex items-center px-3 font-normal  text-white hover:text-red-600 transition cursor-pointer">
               Contact
             </a>
           </li>
