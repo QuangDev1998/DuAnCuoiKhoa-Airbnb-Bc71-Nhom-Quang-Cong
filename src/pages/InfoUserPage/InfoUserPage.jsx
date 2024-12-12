@@ -50,7 +50,6 @@ export default function InfoUserPage() {
         <div
           className="block lg:sticky space-y-3 top-0 basis-1/4 p-5 border-solid border rounded-md"
           style={{
-            // height: "500px",
             minHeight: "500px",
             maxHeight: "100vh",
           }}
@@ -123,10 +122,13 @@ export default function InfoUserPage() {
           >
             Chỉnh sửa hồ sơ
           </button>
+          {/* list phòng đã book */}
           <ListBookedRoom idUser={infoUser.id} />
         </div>
       </div>
+      {/* modal up avatar */}
       <ModalUpHinh idUser={idUser} />
+      {/* modal edit */}
       <ModalEditInfoUser />
     </div>
   );

@@ -4,7 +4,7 @@ export const fetchListUserAction = createAsyncThunk(
   "quanLyNguoiDungSlice/fetchListUserAction",
   async (_, { rejectWithValue }) => {
     try {
-      const result = await nguoiDungServices.getListUser();
+      const result = await nguoiDungServices.findUser(1, 10, "");
       return result.data.content;
     } catch (error) {
       return rejectWithValue(error);

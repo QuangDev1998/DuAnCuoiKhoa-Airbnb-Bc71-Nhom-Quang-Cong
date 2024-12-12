@@ -22,9 +22,7 @@ export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
   const onChangeRadio = (e) => {
     setRadioValue(e.target.value);
   };
-
   const dispatch = useDispatch();
-
   const hideModal = () => {
     dispatch(setIsModalOpenAction(false));
   };
@@ -37,6 +35,7 @@ export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
         fetchSearchUser(valueInput);
       })
       .catch((err) => {
+        console.error(err);
         message.error("Thêm thất bại");
       });
   };
@@ -73,7 +72,7 @@ export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
         <h1 className="my-3 text-2xl text-center">Thêm người dùng mới</h1>
         <Row gutter={24}>
           {/* Col left */}
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={24} md={12}>
             {/* name */}
             <Form.Item
               name="name"
@@ -148,7 +147,7 @@ export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
             </Form.Item>
           </Col>
           {/* Col right */}
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={24} md={12}>
             {/* email */}
             <Form.Item
               name="email"

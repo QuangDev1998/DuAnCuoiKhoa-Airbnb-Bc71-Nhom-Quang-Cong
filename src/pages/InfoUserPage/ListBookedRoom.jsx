@@ -39,12 +39,13 @@ export default function ListBookedRoom({ idUser }) {
   const renderListBookedRoom = () => {
     return listBookedRoom?.map((room, index) => {
       return (
-        <div className="mt-5" key={index}>
+        <div className="mt-5 duration-300" key={index}>
           <Card
             hoverable
             onClick={() => {
               navigate(`/room-booking/${room.id}`);
             }}
+            data-aos="zoom-in"
           >
             <div className="grid grid-cols1 md:grid-cols-2 gap-5">
               <div className="h-48">

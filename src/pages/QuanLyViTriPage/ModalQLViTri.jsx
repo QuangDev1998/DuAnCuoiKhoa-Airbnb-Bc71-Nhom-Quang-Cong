@@ -22,12 +22,13 @@ export default function ModalQLViTri({ fetchSearchViTri, valueInput }) {
     dispatch(setIsModalOpenAction(false));
   };
   const handleOk = (values) => {
+    // tạo FormData từ hình upload
     values.hinhAnh = values.hinhAnh[0].originFileObj;
-    console.log(values);
     let formData = new FormData();
     formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
     const valuesClone = { ...values };
     valuesClone.hinhAnh = "";
+    // gọi api tạo vị trí => có id => gọi api up hình
     viTriServices
       .addVitri(valuesClone, token)
       .then((result) => {
@@ -38,12 +39,12 @@ export default function ModalQLViTri({ fetchSearchViTri, valueInput }) {
             message.success("Thêm thành công");
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
             message.error("Thêm thất bại");
           });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         message.error("Thêm thất bại");
       });
   };

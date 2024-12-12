@@ -4,7 +4,7 @@ import {
   fetchBookingInfoAction,
   fetchListBookingAction,
 } from "../../redux/thunks/quanLyBookingThunks";
-import { Tag, Popconfirm, Table, message } from "antd";
+import { Popconfirm, Table, message } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import dayjs from "dayjs";
 import { bookingServices } from "../../services/bookingServices";
@@ -49,22 +49,8 @@ export default function ListBooking({ fetchSearchBooking, valueInput }) {
       dataIndex: "soLuongKhach",
       key: "soLuongKhach",
     },
-
-    {
-      title: "Trạng thái",
-
-      key: "status",
-      render: (_, dataObject) => {
-        if (dataObject.role === "ADMIN") {
-          return <Tag color="red">ADMIN</Tag>;
-        } else {
-          return <Tag color="green">USER</Tag>;
-        }
-      },
-    },
     {
       title: "Thao tác",
-
       key: "action",
       render: (_, dataObject) => {
         return (
@@ -76,7 +62,7 @@ export default function ListBooking({ fetchSearchBooking, valueInput }) {
                     dispatch(setIsModalEditOpenAction(true));
                   })
                   .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                   });
               }}
               className=" text-2xl hover:cursor-pointer mr-2"
@@ -119,7 +105,7 @@ export default function ListBooking({ fetchSearchBooking, valueInput }) {
         message.success("Xóa thành công");
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         message.error("Xóa thất bại");
       });
   };

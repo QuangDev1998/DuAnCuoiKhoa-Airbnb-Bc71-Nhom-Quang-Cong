@@ -35,12 +35,13 @@ export default function ModalEditQLPhong({ fetchSearchPhong, valueInput }) {
     dispatch(setIsModalEditOpenAction(false));
   };
   const handleOk = (values) => {
-    console.log("values:", values);
+    // tạo FormData từ hình upload
     values.hinhAnh = values.hinhAnh[0].originFileObj;
     let formData = new FormData();
     formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
     const valuesClone = { ...values };
     valuesClone.hinhAnh = "";
+    // gọi api up hình => có id => gọi api cập nhật phòng
     phongServices
       .uploadHinhPhong(formData, values.id, token)
       .then((result) => {
@@ -54,11 +55,11 @@ export default function ModalEditQLPhong({ fetchSearchPhong, valueInput }) {
           })
           .catch((err) => {
             message.error("Cập nhật thất bại");
-            console.log(err);
+            console.error(err);
           });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         message.error("Thêm thất bại");
       });
   };
@@ -164,7 +165,7 @@ export default function ModalEditQLPhong({ fetchSearchPhong, valueInput }) {
         </Form.Item>
         <Row gutter={24}>
           {/* Col left */}
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={24} md={12}>
             {/* id */}
             <Form.Item name="id" label="Mã phòng thuê">
               <Input disabled />
@@ -238,7 +239,7 @@ export default function ModalEditQLPhong({ fetchSearchPhong, valueInput }) {
             </Form.Item>
           </Col>
           {/* Col right */}
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={24} md={12}>
             {/* tenPhong */}
             <Form.Item
               name="tenPhong"
@@ -311,7 +312,7 @@ export default function ModalEditQLPhong({ fetchSearchPhong, valueInput }) {
             </Form.Item>
           </Col>
         </Row>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3">
           {/* mayGiat */}
           <Form.Item name="mayGiat" label="Máy giặt">
             <Switch checkedChildren="Có" unCheckedChildren="Không" />

@@ -33,7 +33,7 @@ export default function ListPhong({ fetchSearchPhong, valueInput }) {
       key: "tenPhong",
       render: (_, dataObject) => {
         return (
-          <div className="flex items-center">
+          <div className="md:flex items-center">
             <img
               src={dataObject.hinhAnh}
               alt="avatar"
@@ -126,6 +126,7 @@ export default function ListPhong({ fetchSearchPhong, valueInput }) {
         message.success("Xóa thành công");
       })
       .catch((err) => {
+        console.error(err);
         message.err("Xóa thất bại");
       });
   };

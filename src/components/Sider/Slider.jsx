@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AimOutlined,
   CalendarOutlined,
@@ -6,7 +6,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation, useParams } from "react-router-dom";
 
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -17,33 +17,35 @@ function getItem(label, key, icon, children) {
     label,
   };
 }
-const items = [
-  getItem(
-    <NavLink to="/admin/QuanLyNguoiDung">Quản lý người dùng</NavLink>,
-    "1",
-    <UserOutlined />
-  ),
-  getItem(
-    <NavLink to="/admin/QuanLyViTri">Quản lý vị trí</NavLink>,
-    "2",
-    <AimOutlined />
-  ),
-  getItem(
-    <NavLink to="/admin/QuanLyPhong">Quản lý phòng</NavLink>,
-    "3",
-    <HomeOutlined />
-  ),
-  getItem(
-    <NavLink to="/admin/QuanLyBooking">Quản lý booking</NavLink>,
-    "4",
-    <CalendarOutlined />
-  ),
-];
+
 export default function Slider({ content }) {
   const [collapsed, setCollapsed] = useState(true);
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
+
+  const location = useLocation(); // lấy location.pathname để cập nhật state cho defaultSelectedKeys của Menu
+  // data cho component Menu
+  const items = [
+    getItem(
+      <NavLink to="/admin/QuanLyNguoiDung">Quản lý người dùng</NavLink>,
+      "/admin/QuanLyNguoiDung",
+      <UserOutlined />
+    ),
+    getItem(
+      <NavLink to="/admin/QuanLyViTri">Quản lý vị trí</NavLink>,
+      "/admin/QuanLyViTri",
+      <AimOutlined />
+    ),
+    getItem(
+      <NavLink to="/admin/QuanLyPhong">Quản lý phòng</NavLink>,
+      "/admin/QuanLyPhong",
+      <HomeOutlined />
+    ),
+    getItem(
+      <NavLink to="/admin/QuanLyBooking">Quản lý booking</NavLink>,
+      "/admin/QuanLyBooking",
+      <CalendarOutlined />
+    ),
+  ];
+
   return (
     <Layout
       style={{
@@ -54,11 +56,12 @@ export default function Slider({ content }) {
         collapsible
         collapsed={collapsed}
         onCollapse={(value) => setCollapsed(value)}
+        theme="light"
       >
         <div className="demo-logo-vertical" />
         <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
+          theme="light"
+          defaultSelectedKeys={[location.pathname]}
           mode="inline"
           items={items}
         />

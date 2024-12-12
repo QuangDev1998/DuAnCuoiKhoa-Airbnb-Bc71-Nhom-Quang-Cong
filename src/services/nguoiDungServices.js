@@ -6,9 +6,9 @@ export const nguoiDungServices = {
   deleteUser: (id) => http.delete(`/api/users?id=${id}`),
   getUserInfo: (id) => http.get(`/api/users/${id}`),
   createUser: (user) => http.post(`/api/users`, user),
-  findUser: (keyword) =>
+  findUser: (pageIndex, pageSize, keyword) =>
     http.get(
-      `/api/users/phan-trang-tim-kiem?pageIndex=1&pageSize=10&keyword=${keyword}`
+      `/api/users/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`
     ),
   editUser: (id, userInfo) => http.put(`/api/users/${id}`, userInfo),
   uploadHinhUser: (formFile, tokenBearer) =>
