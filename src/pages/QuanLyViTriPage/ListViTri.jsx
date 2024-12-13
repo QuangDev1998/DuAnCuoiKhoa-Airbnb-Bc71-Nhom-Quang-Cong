@@ -119,5 +119,13 @@ export default function ListViTri({ fetchSearchViTri, valueInput }) {
   const confirm = (id) => {
     handleDeleteViTri(id);
   };
-  return <Table dataSource={renderListVitri()} columns={columns} />;
+  return (
+    <Table
+      dataSource={renderListVitri()}
+      columns={columns}
+      pagination={{
+        total: null,
+      }}
+    />
+  );
 }
