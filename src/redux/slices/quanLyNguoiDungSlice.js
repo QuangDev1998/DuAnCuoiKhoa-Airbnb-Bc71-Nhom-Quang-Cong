@@ -9,6 +9,8 @@ const initialState = {
   userInfo: null,
   isModalOpen: false,
   isModalEditOpen: false,
+  totalRow: null,
+  currentPage: 1,
 };
 
 const quanLyNguoiDungSlice = createSlice({
@@ -24,21 +26,28 @@ const quanLyNguoiDungSlice = createSlice({
     setIsModalEditOpenAction: (state, action) => {
       state.isModalEditOpen = action.payload;
     },
+    setTotalRowAction: (state, action) => {
+      state.totalRow = action.payload;
+    },
+    setCurrentPageAction: (state, action) => {
+      state.currentPage = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // fetchListUserAction
     builder.addCase(fetchListUserAction.fulfilled, (state, action) => {
-      state.listUser = action.payload;
+      state.listUser = action.payload.data;
+      state.totalRow = action.payload.totalRow;
     });
     builder.addCase(fetchListUserAction.rejected, (state, action) => {
-      console.log(action.payload);
+      console.error(action.payload);
     });
     // fetchUserInfoAction
     builder.addCase(fetchUserInfoAction.fulfilled, (state, action) => {
       state.userInfo = action.payload;
     });
     builder.addCase(fetchUserInfoAction.rejected, (state, action) => {
-      console.log(action.payload);
+      console.error(action.payload);
     });
   },
 });
@@ -47,6 +56,8 @@ export const {
   setListUserAction,
   setIsModalOpenAction,
   setIsModalEditOpenAction,
+  setTotalRowAction,
+  setCurrentPageAction,
 } = quanLyNguoiDungSlice.actions;
 
 export default quanLyNguoiDungSlice.reducer;

@@ -2,7 +2,11 @@ import React from "react";
 import { Table, Avatar, Tag, Popconfirm, message } from "antd";
 import { DeleteOutlined, EditOutlined, UserOutlined } from "@ant-design/icons";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
-import { setIsModalEditOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
+import {
+  setCurrentPageAction,
+  setIsModalEditOpenAction,
+  setListUserAction,
+} from "../../redux/slices/quanLyNguoiDungSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import dayjs from "dayjs";
@@ -12,12 +16,24 @@ import {
 } from "../../redux/thunks/quanLyNguoiDungThunks";
 
 export default function ListUser({ fetchSearchUser, valueInput }) {
-  const { listUser } = useSelector((state) => state.quanLyNguoiDungSlice);
+  const { listUser, totalRow, currentPage } = useSelector(
+    (state) => state.quanLyNguoiDungSlice
+  );
   const dispatch = useDispatch();
-
   useEffect(() => {
     dispatch(fetchListUserAction());
   }, [dispatch]);
+  const handlePageChange = (page, pageSize) => {
+    dispatch(setCurrentPageAction(page));
+    nguoiDungServices
+      .findUser(page, pageSize, valueInput)
+      .then((result) => {
+        dispatch(setListUserAction(result.data.content.data));
+      })
+      .catch((err) => {
+        console.err(err);
+      });
+  };
   // Table data
   const columns = [
     {
@@ -86,7 +102,7 @@ export default function ListUser({ fetchSearchUser, valueInput }) {
                     dispatch(setIsModalEditOpenAction(true));
                   })
                   .catch((err) => {
-                    console.log(err);
+                    console.err(err);
                   });
               }}
               className=" text-2xl hover:cursor-pointer mr-2"
@@ -129,7 +145,7 @@ export default function ListUser({ fetchSearchUser, valueInput }) {
         message.success("Xóa thành công");
       })
       .catch((err) => {
-        console.log(err);
+        console.err(err);
         message.error("Xóa thất bại");
       });
   };
@@ -137,5 +153,17 @@ export default function ListUser({ fetchSearchUser, valueInput }) {
   const confirm = (id) => {
     handleDeleteUser(id);
   };
-  return <Table dataSource={renderListUser()} columns={columns} />;
+  return (
+    <Table
+      dataSource={renderListUser()}
+      columns={columns}
+      pagination={{
+        total: totalRow, // total để hiện số trang
+        defaultCurrent: 1,
+        current: currentPage,
+        pageSize: 10, // Số dòng mỗi trang
+        onChange: handlePageChange,
+      }}
+    />
+  );
 }

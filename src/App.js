@@ -1,6 +1,8 @@
 import "./App.css";
 import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 import TempHeader from "./components/TempHeader/TempHeader";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TempLoginPage from "./pages/TempLoginPage/TempLoginPage";
@@ -14,6 +16,7 @@ import BookingPage from "./pages/BookingPage/BookingPage";
 import HomePage from "./pages/HomePage/HomePage";
 import Layout from "./templates/Layout";
 
+AOS.init();
 function App() {
   return (
     <div>

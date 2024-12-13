@@ -30,7 +30,7 @@ export default function ListViTri({ fetchSearchViTri, valueInput }) {
       key: "tenViTri",
       render: (_, dataObject) => {
         return (
-          <div className="flex items-center">
+          <div className="md:flex items-center">
             <img
               src={dataObject.hinhAnh}
               alt="avatar"
@@ -61,6 +61,7 @@ export default function ListViTri({ fetchSearchViTri, valueInput }) {
       render: (_, dataObject) => {
         return (
           <div>
+            {/* nút edit */}
             <EditOutlined
               onClick={() => {
                 dispatch(fetchViTriInfoAction(dataObject.id))
@@ -68,11 +69,12 @@ export default function ListViTri({ fetchSearchViTri, valueInput }) {
                     dispatch(setIsModalEditOpenAction(true));
                   })
                   .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                   });
               }}
               className=" text-2xl hover:cursor-pointer mr-2"
             />
+            {/* nút xóa có kèm confirm */}
             <Popconfirm
               title="Xoá người dùng"
               description="Bạn có chắc muốn xóa người dùng?"
@@ -110,6 +112,7 @@ export default function ListViTri({ fetchSearchViTri, valueInput }) {
         message.success("Xóa thành công");
       })
       .catch((err) => {
+        console.error(err);
         message.err("Xóa thất bại");
       });
   };
@@ -118,11 +121,11 @@ export default function ListViTri({ fetchSearchViTri, valueInput }) {
   };
   return (
     <Table
-      pagination={{
-        pageSize: 3,
-      }}
       dataSource={renderListVitri()}
       columns={columns}
+      pagination={{
+        total: null,
+      }}
     />
   );
 }

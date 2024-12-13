@@ -9,7 +9,6 @@ export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
   const { isModalEditOpen, viTriInfo } = useSelector(
     (state) => state.quanLyViTriSlice
   );
-
   const { token } = useSelector((state) => state.userSlice.loginData);
   const [form] = Form.useForm();
 
@@ -19,18 +18,18 @@ export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
     }
     return e?.fileList;
   };
-
   const dispatch = useDispatch();
-
   const hideModal = () => {
     dispatch(setIsModalEditOpenAction(false));
   };
   const handleOk = (values) => {
+    // tạo FormData từ hình upload
     values.hinhAnh = values.hinhAnh[0].originFileObj;
     let formData = new FormData();
     formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
     const valuesClone = { ...values };
     valuesClone.hinhAnh = "";
+    // gọi api up hình => có id => gọi api cập nhật vị trí
     viTriServices
       .uploadHinhViTri(formData, values.id, token)
       .then((result) => {
@@ -43,12 +42,12 @@ export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
             message.success("Cập nhật thành công");
           })
           .catch((err) => {
-            console.log(err);
+            console.error(err);
             message.error("Cập nhật thất bại");
           });
       })
       .catch((err) => {
-        console.log(err);
+        console.error(err);
         message.error("Cập nhật thất bại");
       });
   };

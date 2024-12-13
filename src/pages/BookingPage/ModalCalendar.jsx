@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsModalCalendarOpen } from "../../redux/slices/bookingSlice";
+import {
+  setIsModalCalendarOpen,
+  setNgayDen,
+  setNgayDi,
+  setTotalDay,
+} from "../../redux/slices/bookingSlice";
 import { Modal } from "antd";
 import { addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
 
 export default function ModalCalendar() {
-  const { isModalCalendarOpen } = useSelector((state) => state.bookingSlice);
+  const { totalDay, isModalCalendarOpen } = useSelector(
+    (state) => state.bookingSlice
+  );
   const dispatch = useDispatch();
   const handleOk = () => {
     dispatch(setIsModalCalendarOpen(false));
@@ -24,15 +31,23 @@ export default function ModalCalendar() {
   const onchangeDate = (item) => {
     console.log(item);
     setState([item.selection]);
+    let { startDate, endDate } = item.selection;
+    console.log(startDate);
+    dispatch(setNgayDen(startDate));
+    dispatch(setNgayDi(endDate));
+    let days = Math.round((endDate - startDate) / (1000 * 3600 * 24));
+    dispatch(setTotalDay(days));
   };
   return (
     <Modal
-      title="Đêm"
+      title={`${totalDay} đêm`}
+      // title="dem"
       open={isModalCalendarOpen}
       onOk={handleOk}
       onCancel={handleCancel}
       footer={null}
       width="600px"
+      // height="320px"
     >
       <DateRangePicker
         // onChange={(item) => setState([item.selection])}
@@ -40,6 +55,7 @@ export default function ModalCalendar() {
         showSelectionPreview={true}
         moveRangeOnFirstSelection={false}
         minDate={addDays(new Date(), 0)}
+        initialFocusedRange={[0, 0]}
         months={1}
         rangeColors={["rgb(254, 107, 110)"]}
         ranges={state}

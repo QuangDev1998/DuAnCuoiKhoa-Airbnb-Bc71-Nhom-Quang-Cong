@@ -4,33 +4,7 @@ import { useSelector } from "react-redux";
 
 export default function InfoRoomLeft() {
   const { infoRoom } = useSelector((state) => state.detailRoomSlice);
-  const renderTienIch = () => {
-    let tienIchContent = [];
 
-    const amenitiesMapping = {
-      mayGiat: "Máy giặt",
-      banLa: "Bàn là",
-      tivi: "Tivi",
-      dieuHoa: "Điều hòa",
-      wifi: "Wifi",
-      bep: "Bếp",
-      doXe: "Bãi đỗ xe",
-      hoBoi: "Hồ bơi",
-      baiUi: "Bàn ủi",
-    };
-
-    Object.keys(infoRoom).forEach((key) => {
-      if (infoRoom[key] && amenitiesMapping[key]) {
-        tienIchContent.push(
-          <div key={key}>
-            <CheckOutlined /> {amenitiesMapping[key]}
-          </div>
-        );
-      }
-    });
-
-    return tienIchContent;
-  };
   return (
     <div className="basis-2/3 divide-y-2 space-y-5">
       <div className="">
@@ -96,11 +70,6 @@ export default function InfoRoomLeft() {
       {/* mô tả */}
       <div className="py-5">
         <p>{infoRoom.moTa}</p>
-      </div>
-      {/* tiện ích đi kèm */}
-      <div>
-        <h1 className="text-xl font-bold">Các tiện ích đi kèm</h1>
-        <div className="grid grid-cols-1 md:grid-cols-2">{renderTienIch()}</div>
       </div>
     </div>
   );

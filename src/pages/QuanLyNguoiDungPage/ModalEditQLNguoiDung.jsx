@@ -92,7 +92,7 @@ export default function ModalEditQLNguoiDung({ fetchSearchUser, valueInput }) {
         <h1 className="my-3 text-2xl text-center">Cập nhật người dùng</h1>
         <Row gutter={24}>
           {/* Col left */}
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={24} md={12}>
             {/* id */}
             <Form.Item name="id" label="Mã người dùng">
               <Input disabled />
@@ -156,7 +156,7 @@ export default function ModalEditQLNguoiDung({ fetchSearchUser, valueInput }) {
             </Form.Item>
           </Col>
           {/* Col right */}
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={24} md={12}>
             {/* name */}
             <Form.Item
               name="name"

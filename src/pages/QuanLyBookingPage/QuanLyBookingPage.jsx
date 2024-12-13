@@ -13,7 +13,7 @@ export default function QuanLyBookingPage() {
   const [valueInput, setvalueInput] = useState("");
   const searchRef = useRef(null);
 
-  //  debounce
+  //  debounce tính năng search
   const handleChangeSearch = (e) => {
     let { value } = e.target;
     setvalueInput(value);
@@ -25,16 +25,19 @@ export default function QuanLyBookingPage() {
     }, 1000);
   };
   const fetchSearchBooking = (keyword) => {
+    // nếu thanh search trống trả về list booking mặc định
     if (keyword === "") {
       dispatch(fetchListBookingAction());
-    } else {
+    }
+    // nếu có gọi api search và set list booking theo data trả về
+    else {
       bookingServices
         .searchBooking(keyword)
         .then((result) => {
           dispatch(setListBookingAction(result.data.content));
         })
         .catch((err) => {
-          console.log(err);
+          console.error(err);
         });
     }
   };
@@ -42,26 +45,20 @@ export default function QuanLyBookingPage() {
     <div>
       <div className="flex justify-around py-5">
         <h1 className="text-2xl font-bold">Quản lý Booking</h1>
-        {/* <button
-          //   onClick={() => dispatch(setIsModalOpenAction(true))}
-          className="py-2 px-3 cursor-pointer text-white rounded-md shadow-md"
-          style={{
-            backgroundColor: "rgb(254 107 110)",
-          }}
-        >
-          + Thêm booking mới
-        </button> */}
       </div>
+      {/* input search */}
       <Input
         className="p-2.5 my-3"
         placeholder="Nhập mã người dùng..."
         onChange={handleChangeSearch}
         value={valueInput}
       />
+      {/* list booking */}
       <ListBooking
         fetchSearchBooking={fetchSearchBooking}
         valueInput={valueInput}
       />
+      {/* modal edit */}
       <ModalEditQLBooking
         fetchSearchBooking={fetchSearchBooking}
         valueInput={valueInput}
