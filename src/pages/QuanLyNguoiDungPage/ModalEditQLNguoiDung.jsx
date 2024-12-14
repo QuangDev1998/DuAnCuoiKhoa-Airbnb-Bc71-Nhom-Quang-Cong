@@ -15,10 +15,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import dayjs from "dayjs";
 import { setIsModalEditOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
-import { fetchUserInfoAction } from "../../redux/thunks/quanLyNguoiDungThunks";
+import {
+  fetchListUserAction,
+  fetchUserInfoAction,
+} from "../../redux/thunks/quanLyNguoiDungThunks";
 
-export default function ModalEditQLNguoiDung({ fetchSearchUser, valueInput }) {
-  const { isModalEditOpen, userInfo } = useSelector(
+export default function ModalEditQLNguoiDung() {
+  const { isModalEditOpen, userInfo, currentPage, valueInput } = useSelector(
     (state) => state.quanLyNguoiDungSlice
   );
   const [form] = Form.useForm();
@@ -39,10 +42,11 @@ export default function ModalEditQLNguoiDung({ fetchSearchUser, valueInput }) {
       .editUser(userInfo.id, values)
       .then((result) => {
         dispatch(fetchUserInfoAction(userInfo.id));
-        fetchSearchUser(valueInput);
+        dispatch(fetchListUserAction({ currentPage, valueInput }));
         message.success("Cập nhật thành công");
       })
       .catch((err) => {
+        console.error(err);
         message.error("Cập nhật thất bại");
       });
   };

@@ -15,18 +15,19 @@ import {
   fetchUserInfoAction,
 } from "../../redux/thunks/quanLyNguoiDungThunks";
 
-export default function ListUser({ fetchSearchUser, valueInput }) {
-  const { listUser, totalRow, currentPage } = useSelector(
+export default function ListUser({ fetchSearchUser }) {
+  const { listUser, totalRow, currentPage, valueInput } = useSelector(
     (state) => state.quanLyNguoiDungSlice
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchListUserAction());
+    dispatch(fetchListUserAction({ currentPage, valueInput }));
   }, [dispatch]);
-  const handlePageChange = (page, pageSize) => {
-    dispatch(setCurrentPageAction(page));
+
+  const handlePageChange = (pageIndex, pageSize) => {
+    dispatch(setCurrentPageAction(pageIndex));
     nguoiDungServices
-      .findUser(page, pageSize, valueInput)
+      .findUser(pageIndex, pageSize, valueInput)
       .then((result) => {
         dispatch(setListUserAction(result.data.content.data));
       })
@@ -141,7 +142,8 @@ export default function ListUser({ fetchSearchUser, valueInput }) {
     nguoiDungServices
       .deleteUser(id)
       .then((result) => {
-        fetchSearchUser(valueInput);
+        // fetchSearchUser(valueInput);
+        dispatch(fetchListUserAction({ currentPage, valueInput }));
         message.success("Xóa thành công");
       })
       .catch((err) => {

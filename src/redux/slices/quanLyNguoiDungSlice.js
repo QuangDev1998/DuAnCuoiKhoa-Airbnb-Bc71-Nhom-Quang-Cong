@@ -11,6 +11,7 @@ const initialState = {
   isModalEditOpen: false,
   totalRow: null,
   currentPage: 1,
+  valueInput: "",
 };
 
 const quanLyNguoiDungSlice = createSlice({
@@ -31,6 +32,9 @@ const quanLyNguoiDungSlice = createSlice({
     },
     setCurrentPageAction: (state, action) => {
       state.currentPage = action.payload;
+    },
+    setValueInputAction: (state, action) => {
+      state.valueInput = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -58,6 +62,7 @@ export const {
   setIsModalEditOpenAction,
   setTotalRowAction,
   setCurrentPageAction,
+  setValueInputAction,
 } = quanLyNguoiDungSlice.actions;
 
 export default quanLyNguoiDungSlice.reducer;

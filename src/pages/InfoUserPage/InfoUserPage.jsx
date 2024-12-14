@@ -45,7 +45,7 @@ export default function InfoUserPage() {
         ></div>
       </div>
       {/* info */}
-      <div className="grid lg:flex gap-10 py-5">
+      <div className="container grid lg:flex gap-10 py-5">
         {/* info left */}
         <div
           className="block lg:sticky space-y-3 top-0 basis-1/4 p-5 border-solid border rounded-md"

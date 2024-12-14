@@ -1,38 +1,41 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import { Input } from "antd";
-
 import ListUser from "./ListUser";
 import {
+  setCurrentPageAction,
   setIsModalOpenAction,
   setListUserAction,
   setTotalRowAction,
+  setValueInputAction,
 } from "../../redux/slices/quanLyNguoiDungSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ModalQLNguoiDung from "./ModalQLNguoiDung";
 import ModalEditQLNguoiDung from "./ModalEditQLNguoiDung";
 import { fetchListUserAction } from "../../redux/thunks/quanLyNguoiDungThunks";
 
 export default function QuanLyNguoiDungPage() {
+  const { currentPage, valueInput } = useSelector(
+    (state) => state.quanLyNguoiDungSlice
+  );
   const dispatch = useDispatch();
-  const [valueInput, setvalueInput] = useState("");
   const searchRef = useRef(null);
 
   //  debounce tính năng search
   const handleChangeSearch = (e) => {
     let { value } = e.target;
-    setvalueInput(value);
+    dispatch(setValueInputAction(value));
     if (searchRef.current) {
       clearTimeout(searchRef.current);
     }
     searchRef.current = setTimeout(() => {
-      fetchSearchUser(value);
+      fetchSearchUser(valueInput);
     }, 1000);
   };
   const fetchSearchUser = (keyword) => {
     // nếu thanh search trống trả về list user mặc định
     if (keyword === "") {
-      dispatch(fetchListUserAction());
+      dispatch(fetchListUserAction({ currentPage, valueInput }));
     }
     // nếu có gọi api search và set list user theo data trả về
     else {
@@ -40,6 +43,7 @@ export default function QuanLyNguoiDungPage() {
         .findUser(1, 10, keyword)
         .then((result) => {
           dispatch(setListUserAction(result.data.content.data));
+          dispatch(setCurrentPageAction(1));
           dispatch(setTotalRowAction(result.data.content.totalRow));
         })
         .catch((err) => {
@@ -70,17 +74,11 @@ export default function QuanLyNguoiDungPage() {
         value={valueInput}
       />
       {/* list user */}
-      <ListUser fetchSearchUser={fetchSearchUser} valueInput={valueInput} />
+      <ListUser fetchSearchUser={fetchSearchUser} />
       {/* modal add */}
-      <ModalQLNguoiDung
-        fetchSearchUser={fetchSearchUser}
-        valueInput={valueInput}
-      />
+      <ModalQLNguoiDung />
       {/* modal edit */}
-      <ModalEditQLNguoiDung
-        fetchSearchUser={fetchSearchUser}
-        valueInput={valueInput}
-      />
+      <ModalEditQLNguoiDung />
     </div>
   );
 }

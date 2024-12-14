@@ -2,9 +2,13 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 export const fetchListUserAction = createAsyncThunk(
   "quanLyNguoiDungSlice/fetchListUserAction",
-  async (_, { rejectWithValue }) => {
+  async ({ currentPage, valueInput }, { rejectWithValue }) => {
     try {
-      const result = await nguoiDungServices.findUser(1, 10, "");
+      const result = await nguoiDungServices.findUser(
+        currentPage,
+        10,
+        valueInput
+      );
       return result.data.content;
     } catch (error) {
       return rejectWithValue(error);

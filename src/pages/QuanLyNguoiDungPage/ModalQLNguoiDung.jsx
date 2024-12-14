@@ -14,9 +14,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { setIsModalOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import dayjs from "dayjs";
+import { fetchListUserAction } from "../../redux/thunks/quanLyNguoiDungThunks";
 
-export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
-  const { isModalOpen } = useSelector((state) => state.quanLyNguoiDungSlice);
+export default function ModalQLNguoiDung() {
+  const { isModalOpen, currentPage, valueInput } = useSelector(
+    (state) => state.quanLyNguoiDungSlice
+  );
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
   const onChangeRadio = (e) => {
@@ -32,7 +35,7 @@ export default function ModalQLNguoiDung({ fetchSearchUser, valueInput }) {
       .createUser(values)
       .then((result) => {
         message.success("Thêm thành công");
-        fetchSearchUser(valueInput);
+        dispatch(fetchListUserAction({ currentPage, valueInput }));
       })
       .catch((err) => {
         console.error(err);
