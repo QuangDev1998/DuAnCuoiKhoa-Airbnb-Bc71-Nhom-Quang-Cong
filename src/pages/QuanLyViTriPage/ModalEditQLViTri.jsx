@@ -3,14 +3,18 @@ import { Modal, Form, Input, message, Upload } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsModalEditOpenAction } from "../../redux/slices/quanLyViTriSlice";
 import { viTriServices } from "../../services/viTriServices";
-import { fetchViTriInfoAction } from "../../redux/thunks/quanLyViTriThunks";
+import {
+  fetchListViTriAction,
+  fetchViTriInfoAction,
+} from "../../redux/thunks/quanLyViTriThunks";
 
-export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
-  const { isModalEditOpen, viTriInfo } = useSelector(
+export default function ModalEditQLViTri({ valueInput }) {
+  const { isModalEditOpen, viTriInfo, currentPage } = useSelector(
     (state) => state.quanLyViTriSlice
   );
   const { token } = useSelector((state) => state.userSlice.loginData);
   const [form] = Form.useForm();
+  const dispatch = useDispatch();
 
   const normFile = (e) => {
     if (Array.isArray(e)) {
@@ -18,38 +22,57 @@ export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
     }
     return e?.fileList;
   };
-  const dispatch = useDispatch();
   const hideModal = () => {
     dispatch(setIsModalEditOpenAction(false));
   };
+  // hàm submit form
   const handleOk = (values) => {
-    // tạo FormData từ hình upload
-    values.hinhAnh = values.hinhAnh[0].originFileObj;
-    let formData = new FormData();
-    formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
-    const valuesClone = { ...values };
-    valuesClone.hinhAnh = "";
-    // gọi api up hình => có id => gọi api cập nhật vị trí
-    viTriServices
-      .uploadHinhViTri(formData, values.id, token)
-      .then((result) => {
-        let viTriData = result.data.content;
-        viTriServices
-          .editViTri(viTriData.id, viTriData, token)
-          .then((result) => {
-            dispatch(fetchViTriInfoAction(viTriData.id));
-            fetchSearchViTri(valueInput);
-            message.success("Cập nhật thành công");
-          })
-          .catch((err) => {
-            console.error(err);
-            message.error("Cập nhật thất bại");
-          });
-      })
-      .catch((err) => {
-        console.error(err);
-        message.error("Cập nhật thất bại");
-      });
+    // nếu hinhAnh của form ko có
+    if (!values.hinhAnh) {
+      // ko edit hình => hinhAnh của form = viTriInfo.hinhAnh
+      values.hinhAnh = viTriInfo.hinhAnh;
+      // gọi api edit
+      viTriServices
+        .editViTri(values.id, values, token)
+        .then((result) => {
+          // => update list
+          dispatch(fetchViTriInfoAction(values.id));
+          dispatch(fetchListViTriAction({ currentPage, valueInput }));
+          message.success("Cập nhật thành công");
+        })
+        .catch((err) => {
+          console.error(err);
+          message.error("Cập nhật thất bại");
+        });
+    } else {
+      // có edit hình => tạo FormData từ hình upload
+      values.hinhAnh = values.hinhAnh[0].originFileObj;
+      let formData = new FormData();
+      formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
+      // gọi api up hình
+      viTriServices
+        .uploadHinhViTri(formData, values.id, token)
+        .then((result) => {
+          values.hinhAnh = result.data.content.hinhAnh;
+          // => gọi api edit
+          viTriServices
+            .editViTri(values.id, values, token)
+            .then((result) => {
+              // => update list
+              dispatch(fetchViTriInfoAction(values.id));
+              dispatch(fetchListViTriAction({ currentPage, valueInput }));
+              message.success("Cập nhật thành công");
+            })
+            .catch((err) => {
+              console.error(err);
+              message.error("Cập nhật thất bại");
+            });
+        })
+        .catch((err) => {
+          console.error(err);
+          message.error("Cập nhật thất bại");
+        });
+    }
   };
   const renderInitialValues = () => {
     if (viTriInfo) {
@@ -101,13 +124,6 @@ export default function ModalEditQLViTri({ fetchSearchViTri, valueInput }) {
           name="hinhAnh"
           valuePropName="fileList"
           getValueFromEvent={normFile}
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn hình!",
-            },
-          ]}
-          hasFeedback
         >
           <Upload
             listType="picture"

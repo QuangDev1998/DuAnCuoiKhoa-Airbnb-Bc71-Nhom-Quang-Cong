@@ -1,48 +1,28 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Input } from "antd";
 import { useDispatch } from "react-redux";
 import ListViTri from "./ListViTri";
-import {
-  setIsModalOpenAction,
-  setListViTriAction,
-} from "../../redux/slices/quanLyViTriSlice";
-import { viTriServices } from "../../services/viTriServices";
+import { setIsModalOpenAction } from "../../redux/slices/quanLyViTriSlice";
 import ModalQLViTri from "./ModalQLViTri";
 import ModalEditQLViTri from "./ModalEditQLViTri";
 import { fetchListViTriAction } from "../../redux/thunks/quanLyViTriThunks";
 
 export default function QuanLyViTriPage() {
-  const [valueInput, setvalueInput] = useState("");
+  const [valueInput, setValueInput] = useState("");
   const searchRef = useRef(null);
   const dispatch = useDispatch();
 
   //  debounce tính năng search
   const handleChangeSearch = (e) => {
     let { value } = e.target;
-    setvalueInput(value);
+    setValueInput(value);
+    // nếu đã có input search => xóa setTimeout cũ / tạo setTimeout mới
     if (searchRef.current) {
       clearTimeout(searchRef.current);
     }
     searchRef.current = setTimeout(() => {
-      fetchSearchViTri(value);
+      dispatch(fetchListViTriAction({ currentPage: 1, valueInput: value }));
     }, 1000);
-  };
-  const fetchSearchViTri = (keyword) => {
-    // nếu thanh search trống trả về list vị trí mặc định
-    if (keyword === "") {
-      dispatch(fetchListViTriAction());
-    }
-    // nếu có gọi api search và set list vị trí theo data trả về
-    else {
-      viTriServices
-        .findViTri(keyword)
-        .then((result) => {
-          dispatch(setListViTriAction(result.data.content.data));
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
   };
 
   return (
@@ -67,17 +47,11 @@ export default function QuanLyViTriPage() {
         value={valueInput}
       />
       {/* list vị trí */}
-      <ListViTri fetchSearchViTri={fetchSearchViTri} valueInput={valueInput} />
+      <ListViTri valueInput={valueInput} />
       {/* modal add */}
-      <ModalQLViTri
-        fetchSearchViTri={fetchSearchViTri}
-        valueInput={valueInput}
-      />
+      <ModalQLViTri valueInput={valueInput} />
       {/* modal edit */}
-      <ModalEditQLViTri
-        fetchSearchViTri={fetchSearchViTri}
-        valueInput={valueInput}
-      />
+      <ModalEditQLViTri valueInput={valueInput} />
     </div>
   );
 }

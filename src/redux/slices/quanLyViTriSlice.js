@@ -9,6 +9,8 @@ const initialState = {
   viTriInfo: null,
   isModalOpen: false,
   isModalEditOpen: false,
+  totalRow: null,
+  currentPage: 1,
 };
 
 const quanLyViTriSlice = createSlice({
@@ -24,21 +26,28 @@ const quanLyViTriSlice = createSlice({
     setIsModalEditOpenAction: (state, action) => {
       state.isModalEditOpen = action.payload;
     },
+    setTotalRowAction: (state, action) => {
+      state.totalRow = action.payload;
+    },
+    setCurrentPageAction: (state, action) => {
+      state.currentPage = action.payload;
+    },
   },
   extraReducers: (builder) => {
     // fetchListViTriAction
     builder.addCase(fetchListViTriAction.fulfilled, (state, action) => {
-      state.listViTri = action.payload;
+      state.listViTri = action.payload.data;
+      state.totalRow = action.payload.totalRow;
     });
     builder.addCase(fetchListViTriAction.rejected, (state, action) => {
-      console.log(action.payload);
+      console.error(action.error);
     });
     // fetchViTriInfoAction
     builder.addCase(fetchViTriInfoAction.fulfilled, (state, action) => {
       state.viTriInfo = action.payload;
     });
     builder.addCase(fetchViTriInfoAction.rejected, (state, action) => {
-      console.log(action.payload);
+      console.error(action.error);
     });
   },
 });
@@ -47,6 +56,8 @@ export const {
   setListViTriAction,
   setIsModalOpenAction,
   setIsModalEditOpenAction,
+  setTotalRowAction,
+  setCurrentPageAction,
 } = quanLyViTriSlice.actions;
 
 export default quanLyViTriSlice.reducer;

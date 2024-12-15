@@ -1,6 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsModalEditOpenAction } from "../../redux/slices/quanLyViTriSlice";
+import {
+  setCurrentPageAction,
+  setIsModalEditOpenAction,
+  setListViTriAction,
+} from "../../redux/slices/quanLyViTriSlice";
 import { message, Popconfirm, Table } from "antd";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
@@ -10,13 +14,28 @@ import {
   fetchViTriInfoAction,
 } from "../../redux/thunks/quanLyViTriThunks";
 
-export default function ListViTri({ fetchSearchViTri, valueInput }) {
+export default function ListViTri({ valueInput }) {
   const { token } = useSelector((state) => state.userSlice.loginData);
-  const { listViTri } = useSelector((state) => state.quanLyViTriSlice);
+  const { listViTri, totalRow, currentPage } = useSelector(
+    (state) => state.quanLyViTriSlice
+  );
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchListViTriAction());
-  }, [dispatch]);
+    dispatch(fetchListViTriAction({ currentPage, valueInput }));
+  }, []);
+
+  const handlePageChange = (pageIndex, pageSize) => {
+    // cập nhật lại currentPage và call api search => set list theo page mới
+    dispatch(setCurrentPageAction(pageIndex));
+    viTriServices
+      .findViTri(pageIndex, pageSize, valueInput)
+      .then((result) => {
+        dispatch(setListViTriAction(result.data.content.data));
+      })
+      .catch((err) => {
+        console.err(err);
+      });
+  };
   // Table data
   const columns = [
     {
@@ -74,7 +93,7 @@ export default function ListViTri({ fetchSearchViTri, valueInput }) {
               }}
               className=" text-2xl hover:cursor-pointer mr-2"
             />
-            {/* nút xóa có kèm confirm */}
+            {/* Popconfirm bọc nút xóa => confirm => chạy hàm xóa */}
             <Popconfirm
               title="Xoá người dùng"
               description="Bạn có chắc muốn xóa người dùng?"
@@ -108,7 +127,7 @@ export default function ListViTri({ fetchSearchViTri, valueInput }) {
     viTriServices
       .deleteViTri(id, token)
       .then((result) => {
-        fetchSearchViTri(valueInput);
+        dispatch(fetchListViTriAction({ currentPage, valueInput }));
         message.success("Xóa thành công");
       })
       .catch((err) => {
@@ -124,7 +143,11 @@ export default function ListViTri({ fetchSearchViTri, valueInput }) {
       dataSource={renderListVitri()}
       columns={columns}
       pagination={{
-        total: null,
+        total: totalRow, // total để hiện số trang
+        defaultCurrent: 1,
+        current: currentPage,
+        pageSize: 3, // Số dòng mỗi trang
+        onChange: handlePageChange,
       }}
     />
   );

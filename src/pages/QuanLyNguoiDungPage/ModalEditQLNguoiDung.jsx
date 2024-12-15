@@ -41,8 +41,8 @@ export default function ModalEditQLNguoiDung({ valueInput }) {
     nguoiDungServices
       .editUser(userInfo.id, values)
       .then((result) => {
-        dispatch(fetchUserInfoAction(userInfo.id));
         // => => update list
+        dispatch(fetchUserInfoAction(userInfo.id));
         dispatch(fetchListUserAction({ currentPage, valueInput }));
         message.success("Cập nhật thành công");
       })

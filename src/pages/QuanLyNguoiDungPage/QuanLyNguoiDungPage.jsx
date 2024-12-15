@@ -21,11 +21,8 @@ export default function QuanLyNguoiDungPage() {
       clearTimeout(searchRef.current);
     }
     searchRef.current = setTimeout(() => {
-      fetchSearchUser(value);
+      dispatch(fetchListUserAction({ currentPage: 1, valueInput: value }));
     }, 1000);
-  };
-  const fetchSearchUser = (value) => {
-    dispatch(fetchListUserAction({ currentPage: 1, valueInput }));
   };
 
   return (

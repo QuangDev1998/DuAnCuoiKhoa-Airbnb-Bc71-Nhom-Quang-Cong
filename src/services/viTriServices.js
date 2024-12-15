@@ -10,9 +10,9 @@ export const viTriServices = {
     http.post(`/api/vi-tri`, viTriData, { headers: { token: tokenBearer } }),
   deleteViTri: (id, tokenBearer) =>
     http.delete(`/api/vi-tri/${id}`, { headers: { token: tokenBearer } }),
-  findViTri: (keyword) =>
+  findViTri: (pageIndex, pageSize, keyword) =>
     http.get(
-      `/api/vi-tri/phan-trang-tim-kiem?pageIndex=1&pageSize=3&keyword=${keyword}`
+      `/api/vi-tri/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`
     ),
   getViTriInfo: (id) => http.get(`/api/vi-tri/${id}`),
   editViTri: (id, viTriData, tokenBearer) =>
