@@ -25,6 +25,7 @@ export default function ListUser({ valueInput }) {
   }, []);
 
   const handlePageChange = (pageIndex, pageSize) => {
+    // cập nhật lại currentPage và call api search => set list theo page mới
     dispatch(setCurrentPageAction(pageIndex));
     nguoiDungServices
       .findUser(pageIndex, pageSize, valueInput)
@@ -143,14 +144,7 @@ export default function ListUser({ valueInput }) {
     nguoiDungServices
       .deleteUser(id)
       .then((result) => {
-        nguoiDungServices
-          .findUser(currentPage, 10, valueInput)
-          .then((result) => {
-            dispatch(setListUserAction(result.data.content.data));
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        dispatch(fetchListUserAction({ currentPage, valueInput }));
         message.success("Xóa thành công");
       })
       .catch((err) => {

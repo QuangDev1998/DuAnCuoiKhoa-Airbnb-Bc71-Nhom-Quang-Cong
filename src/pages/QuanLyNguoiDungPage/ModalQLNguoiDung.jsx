@@ -11,12 +11,10 @@ import {
   message,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setIsModalOpenAction,
-  setListUserAction,
-} from "../../redux/slices/quanLyNguoiDungSlice";
+import { setIsModalOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import dayjs from "dayjs";
+import { fetchListUserAction } from "../../redux/thunks/quanLyNguoiDungThunks";
 
 export default function ModalQLNguoiDung({ valueInput }) {
   const { isModalOpen, currentPage } = useSelector(
@@ -32,19 +30,15 @@ export default function ModalQLNguoiDung({ valueInput }) {
   const hideModal = () => {
     dispatch(setIsModalOpenAction(false));
   };
+  // hàm submit form
   const handleOk = (values) => {
     values.birthday = dayjs(values.birthday).format("DD-MM-YYYY");
+    // gọi api tạo
     nguoiDungServices
       .createUser(values)
       .then((result) => {
-        nguoiDungServices
-          .findUser(currentPage, 10, valueInput)
-          .then((result) => {
-            dispatch(setListUserAction(result.data.content.data));
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        // => update list
+        dispatch(fetchListUserAction({ currentPage, valueInput }));
         message.success("Thêm thành công");
       })
       .catch((err) => {

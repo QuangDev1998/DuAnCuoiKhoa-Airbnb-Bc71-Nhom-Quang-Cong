@@ -14,11 +14,11 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import dayjs from "dayjs";
+import { setIsModalEditOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
 import {
-  setIsModalEditOpenAction,
-  setListUserAction,
-} from "../../redux/slices/quanLyNguoiDungSlice";
-import { fetchUserInfoAction } from "../../redux/thunks/quanLyNguoiDungThunks";
+  fetchListUserAction,
+  fetchUserInfoAction,
+} from "../../redux/thunks/quanLyNguoiDungThunks";
 
 export default function ModalEditQLNguoiDung({ valueInput }) {
   const { isModalEditOpen, userInfo, currentPage } = useSelector(
@@ -34,20 +34,16 @@ export default function ModalEditQLNguoiDung({ valueInput }) {
   const hideModal = () => {
     dispatch(setIsModalEditOpenAction(false));
   };
+  // hàm submit form
   const handleOk = (values) => {
     values.birthday = dayjs(values.birthday).format("DD-MM-YYYY");
+    // gọi api edit
     nguoiDungServices
       .editUser(userInfo.id, values)
       .then((result) => {
         dispatch(fetchUserInfoAction(userInfo.id));
-        nguoiDungServices
-          .findUser(currentPage, 10, valueInput)
-          .then((result) => {
-            dispatch(setListUserAction(result.data.content.data));
-          })
-          .catch((err) => {
-            console.error(err);
-          });
+        // => => update list
+        dispatch(fetchListUserAction({ currentPage, valueInput }));
         message.success("Cập nhật thành công");
       })
       .catch((err) => {

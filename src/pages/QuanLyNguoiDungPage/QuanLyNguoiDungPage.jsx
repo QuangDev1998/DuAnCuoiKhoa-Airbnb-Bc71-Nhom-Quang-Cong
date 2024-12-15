@@ -1,16 +1,11 @@
 import React, { useRef, useState } from "react";
-import { nguoiDungServices } from "../../services/nguoiDungServices";
 import { Input } from "antd";
 import ListUser from "./ListUser";
-import {
-  setCurrentPageAction,
-  setIsModalOpenAction,
-  setListUserAction,
-  setTotalRowAction,
-} from "../../redux/slices/quanLyNguoiDungSlice";
+import { setIsModalOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
 import { useDispatch } from "react-redux";
 import ModalQLNguoiDung from "./ModalQLNguoiDung";
 import ModalEditQLNguoiDung from "./ModalEditQLNguoiDung";
+import { fetchListUserAction } from "../../redux/thunks/quanLyNguoiDungThunks";
 
 export default function QuanLyNguoiDungPage() {
   const [valueInput, setValueInput] = useState("");
@@ -30,16 +25,7 @@ export default function QuanLyNguoiDungPage() {
     }, 1000);
   };
   const fetchSearchUser = (value) => {
-    nguoiDungServices
-      .findUser(1, 10, value)
-      .then((result) => {
-        dispatch(setListUserAction(result.data.content.data));
-        dispatch(setCurrentPageAction(1));
-        dispatch(setTotalRowAction(result.data.content.totalRow));
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    dispatch(fetchListUserAction({ currentPage: 1, valueInput }));
   };
 
   return (
