@@ -10,6 +10,7 @@ export const nguoiDungServices = {
     http.get(
       `/api/users/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`
     ),
+
   editUser: (id, userInfo) => http.put(`/api/users/${id}`, userInfo),
   uploadHinhUser: (formFile, tokenBearer) =>
     http.post(`/api/users/upload-avatar`, formFile, {

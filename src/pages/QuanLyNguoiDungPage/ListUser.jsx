@@ -15,14 +15,14 @@ import {
   fetchUserInfoAction,
 } from "../../redux/thunks/quanLyNguoiDungThunks";
 
-export default function ListUser({ fetchSearchUser }) {
-  const { listUser, totalRow, currentPage, valueInput } = useSelector(
+export default function ListUser({ valueInput }) {
+  const { listUser, totalRow, currentPage } = useSelector(
     (state) => state.quanLyNguoiDungSlice
   );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchListUserAction({ currentPage, valueInput }));
-  }, [dispatch]);
+  }, []);
 
   const handlePageChange = (pageIndex, pageSize) => {
     dispatch(setCurrentPageAction(pageIndex));
@@ -108,6 +108,7 @@ export default function ListUser({ fetchSearchUser }) {
               }}
               className=" text-2xl hover:cursor-pointer mr-2"
             />
+            {/* Popconfirm bọc nút xóa => confirm => chạy hàm xóa */}
             <Popconfirm
               title="Xoá người dùng"
               description="Bạn có chắc muốn xóa người dùng?"
@@ -142,8 +143,14 @@ export default function ListUser({ fetchSearchUser }) {
     nguoiDungServices
       .deleteUser(id)
       .then((result) => {
-        // fetchSearchUser(valueInput);
-        dispatch(fetchListUserAction({ currentPage, valueInput }));
+        nguoiDungServices
+          .findUser(currentPage, 10, valueInput)
+          .then((result) => {
+            dispatch(setListUserAction(result.data.content.data));
+          })
+          .catch((err) => {
+            console.error(err);
+          });
         message.success("Xóa thành công");
       })
       .catch((err) => {

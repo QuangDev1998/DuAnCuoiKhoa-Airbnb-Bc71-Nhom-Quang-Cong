@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import { Input } from "antd";
 import ListUser from "./ListUser";
@@ -7,50 +7,41 @@ import {
   setIsModalOpenAction,
   setListUserAction,
   setTotalRowAction,
-  setValueInputAction,
 } from "../../redux/slices/quanLyNguoiDungSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import ModalQLNguoiDung from "./ModalQLNguoiDung";
 import ModalEditQLNguoiDung from "./ModalEditQLNguoiDung";
-import { fetchListUserAction } from "../../redux/thunks/quanLyNguoiDungThunks";
 
 export default function QuanLyNguoiDungPage() {
-  const { currentPage, valueInput } = useSelector(
-    (state) => state.quanLyNguoiDungSlice
-  );
+  const [valueInput, setValueInput] = useState("");
   const dispatch = useDispatch();
   const searchRef = useRef(null);
 
   //  debounce tính năng search
   const handleChangeSearch = (e) => {
     let { value } = e.target;
-    dispatch(setValueInputAction(value));
+    setValueInput(value);
+    // nếu đã có input search => xóa setTimeout cũ / tạo setTimeout mới
     if (searchRef.current) {
       clearTimeout(searchRef.current);
     }
     searchRef.current = setTimeout(() => {
-      fetchSearchUser(valueInput);
+      fetchSearchUser(value);
     }, 1000);
   };
-  const fetchSearchUser = (keyword) => {
-    // nếu thanh search trống trả về list user mặc định
-    if (keyword === "") {
-      dispatch(fetchListUserAction({ currentPage, valueInput }));
-    }
-    // nếu có gọi api search và set list user theo data trả về
-    else {
-      nguoiDungServices
-        .findUser(1, 10, keyword)
-        .then((result) => {
-          dispatch(setListUserAction(result.data.content.data));
-          dispatch(setCurrentPageAction(1));
-          dispatch(setTotalRowAction(result.data.content.totalRow));
-        })
-        .catch((err) => {
-          console.error(err);
-        });
-    }
+  const fetchSearchUser = (value) => {
+    nguoiDungServices
+      .findUser(1, 10, value)
+      .then((result) => {
+        dispatch(setListUserAction(result.data.content.data));
+        dispatch(setCurrentPageAction(1));
+        dispatch(setTotalRowAction(result.data.content.totalRow));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
   };
+
   return (
     <div>
       <div className="md:flex justify-around py-5">
@@ -74,11 +65,11 @@ export default function QuanLyNguoiDungPage() {
         value={valueInput}
       />
       {/* list user */}
-      <ListUser fetchSearchUser={fetchSearchUser} />
+      <ListUser valueInput={valueInput} />
       {/* modal add */}
-      <ModalQLNguoiDung />
+      <ModalQLNguoiDung valueInput={valueInput} />
       {/* modal edit */}
-      <ModalEditQLNguoiDung />
+      <ModalEditQLNguoiDung valueInput={valueInput} />
     </div>
   );
 }

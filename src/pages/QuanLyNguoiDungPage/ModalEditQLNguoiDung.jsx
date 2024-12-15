@@ -14,25 +14,23 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import dayjs from "dayjs";
-import { setIsModalEditOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
 import {
-  fetchListUserAction,
-  fetchUserInfoAction,
-} from "../../redux/thunks/quanLyNguoiDungThunks";
+  setIsModalEditOpenAction,
+  setListUserAction,
+} from "../../redux/slices/quanLyNguoiDungSlice";
+import { fetchUserInfoAction } from "../../redux/thunks/quanLyNguoiDungThunks";
 
-export default function ModalEditQLNguoiDung() {
-  const { isModalEditOpen, userInfo, currentPage, valueInput } = useSelector(
+export default function ModalEditQLNguoiDung({ valueInput }) {
+  const { isModalEditOpen, userInfo, currentPage } = useSelector(
     (state) => state.quanLyNguoiDungSlice
   );
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
+  const dispatch = useDispatch();
 
   const onChangeRadio = (e) => {
     setRadioValue(e.target.value);
   };
-
-  const dispatch = useDispatch();
-
   const hideModal = () => {
     dispatch(setIsModalEditOpenAction(false));
   };
@@ -42,7 +40,14 @@ export default function ModalEditQLNguoiDung() {
       .editUser(userInfo.id, values)
       .then((result) => {
         dispatch(fetchUserInfoAction(userInfo.id));
-        dispatch(fetchListUserAction({ currentPage, valueInput }));
+        nguoiDungServices
+          .findUser(currentPage, 10, valueInput)
+          .then((result) => {
+            dispatch(setListUserAction(result.data.content.data));
+          })
+          .catch((err) => {
+            console.error(err);
+          });
         message.success("Cập nhật thành công");
       })
       .catch((err) => {

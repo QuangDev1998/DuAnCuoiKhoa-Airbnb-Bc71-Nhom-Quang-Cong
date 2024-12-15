@@ -11,21 +11,24 @@ import {
   message,
 } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { setIsModalOpenAction } from "../../redux/slices/quanLyNguoiDungSlice";
+import {
+  setIsModalOpenAction,
+  setListUserAction,
+} from "../../redux/slices/quanLyNguoiDungSlice";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import dayjs from "dayjs";
-import { fetchListUserAction } from "../../redux/thunks/quanLyNguoiDungThunks";
 
-export default function ModalQLNguoiDung() {
-  const { isModalOpen, currentPage, valueInput } = useSelector(
+export default function ModalQLNguoiDung({ valueInput }) {
+  const { isModalOpen, currentPage } = useSelector(
     (state) => state.quanLyNguoiDungSlice
   );
   const [form] = Form.useForm();
   const [radioValue, setRadioValue] = useState();
+  const dispatch = useDispatch();
+
   const onChangeRadio = (e) => {
     setRadioValue(e.target.value);
   };
-  const dispatch = useDispatch();
   const hideModal = () => {
     dispatch(setIsModalOpenAction(false));
   };
@@ -34,8 +37,15 @@ export default function ModalQLNguoiDung() {
     nguoiDungServices
       .createUser(values)
       .then((result) => {
+        nguoiDungServices
+          .findUser(currentPage, 10, valueInput)
+          .then((result) => {
+            dispatch(setListUserAction(result.data.content.data));
+          })
+          .catch((err) => {
+            console.error(err);
+          });
         message.success("Thêm thành công");
-        dispatch(fetchListUserAction({ currentPage, valueInput }));
       })
       .catch((err) => {
         console.error(err);
