@@ -11,7 +11,6 @@ export default function ModalQLBooking({ fetchSearchBooking, valueInput }) {
     (state) => state.quanLyBookingSlice
   );
   const [form] = Form.useForm();
-  const { RangePicker } = DatePicker;
   const dispatch = useDispatch();
   const hideModal = () => {
     dispatch(setIsModalEditOpenAction(false));

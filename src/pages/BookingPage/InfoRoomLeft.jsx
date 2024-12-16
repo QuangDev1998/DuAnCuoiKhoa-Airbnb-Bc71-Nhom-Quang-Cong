@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { InfoCircleOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
 
 export default function InfoRoomLeft() {

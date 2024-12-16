@@ -7,8 +7,9 @@ import {
 
 const initialState = {
   infoUser: {},
-  listBooking: [],
-  listBookedRoom: [],
+  listBooked: [], // list phòng đã đặt
+  listIdBooking: [], // list id phòng
+  listBookedRoom: [], // list thông tin phòng đã đặt
   isModalUpHinhOpen: false,
   isModalEditOpen: false,
 };
@@ -20,11 +21,14 @@ const infoUserSlice = createSlice({
     setInfoUserAction: (state, action) => {
       state.infoUser = action.payload;
     },
-    setListBookingAction: (state, action) => {
-      state.listBooking = action.payload;
+    setListBookedAction: (state, action) => {
+      state.listBooked = action.payload;
+    },
+    setListIDBookingAction: (state, action) => {
+      state.listIdBooking = action.payload;
     },
     setListBookedRoomAction: (state, action) => {
-      state.listBooking = action.payload;
+      state.listBookedRoom = action.payload;
     },
     setIsModalUpHinhOpenAction: (state, action) => {
       state.isModalUpHinhOpen = action.payload;
@@ -39,28 +43,30 @@ const infoUserSlice = createSlice({
       state.infoUser = action.payload;
     });
     builder.addCase(fetchInfoUserAction.rejected, (state, action) => {
-      console.log(action.payload);
+      console.log(action.error);
     });
     // createListIdBookingAction
     builder.addCase(createListIdBookingAction.fulfilled, (state, action) => {
-      state.listBooking = action.payload;
+      state.listIdBooking = action.payload.listId;
+      state.listBooked = action.payload.listBooked;
     });
     builder.addCase(createListIdBookingAction.rejected, (state, action) => {
-      console.log(action.payload);
+      console.log(action.error);
     });
     // createListIdBookingAction
     builder.addCase(createListBookedRoomAction.fulfilled, (state, action) => {
       state.listBookedRoom = action.payload;
     });
     builder.addCase(createListBookedRoomAction.rejected, (state, action) => {
-      console.log(action.payload);
+      console.log(action.error);
     });
   },
 });
 
 export const {
   setInfoUserAction,
-  setListBookingAction,
+  setListBookedAction,
+  setListIDBookingAction,
   setListBookedRoomAction,
   setIsModalUpHinhOpenAction,
   setIsModalEditOpenAction,

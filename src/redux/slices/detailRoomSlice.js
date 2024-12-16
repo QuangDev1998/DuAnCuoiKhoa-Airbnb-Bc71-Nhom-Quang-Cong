@@ -12,7 +12,14 @@ const initialState = {
 const detailRoomSlice = createSlice({
   name: "detailRoomSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    setInfoRoomAction: (state, action) => {
+      state.infoRoom = action.payload;
+    },
+    setListCommentAction: (state, action) => {
+      state.listComment = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     // fetchDetailRoomAction
     builder.addCase(fetchDetailRoomAction.fulfilled, (state, action) => {
@@ -37,6 +44,7 @@ const detailRoomSlice = createSlice({
   },
 });
 
-export const {} = detailRoomSlice.actions;
+export const { setInfoRoomAction, setListCommentAction } =
+  detailRoomSlice.actions;
 
 export default detailRoomSlice.reducer;

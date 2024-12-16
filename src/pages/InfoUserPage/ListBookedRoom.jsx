@@ -8,9 +8,12 @@ import {
 import { fetchListViTriAction } from "../../redux/thunks/quanLyViTriThunks";
 import { useNavigate } from "react-router-dom";
 import { EnvironmentOutlined } from "@ant-design/icons";
+import { viTriServices } from "../../services/viTriServices";
+import { setListViTriAction } from "../../redux/slices/quanLyViTriSlice";
+import dayjs from "dayjs";
 
 export default function ListBookedRoom({ idUser }) {
-  const { listBooking, listBookedRoom } = useSelector(
+  const { listIdBooking, listBookedRoom, listBooked } = useSelector(
     (state) => state.infoUserSlice
   );
   const { listViTri } = useSelector((state) => state.quanLyViTriSlice);
@@ -18,21 +21,44 @@ export default function ListBookedRoom({ idUser }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
+    viTriServices
+      .getListViTri()
+      .then((result) => {
+        dispatch(setListViTriAction(result.data.content));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+  useEffect(() => {
     dispatch(createListIdBookingAction(idUser));
   }, [dispatch, idUser]);
   // từ list ID phòng => list phòng đã đặt
   useEffect(() => {
-    dispatch(createListBookedRoomAction(listBooking));
-  }, [dispatch, listBooking]);
+    dispatch(createListBookedRoomAction(listIdBooking));
+  }, [dispatch, listIdBooking]);
 
   useEffect(() => {
     dispatch(fetchListViTriAction());
   }, []);
   // từ maViTri => tinhThanh
   const renderTinhThanh = (id) => {
-    const index = listViTri.findIndex((viTri) => viTri.id === id);
+    let index = listViTri.findIndex((viTri) => viTri.id === id);
     if (index !== -1) {
       return listViTri[index].tinhThanh;
+    }
+  };
+  // từ maPhong => ngayDen,ngayDi
+  const renderDateBookRoom = (maPhong) => {
+    let index = listBookedRoom.findIndex((room) => room.id === maPhong);
+    if (index !== -1) {
+      const ngayDen = dayjs(listBooked[index].ngayDen).format("DD/MM/YYYY");
+      const ngayDi = dayjs(listBooked[index].ngayDi).format("DD/MM/YYYY");
+      return (
+        <span className="text-sm block">
+          {ngayDen} - {ngayDi}
+        </span>
+      );
     }
   };
 
@@ -58,11 +84,13 @@ export default function ListBookedRoom({ idUser }) {
               <div className="divide-y-2">
                 <div>
                   <h1 className="text-lg font-bold">{room.tenPhong}</h1>
-                  <p>
+                  <p className="text-sm">
+                    {renderDateBookRoom(room.id)}
                     <EnvironmentOutlined className="mr-1" />
                     {renderTinhThanh(room.maViTri)}
                   </p>
                 </div>
+
                 <div className="mt-2 flex justify-start gap-5 text-gray-500">
                   <ul>
                     <li>{room.khach} khách</li>

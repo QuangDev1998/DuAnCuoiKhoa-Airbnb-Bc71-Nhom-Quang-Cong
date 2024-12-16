@@ -85,10 +85,11 @@ export default function ModalUpHinh({ idUser }) {
         </div>
         {/* hinhAnh */}
         <Form.Item
-          label="Chọn hình"
+          label=""
           name="avatar"
           valuePropName="fileList"
           getValueFromEvent={normFile}
+          style={{ textAlign: "center", marginTop: "20px" }}
           rules={[
             {
               required: true,
@@ -102,10 +103,7 @@ export default function ModalUpHinh({ idUser }) {
             maxCount={1}
             accept="image/png, image/jpeg"
           >
-            <button
-              className="border-2 border-solid py-2 px-3 rounded-md"
-              type="button"
-            >
+            <button className="button-primary" type="button">
               <PlusOutlined />
             </button>
           </Upload>
