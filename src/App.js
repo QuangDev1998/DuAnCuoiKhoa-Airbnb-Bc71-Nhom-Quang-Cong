@@ -16,6 +16,7 @@ import BookingPage from "./pages/BookingPage/BookingPage";
 import HomePage from "./pages/HomePage/HomePage";
 import Layout from "./templates/Layout";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
+import RoomsVitri from "./pages/RoomsPage/RoomsVitri";
 
 AOS.init();
 function App() {
@@ -24,12 +25,12 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout content={<HomePage />} />} />
+          <Route path="/rooms" element={<Layout content={<RoomsPage />} />} />
           <Route
             path="/rooms/:id"
-            element={<Layout content={<RoomsPage />} />}
+            element={<Layout content={<RoomsVitri />} />}
           />
-
-          <Route path="/login" element={<TempLoginPage />} />
+          <Route path="/" element={<TempLoginPage />} />
           <Route path="/info-user" element={<InfoUserPage />} />
           <Route
             path="/admin/QuanLyNguoiDung"

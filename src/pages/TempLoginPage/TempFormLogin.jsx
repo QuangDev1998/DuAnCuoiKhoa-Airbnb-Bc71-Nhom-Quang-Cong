@@ -25,7 +25,7 @@ export default function TempFormLogin({ onLoginSuccess }) {
         }
 
         // Điều hướng đến trang quản lý người dùng
-        navigate("/admin/QuanLyNguoiDung");
+        navigate("/");
       })
       .catch((err) => {
         console.error(err);
