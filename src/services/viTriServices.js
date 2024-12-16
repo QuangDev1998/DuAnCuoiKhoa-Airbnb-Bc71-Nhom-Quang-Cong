@@ -1,6 +1,6 @@
 import { http } from "./config";
 
-export const viTriServices = {
+export let viTriServices = {
   getListViTri: () => http.get(`/api/vi-tri`),
   uploadHinhViTri: (formData, id, tokenBearer) =>
     http.post(`/api/vi-tri/upload-hinh-vitri?maViTri=${id}`, formData, {
@@ -10,9 +10,9 @@ export const viTriServices = {
     http.post(`/api/vi-tri`, viTriData, { headers: { token: tokenBearer } }),
   deleteViTri: (id, tokenBearer) =>
     http.delete(`/api/vi-tri/${id}`, { headers: { token: tokenBearer } }),
-  findViTri: (keyword) =>
+  findViTri: (tinhThanh, pageIndex = 1, pageSize = 8) =>
     http.get(
-      `/api/vi-tri/phan-trang-tim-kiem?pageIndex=1&pageSize=3&keyword=${keyword}`
+      `/api/vi-tri/phan-trang-tim-kiem?pageIndex=1&pageSize=8&keyword=${tinhThanh}`
     ),
   getViTriInfo: (id) => http.get(`/api/vi-tri/${id}`),
   editViTri: (id, viTriData, tokenBearer) =>

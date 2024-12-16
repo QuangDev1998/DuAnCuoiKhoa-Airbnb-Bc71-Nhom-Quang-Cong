@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Location() {
-  return <div>Location</div>;
+export default function Locations() {
+  return <div>Locations</div>;
 }

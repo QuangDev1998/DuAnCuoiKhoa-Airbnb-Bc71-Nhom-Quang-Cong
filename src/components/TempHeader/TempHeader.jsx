@@ -7,7 +7,7 @@ import TempFormRegister from "../../pages/TempLoginPage/TempFormRegister"; // Fo
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import airbnbLogo from "../../assets/image/airbnb-1.aabeefedaf30b8c7011a022cdb5a6425.png";
 
-export default function Header() {
+export default function TempHeader() {
   const user = useSelector((state) => state.userSlice.loginData); // Kiểm tra trạng thái đăng nhập
   const [showDropdown, setShowDropdown] = useState(false); // Trạng thái hiển thị dropdown
   const [isModalOpen, setIsModalOpen] = useState(false); // Trạng thái hiển thị Modal
@@ -136,7 +136,7 @@ export default function Header() {
                 <ul className="py-1">
                   <li>
                     <a
-                      href="/dashboard"
+                      href="/info-user"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
                       Dashboard
@@ -144,28 +144,13 @@ export default function Header() {
                   </li>
                   <li>
                     <a
-                      href="/admin"
+                      href="/admin/QuanLyNguoiDung"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                     >
                       To page Admin
                     </a>
                   </li>
-                  <li>
-                    <a
-                      href="/settings"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Settings
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="/earnings"
-                      className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                    >
-                      Earnings
-                    </a>
-                  </li>
+
                   <li>
                     <button
                       onClick={handleLogout}

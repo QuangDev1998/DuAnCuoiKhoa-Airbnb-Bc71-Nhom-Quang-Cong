@@ -1,5 +1,5 @@
 .container {
-  width: 70%;
+  width: 80%;
   margin: 0 auto;
 }
 .text-primary {
@@ -65,3 +65,9 @@
 .button-secondary:hover {
   opacity: 80%;
 } /*# sourceMappingURL=App.css.map */
+
+.ant-card {
+  display: flex !important;
+  align-items: center !important;
+  flex-direction: row !important;
+}

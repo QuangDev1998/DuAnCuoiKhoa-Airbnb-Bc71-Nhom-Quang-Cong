@@ -15,15 +15,17 @@ import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
 import HomePage from "./pages/HomePage/HomePage";
 import Layout from "./templates/Layout";
+import RoomsPage from "./pages/RoomsPage/RoomsPage";
 
 AOS.init();
 function App() {
   return (
     <div>
       <BrowserRouter>
-        <TempHeader />
         <Routes>
           <Route path="/" element={<Layout content={<HomePage />} />} />
+          <Route path="/rooms" element={<Layout content={<RoomsPage />} />} />
+
           <Route path="/login" element={<TempLoginPage />} />
           <Route path="/info-user" element={<InfoUserPage />} />
           <Route
