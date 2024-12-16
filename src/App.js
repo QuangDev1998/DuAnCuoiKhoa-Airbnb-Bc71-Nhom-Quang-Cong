@@ -24,7 +24,10 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout content={<HomePage />} />} />
-          <Route path="/rooms" element={<Layout content={<RoomsPage />} />} />
+          <Route
+            path="/rooms/:id"
+            element={<Layout content={<RoomsPage />} />}
+          />
 
           <Route path="/login" element={<TempLoginPage />} />
           <Route path="/info-user" element={<InfoUserPage />} />
