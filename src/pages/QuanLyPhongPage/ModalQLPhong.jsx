@@ -15,9 +15,12 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 import { phongServices } from "../../services/phongServices";
+import { fetchListPhongAction } from "../../redux/thunks/quanLyPhongThunks";
 
-export default function ModalQLPhong({ fetchSearchPhong, valueInput }) {
-  const { isModalOpen } = useSelector((state) => state.quanLyPhongSlice);
+export default function ModalQLPhong({ valueInput }) {
+  const { isModalOpen, currentPage } = useSelector(
+    (state) => state.quanLyPhongSlice
+  );
   const { token } = useSelector((state) => state.userSlice.loginData);
   const { listViTri } = useSelector((state) => state.quanLyViTriSlice);
   const dispatch = useDispatch();
@@ -32,21 +35,24 @@ export default function ModalQLPhong({ fetchSearchPhong, valueInput }) {
   const hideModal = () => {
     dispatch(setIsModalOpenAction(false));
   };
+  // hàm submit form
   const handleOk = (values) => {
     // tạo FormData từ hình upload
     values.hinhAnh = values.hinhAnh[0].originFileObj;
     let formData = new FormData();
     formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
+    // gọi api tạo
     const valuesClone = { ...values };
     valuesClone.hinhAnh = "";
-    // gọi api tạo phòng => có id => gọi api up hình
     phongServices
       .createPhong(valuesClone, token)
       .then((result) => {
+        // => có id => gọi api up hình
         phongServices
           .uploadHinhPhong(formData, result.data.content.id, token)
           .then((result) => {
-            fetchSearchPhong(valueInput);
+            // => update list
+            dispatch(fetchListPhongAction({ currentPage, valueInput }));
             message.success("Thêm thành công");
           })
           .catch((err) => {

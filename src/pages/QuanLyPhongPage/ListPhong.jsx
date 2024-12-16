@@ -7,19 +7,47 @@ import {
   fetchListPhongAction,
   fetchPhongInfoAction,
 } from "../../redux/thunks/quanLyPhongThunks";
-import { fetchListViTriAction } from "../../redux/thunks/quanLyViTriThunks";
 import { phongServices } from "../../services/phongServices";
-import { setIsModalEditOpenAction } from "../../redux/slices/quanLyPhongSlice";
+import {
+  setCurrentPageAction,
+  setIsModalEditOpenAction,
+  setListPhongAction,
+} from "../../redux/slices/quanLyPhongSlice";
+import { viTriServices } from "../../services/viTriServices";
+import { setListViTriAction } from "../../redux/slices/quanLyViTriSlice";
 
-export default function ListPhong({ fetchSearchPhong, valueInput }) {
+export default function ListPhong({ valueInput }) {
   const { token } = useSelector((state) => state.userSlice.loginData);
-  const { listPhong } = useSelector((state) => state.quanLyPhongSlice);
+  const { listPhong, totalRow, currentPage } = useSelector(
+    (state) => state.quanLyPhongSlice
+  );
   const { listViTri } = useSelector((state) => state.quanLyViTriSlice);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchListPhongAction());
-    dispatch(fetchListViTriAction());
-  }, [dispatch]);
+    dispatch(fetchListPhongAction({ currentPage, valueInput }));
+    viTriServices
+      .getListViTri()
+      .then((result) => {
+        dispatch(setListViTriAction(result.data.content));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
+
+  const handlePageChange = (pageIndex, pageSize) => {
+    // cập nhật lại currentPage và call api search => set list theo page mới
+    dispatch(setCurrentPageAction(pageIndex));
+    phongServices
+      .findPhong(pageIndex, pageSize, valueInput)
+      .then((result) => {
+        dispatch(setListPhongAction(result.data.content.data));
+      })
+      .catch((err) => {
+        console.err(err);
+      });
+  };
+
   // Table data
   const columns = [
     {
@@ -69,6 +97,7 @@ export default function ListPhong({ fetchSearchPhong, valueInput }) {
       render: (_, dataObject) => {
         return (
           <div>
+            {/* nút edit */}
             <EditOutlined
               onClick={() => {
                 dispatch(fetchPhongInfoAction(dataObject.id))
@@ -76,11 +105,12 @@ export default function ListPhong({ fetchSearchPhong, valueInput }) {
                     dispatch(setIsModalEditOpenAction(true));
                   })
                   .catch((err) => {
-                    console.log(err);
+                    console.error(err);
                   });
               }}
               className=" text-2xl hover:cursor-pointer mr-2"
             />
+            {/* Popconfirm bọc nút xóa => confirm => chạy hàm xóa */}
             <Popconfirm
               title="Xoá phòng"
               description="Bạn có chắc muốn xóa phòng?"
@@ -122,7 +152,7 @@ export default function ListPhong({ fetchSearchPhong, valueInput }) {
     phongServices
       .deletePhong(id, token)
       .then((result) => {
-        fetchSearchPhong(valueInput);
+        dispatch(fetchListPhongAction({ currentPage, valueInput }));
         message.success("Xóa thành công");
       })
       .catch((err) => {
@@ -133,5 +163,17 @@ export default function ListPhong({ fetchSearchPhong, valueInput }) {
   const confirm = (id) => {
     handleDeletePhong(id);
   };
-  return <Table dataSource={renderListPhong()} columns={columns} />;
+  return (
+    <Table
+      dataSource={renderListPhong()}
+      columns={columns}
+      pagination={{
+        total: totalRow, // total để hiện số trang
+        defaultCurrent: 1,
+        current: currentPage,
+        pageSize: 10, // Số dòng mỗi trang
+        onChange: handlePageChange,
+      }}
+    />
+  );
 }

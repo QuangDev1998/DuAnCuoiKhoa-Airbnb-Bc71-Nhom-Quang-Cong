@@ -14,10 +14,13 @@ import {
   Switch,
 } from "antd";
 import { phongServices } from "../../services/phongServices";
-import { fetchPhongInfoAction } from "../../redux/thunks/quanLyPhongThunks";
+import {
+  fetchListPhongAction,
+  fetchPhongInfoAction,
+} from "../../redux/thunks/quanLyPhongThunks";
 
-export default function ModalEditQLPhong({ fetchSearchPhong, valueInput }) {
-  const { isModalEditOpen, phongInfo } = useSelector(
+export default function ModalEditQLPhong({ valueInput }) {
+  const { isModalEditOpen, phongInfo, currentPage } = useSelector(
     (state) => state.quanLyPhongSlice
   );
   const { token } = useSelector((state) => state.userSlice.loginData);
@@ -34,34 +37,54 @@ export default function ModalEditQLPhong({ fetchSearchPhong, valueInput }) {
   const hideModal = () => {
     dispatch(setIsModalEditOpenAction(false));
   };
+  // hàm submit form
   const handleOk = (values) => {
-    // tạo FormData từ hình upload
-    values.hinhAnh = values.hinhAnh[0].originFileObj;
-    let formData = new FormData();
-    formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
-    const valuesClone = { ...values };
-    valuesClone.hinhAnh = "";
-    // gọi api up hình => có id => gọi api cập nhật phòng
-    phongServices
-      .uploadHinhPhong(formData, values.id, token)
-      .then((result) => {
-        let phongData = result.data.content;
-        phongServices
-          .editPhong(phongData.id, phongData, token)
-          .then((result) => {
-            dispatch(fetchPhongInfoAction(phongData.id));
-            fetchSearchPhong(valueInput);
-            message.success("Cập nhật thành công");
-          })
-          .catch((err) => {
-            message.error("Cập nhật thất bại");
-            console.error(err);
-          });
-      })
-      .catch((err) => {
-        console.error(err);
-        message.error("Thêm thất bại");
-      });
+    // nếu hinhAnh của form ko có
+    if (!values.hinhAnh) {
+      // ko edit hình => hinhAnh của form = phongInfo.hinhAnh
+      values.hinhAnh = phongInfo.hinhAnh;
+      // gọi api edit
+      phongServices
+        .editPhong(values.id, values, token)
+        .then((result) => {
+          // => update list
+          dispatch(fetchPhongInfoAction(values.id));
+          dispatch(fetchListPhongAction({ currentPage, valueInput }));
+          message.success("Cập nhật thành công");
+        })
+        .catch((err) => {
+          console.error(err);
+          message.error("Cập nhật thất bại");
+        });
+    } else {
+      // có edit hình => tạo FormData từ hình upload
+      values.hinhAnh = values.hinhAnh[0].originFileObj;
+      let formData = new FormData();
+      formData.append("formFile", values.hinhAnh, values.hinhAnh.name);
+      // gọi api up hình
+      phongServices
+        .uploadHinhPhong(formData, values.id, token)
+        .then((result) => {
+          values.hinhAnh = result.data.content.hinhAnh;
+          // => gọi api edit
+          phongServices
+            .editPhong(values.id, values, token)
+            .then((result) => {
+              // => update list
+              dispatch(fetchPhongInfoAction(values.id));
+              dispatch(fetchListPhongAction({ currentPage, valueInput }));
+              message.success("Cập nhật thành công");
+            })
+            .catch((err) => {
+              message.error("Cập nhật thất bại");
+              console.error(err);
+            });
+        })
+        .catch((err) => {
+          console.error(err);
+          message.error("Cập nhật thất bại");
+        });
+    }
   };
   const renderSelectOption = () => {
     return listViTri.map((viTri) => {
@@ -142,12 +165,6 @@ export default function ModalEditQLPhong({ fetchSearchPhong, valueInput }) {
           name="hinhAnh"
           valuePropName="fileList"
           getValueFromEvent={normFile}
-          rules={[
-            {
-              required: true,
-              message: "Vui lòng chọn hình!",
-            },
-          ]}
           hasFeedback
         >
           <Upload

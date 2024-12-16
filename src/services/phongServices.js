@@ -2,9 +2,9 @@ import { http } from "./config";
 
 export const phongServices = {
   getListPhong: () => http.get(`/api/phong-thue`),
-  findPhong: (keyword) =>
+  findPhong: (pageIndex, pageSize, keyword) =>
     http.get(
-      `/api/phong-thue/phan-trang-tim-kiem?pageIndex=1&pageSize=10&keyword=${keyword}`
+      `/api/phong-thue/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`
     ),
   deletePhong: (id, tokenBearer) =>
     http.delete(`/api/phong-thue/${id}`, {

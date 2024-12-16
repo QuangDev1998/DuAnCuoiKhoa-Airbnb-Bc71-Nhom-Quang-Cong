@@ -3,46 +3,29 @@ import { Input } from "antd";
 import { useDispatch } from "react-redux";
 import ListPhong from "./ListPhong";
 import { fetchListPhongAction } from "../../redux/thunks/quanLyPhongThunks";
-import { phongServices } from "../../services/phongServices";
 import {
+  setCurrentPageAction,
   setIsModalOpenAction,
-  setListPhongAction,
 } from "../../redux/slices/quanLyPhongSlice";
 import ModalQLPhong from "./ModalQLPhong";
 import ModalEditQLPhong from "./ModalEditQLPhong";
 
 export default function QuanLyPhongPage() {
-  const [valueInput, setvalueInput] = useState("");
+  const [valueInput, setValueInput] = useState("");
   const searchRef = useRef(null);
   const dispatch = useDispatch();
 
   // debounce tính năng search
   const handleChangeSearch = (e) => {
     let { value } = e.target;
-    setvalueInput(value);
+    setValueInput(value);
+    // nếu đã có input search => xóa setTimeout cũ / tạo setTimeout mới
     if (searchRef.current) {
       clearTimeout(searchRef.current);
     }
     searchRef.current = setTimeout(() => {
-      fetchSearchPhong(value);
+      dispatch(fetchListPhongAction({ currentPage: 1, valueInput: value }));
     }, 1000);
-  };
-  const fetchSearchPhong = (keyword) => {
-    // nếu thanh search trống trả về list phòng mặc định
-    if (keyword === "") {
-      dispatch(fetchListPhongAction());
-    }
-    // nếu có gọi api search và set list phòng theo data trả về
-    else {
-      phongServices
-        .findPhong(keyword)
-        .then((result) => {
-          dispatch(setListPhongAction(result.data.content.data));
-        })
-        .catch((err) => {
-          console.err(err);
-        });
-    }
   };
 
   return (
@@ -67,17 +50,11 @@ export default function QuanLyPhongPage() {
         value={valueInput}
       />
       {/* list phòng */}
-      <ListPhong fetchSearchPhong={fetchSearchPhong} valueInput={valueInput} />
+      <ListPhong valueInput={valueInput} />
       {/* modal add */}
-      <ModalQLPhong
-        fetchSearchPhong={fetchSearchPhong}
-        valueInput={valueInput}
-      />
+      <ModalQLPhong valueInput={valueInput} />
       {/* modal edit */}
-      <ModalEditQLPhong
-        fetchSearchPhong={fetchSearchPhong}
-        valueInput={valueInput}
-      />
+      <ModalEditQLPhong valueInput={valueInput} />
     </div>
   );
 }

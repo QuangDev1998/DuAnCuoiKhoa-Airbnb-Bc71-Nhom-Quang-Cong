@@ -3,24 +3,16 @@ import { phongServices } from "../../services/phongServices";
 
 export const fetchListPhongAction = createAsyncThunk(
   "quanLyPhongSlice/fetchListPhongAction",
-  async (_, { rejectWithValue }) => {
-    try {
-      const result = await phongServices.getListPhong();
-      return result.data.content;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+  async ({ currentPage, valueInput }) => {
+    const result = await phongServices.findPhong(currentPage, 10, valueInput);
+    return result.data.content;
   }
 );
 
 export const fetchPhongInfoAction = createAsyncThunk(
   "quanLyPhongSlice/fetchPhongInfoAction",
-  async (id, { rejectWithValue }) => {
-    try {
-      const result = await phongServices.getPhongInfo(id);
-      return result.data.content;
-    } catch (error) {
-      return rejectWithValue(error);
-    }
+  async (id) => {
+    const result = await phongServices.getPhongInfo(id);
+    return result.data.content;
   }
 );

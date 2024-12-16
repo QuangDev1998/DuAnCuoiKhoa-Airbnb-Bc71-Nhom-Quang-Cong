@@ -1,10 +1,7 @@
 import React from "react";
 import { Modal, Form, Input, message, Upload } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  setIsModalOpenAction,
-  setListViTriAction,
-} from "../../redux/slices/quanLyViTriSlice";
+import { setIsModalOpenAction } from "../../redux/slices/quanLyViTriSlice";
 import { viTriServices } from "../../services/viTriServices";
 import { PlusOutlined } from "@ant-design/icons";
 import { fetchListViTriAction } from "../../redux/thunks/quanLyViTriThunks";

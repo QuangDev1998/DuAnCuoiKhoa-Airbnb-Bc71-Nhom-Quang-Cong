@@ -38,6 +38,7 @@ const quanLyNguoiDungSlice = createSlice({
     builder.addCase(fetchListUserAction.fulfilled, (state, action) => {
       state.listUser = action.payload.data;
       state.totalRow = action.payload.totalRow;
+      state.currentPage = action.payload.pageIndex;
     });
     builder.addCase(fetchListUserAction.rejected, (state, action) => {
       console.error(action.error);

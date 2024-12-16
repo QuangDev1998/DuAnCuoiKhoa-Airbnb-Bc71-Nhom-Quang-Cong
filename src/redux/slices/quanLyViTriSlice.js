@@ -38,6 +38,7 @@ const quanLyViTriSlice = createSlice({
     builder.addCase(fetchListViTriAction.fulfilled, (state, action) => {
       state.listViTri = action.payload.data;
       state.totalRow = action.payload.totalRow;
+      state.currentPage = action.payload.pageIndex;
     });
     builder.addCase(fetchListViTriAction.rejected, (state, action) => {
       console.error(action.error);

@@ -49,7 +49,7 @@ export default function ListUser({ valueInput }) {
       key: "name",
       render: (_, dataObject) => {
         return (
-          <div className="flex items-center">
+          <div className="md:flex items-center">
             {dataObject.avatar ? (
               <Avatar
                 src={
