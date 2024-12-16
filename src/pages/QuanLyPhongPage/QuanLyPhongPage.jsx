@@ -3,10 +3,7 @@ import { Input } from "antd";
 import { useDispatch } from "react-redux";
 import ListPhong from "./ListPhong";
 import { fetchListPhongAction } from "../../redux/thunks/quanLyPhongThunks";
-import {
-  setCurrentPageAction,
-  setIsModalOpenAction,
-} from "../../redux/slices/quanLyPhongSlice";
+import { setIsModalOpenAction } from "../../redux/slices/quanLyPhongSlice";
 import ModalQLPhong from "./ModalQLPhong";
 import ModalEditQLPhong from "./ModalEditQLPhong";
 

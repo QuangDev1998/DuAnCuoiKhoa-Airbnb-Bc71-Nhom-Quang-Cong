@@ -13,11 +13,14 @@ import QuanLyPhongPage from "./pages/QuanLyPhongPage/QuanLyPhongPage";
 import QuanLyBookingPage from "./pages/QuanLyBookingPage/QuanLyBookingPage";
 import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
+import Spinner from "./components/Spinner/Spinner";
+import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 
 AOS.init();
 function App() {
   return (
     <div>
+      <Spinner />
       <BrowserRouter>
         <TempHeader />
         <Routes>
@@ -40,6 +43,7 @@ function App() {
             element={<AdminLayout content={<QuanLyBookingPage />} />}
           />
           <Route path="/room-booking/:id" element={<BookingPage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>
     </div>
