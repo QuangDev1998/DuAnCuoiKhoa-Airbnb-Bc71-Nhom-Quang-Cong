@@ -15,6 +15,13 @@ import Spinner from "./components/Spinner/Spinner";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Layout from "./templates/Layout";
 
+import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
+
+import HomePage from "./pages/HomePage/HomePage";
+import Layout from "./templates/Layout";
+import RoomsPage from "./pages/RoomsPage/RoomsPage";
+import RoomsVitri from "./pages/RoomsPage/RoomsVitri";
+
 AOS.init();
 function App() {
   return (
@@ -22,18 +29,19 @@ function App() {
       <Spinner />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Layout />} />
           <Route
             path="/info-user"
             element={<Layout content={<InfoUserPage />} />}
           />
+          <Route path="/" element={<Layout content={<HomePage />} />} />
+          <Route path="/rooms" element={<Layout content={<RoomsPage />} />} />
           <Route
-            path="/admin/QuanLyNguoiDung"
-            element={<AdminLayout content={<QuanLyNguoiDungPage />} />}
+            path="/rooms/:id"
+            element={<Layout content={<RoomsVitri />} />}
           />
           <Route
-            path="/admin/QuanLyViTri"
-            element={<AdminLayout content={<QuanLyViTriPage />} />}
+            path="/info-user"
+            element={<Layout content={<InfoUserPage />} />}
           />
           <Route
             path="/admin/QuanLyPhong"

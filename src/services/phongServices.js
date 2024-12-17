@@ -6,6 +6,9 @@ export const phongServices = {
     http.get(
       `/api/phong-thue/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`
     ),
+  locationPhong: (id) =>
+    http.get(`/api/phong-thue/lay-phong-theo-vi-tri?maViTri=${id}`),
+
   deletePhong: (id, tokenBearer) =>
     http.delete(`/api/phong-thue/${id}`, {
       headers: { token: tokenBearer },

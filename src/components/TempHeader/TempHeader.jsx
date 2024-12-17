@@ -176,7 +176,6 @@ export default function TempHeader() {
                 onClick={() => setShowDropdown((prev) => !prev)}
               >
                 <i className="fas fa-user text-white text-xl"></i>{" "}
-                {/* Icon người dùng màu trắng */}
               </div>
 
               {showDropdown && (
@@ -214,7 +213,6 @@ export default function TempHeader() {
         </div>
       </div>
 
-      {/* Modal for Login/Register */}
       <Modal open={isModalOpen} onCancel={handleCloseModal} footer={null}>
         {modalContent === "login" ? (
           <TempFormLogin

@@ -29,7 +29,6 @@ export default function TempFormLogin({ onLoginSuccess }) {
         navigate("/");
       })
       .catch((err) => {
-        console.error(err);
         message.error("Đăng nhập thất bại, vui lòng thử lại!");
       });
   };

@@ -1,6 +1,6 @@
 import { http } from "./config";
 
-export const viTriServices = {
+export let viTriServices = {
   getListViTri: () => http.get(`/api/vi-tri`),
   uploadHinhViTri: (formData, id, tokenBearer) =>
     http.post(`/api/vi-tri/upload-hinh-vitri?maViTri=${id}`, formData, {
