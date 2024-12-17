@@ -45,19 +45,18 @@ export default function Locations() {
             key={card.id}
             className="cursor-pointer border rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 flex flex-col justify-between"
             onClick={() => handleNavigate(card.id)}
-            style={{ height: "450px" }} // Tăng chiều cao card
+            style={{ height: "450px" }}
           >
             {/* Phần ảnh */}
             <div style={{ height: "80%" }}>
               {" "}
-              {/* Chiếm 80% chiều cao card */}
               <img
                 src={card.image}
                 alt={card.title}
                 className="w-full h-full object-cover"
               />
             </div>
-            {/* Phần nội dung */}
+
             <div
               className="p-8 text-center"
               style={{ height: "20%", backgroundColor: "white" }}

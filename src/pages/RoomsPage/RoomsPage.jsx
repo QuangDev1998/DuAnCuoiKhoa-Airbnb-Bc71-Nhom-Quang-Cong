@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { phongServices } from "../../services/phongServices";
 import SelectForm from "../HomePage/SelectForm";
 import { useNavigate } from "react-router-dom";
+import { message } from "antd";
 
 export default function RoomsPage() {
   const [phongArr, setPhongArr] = useState([]);
   const navigate = useNavigate();
 
-  // Gọi API lấy danh sách phòng
   useEffect(() => {
     phongServices
       .getListPhong()
@@ -15,14 +15,13 @@ export default function RoomsPage() {
         if (res.data.content.length > 0) {
           setPhongArr(res.data.content);
         } else {
-          console.error("Không có dữ liệu phòng.");
+          message.error("Không có dữ liệu phòng.");
         }
       })
       .catch((err) => {
         console.error("Lỗi khi gọi API:", err);
       });
   }, []);
-
   // Hàm xử lý click
   const handleRoomClick = (id) => {
     navigate(`/room-detail/${id}`);

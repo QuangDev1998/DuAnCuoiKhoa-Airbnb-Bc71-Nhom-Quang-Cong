@@ -3,27 +3,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { message, Modal } from "antd";
 
-import TempFormLogin from "../../pages/TempLoginPage/TempFormLogin"; // Form đăng nhập
-import TempFormRegister from "../../pages/TempLoginPage/TempFormRegister"; // Form đăng ký (nếu có)
+import TempFormLogin from "../../pages/TempLoginPage/TempFormLogin";
+import TempFormRegister from "../../pages/TempLoginPage/TempFormRegister";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import airbnbLogo from "../../assets/image/airbnb-1.aabeefedaf30b8c7011a022cdb5a6425.png";
 import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 
 export default function TempHeader() {
   const user = useSelector((state) => state.userSlice.loginData);
-  const { isModalOpen, modalContent } = useSelector((state) => state.userSlice); /// Kiểm tra trạng thái đăng nhập
-  const [showDropdown, setShowDropdown] = useState(false); // Trạng thái hiển thị dropdown
-  // const [isModalOpen, setIsModalOpen] = useState(false); // Trạng thái hiển thị Modal
-  // const [modalContent, setModalContent] = useState("login"); // Nội dung Modal ("login" hoặc "register")
-  const dropdownRef = useRef(null); // Tham chiếu đến dropdown để xử lý click ngoài
-  const userIconRef = useRef(null); // Tham chiếu đến biểu tượng người dùng
+  const { isModalOpen, modalContent } = useSelector((state) => state.userSlice);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+  const userIconRef = useRef(null);
   const dispatch = useDispatch();
   const handleLogout = () => {
-    localStorage.removeItem("USER_LOGIN"); // Xóa thông tin đăng nhập khỏi localStorage
-    message.success("Đăng xuất thành công!"); // Hiển thị thông báo đăng xuất
+    localStorage.removeItem("USER_LOGIN");
+    message.success("Đăng xuất thành công!");
     setTimeout(() => {
-      setShowDropdown(false); // Ẩn dropdown sau khi logout
-      window.location.href = "/"; // Reload lại trang
+      setShowDropdown(false);
+      window.location.href = "/";
     }, 1000);
   };
 
@@ -48,7 +46,7 @@ export default function TempHeader() {
         userIconRef.current &&
         !userIconRef.current.contains(event.target)
       ) {
-        setShowDropdown(false); // Ẩn dropdown khi click ra ngoài
+        setShowDropdown(false);
       }
     };
 
@@ -107,7 +105,6 @@ export default function TempHeader() {
           </li>
         </ul>
 
-        {/* User information and dropdown */}
         <div className="items-center flex-shrink-0 hidden lg:flex px-8 relative">
           {user ? (
             <>
@@ -176,7 +173,6 @@ export default function TempHeader() {
                 onClick={() => setShowDropdown((prev) => !prev)}
               >
                 <i className="fas fa-user text-white text-xl"></i>{" "}
-                {/* Icon người dùng màu trắng */}
               </div>
 
               {showDropdown && (
@@ -214,7 +210,6 @@ export default function TempHeader() {
         </div>
       </div>
 
-      {/* Modal for Login/Register */}
       <Modal open={isModalOpen} onCancel={handleCloseModal} footer={null}>
         {modalContent === "login" ? (
           <TempFormLogin

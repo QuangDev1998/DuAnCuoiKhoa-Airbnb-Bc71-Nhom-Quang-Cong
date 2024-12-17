@@ -13,14 +13,14 @@ export default function TempFormRegister({ setModalContent }) {
 
     // Dữ liệu gửi lên API
     const data = {
-      id: 0, // Không cần thiết trong API yêu cầu, có thể bỏ qua hoặc giữ lại.
+      id: 0,
       name: name,
       email: email,
       password: password,
       phone: phone,
-      birthday: birthday.format("YYYY-MM-DD"), // Định dạng ngày sinh theo yêu cầu API
+      birthday: birthday.format("YYYY-MM-DD"),
       gender: genderValue,
-      role: "user", // Giả sử bạn đang tạo người dùng bình thường
+      role: "user",
     };
     authServices
       .register(data)

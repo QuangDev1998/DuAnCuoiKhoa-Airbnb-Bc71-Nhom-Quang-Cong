@@ -6,9 +6,7 @@ import airbnbLogo from "../../assets/image/airbnb-1.aabeefedaf30b8c7011a022cdb5a
 export default function Carousel() {
   return (
     <div className="w-full relative flex flex-col items-center smm:h-[50vh] md:h-[60vh] lg:h-[50vh] 2xl:h-[80vh]">
-      {/* Video Background */}
       <div className="absolute w-full h-full">
-        {/* Video Background */}
         <video
           autoPlay
           loop

@@ -1,24 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "antd";
+import { Card, message } from "antd";
 import { viTriServices } from "../../services/viTriServices";
 import { useNavigate } from "react-router-dom";
 
 export default function List() {
   const [vitriArr, setVitriArr] = useState([]);
   const navigate = useNavigate();
-
-  // Đối tượng ánh xạ id với slug
-  const destinations = {
-    1: "ho-chi-minh",
-    2: "can-tho",
-    3: "nha-trang",
-    4: "ha-noi",
-    5: "phu-quoc",
-    6: "da-nang",
-    7: "da-lat",
-    8: "phan-thiet",
-  };
-
   // Lấy dữ liệu từ API
   useEffect(() => {
     viTriServices
@@ -35,14 +22,6 @@ export default function List() {
       });
   }, []);
 
-  // Hàm xử lý điều hướng
-  // const handleNavigation = (id) => {
-  //   if (destinations[id]) {
-  //     navigate(`/rooms/${destinations[id]}`);
-  //   } else {
-  //     navigate("/rooms");
-  //   }
-  // };
   const handleNavigation = (id) => {
     navigate(`/rooms/${id}`);
   };
@@ -83,7 +62,6 @@ export default function List() {
 
   return (
     <div className="container mx-auto py-4">
-      {/* Grid với 4 thẻ mỗi hàng */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {renderVitriList()}
       </div>

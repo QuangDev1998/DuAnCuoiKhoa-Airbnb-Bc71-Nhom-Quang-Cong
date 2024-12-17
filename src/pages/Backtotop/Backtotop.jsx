@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BackTop } from "antd";
-import { ArrowUpOutlined } from "@ant-design/icons"; // Import icon từ Ant Design
+import { ArrowUpOutlined } from "@ant-design/icons";
 
 export default function BackToTop() {
   const [isVisible, setIsVisible] = useState(false);
@@ -36,7 +36,6 @@ export default function BackToTop() {
             "
           >
             <ArrowUpOutlined style={{ fontSize: "20px" }} />{" "}
-            {/* Kích thước icon */}
           </div>
         </BackTop>
       )}

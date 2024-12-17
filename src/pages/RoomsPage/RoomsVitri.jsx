@@ -72,7 +72,7 @@ export default function RoomsVitri() {
             <div
               data-aos="zoom-in"
               key={room.id}
-              onClick={() => handleRoomClick(room.id)} // Gắn onClick
+              onClick={() => handleRoomClick(room.id)}
               className="flex border rounded-lg shadow-md overflow-hidden bg-white duration-300 cursor-pointer hover:shadow-lg"
             >
               {/* Hình ảnh */}

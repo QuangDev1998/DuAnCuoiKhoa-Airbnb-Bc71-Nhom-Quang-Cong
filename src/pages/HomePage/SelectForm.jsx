@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Button, Popover } from "antd";
 import { SearchOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import dayjs from "dayjs";
 import { viTriServices } from "../../services/viTriServices";
@@ -144,7 +143,6 @@ export default function SelectForm() {
   return (
     <div className="flex items-center justify-center my-20">
       {" "}
-      {/* Thêm my-10 để tạo khoảng cách trên và dưới */}
       <div className="container w-full bg-white border rounded-full shadow-sm py-2 px-4 grid grid-cols-3 items-center relative">
         {/* Địa điểm */}
         <Popover

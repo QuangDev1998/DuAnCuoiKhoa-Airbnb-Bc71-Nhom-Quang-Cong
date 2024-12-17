@@ -6,7 +6,7 @@ import "aos/dist/aos.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
-import BookingPage from "./pages/BookingPage/BookingPage";
+
 import HomePage from "./pages/HomePage/HomePage";
 import Layout from "./templates/Layout";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
@@ -28,7 +28,6 @@ function App() {
             path="/info-user"
             element={<Layout content={<InfoUserPage />} />}
           />
-          <Route path="/room-detail/:id" element={<BookingPage />} />
         </Routes>
       </BrowserRouter>
     </div>
