@@ -14,11 +14,7 @@ import RoomDetailPage from "./pages/RoomDetailPage/RoomDetailPage";
 import Spinner from "./components/Spinner/Spinner";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Layout from "./templates/Layout";
-
-import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
-
 import HomePage from "./pages/HomePage/HomePage";
-import Layout from "./templates/Layout";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import RoomsVitri from "./pages/RoomsPage/RoomsVitri";
 
@@ -42,6 +38,14 @@ function App() {
           <Route
             path="/info-user"
             element={<Layout content={<InfoUserPage />} />}
+          />
+          <Route
+            path="/admin/QuanLyNguoiDung"
+            element={<AdminLayout content={<QuanLyNguoiDungPage />} />}
+          />
+          <Route
+            path="/admin/QuanLyViTri"
+            element={<AdminLayout content={<QuanLyViTriPage />} />}
           />
           <Route
             path="/admin/QuanLyPhong"

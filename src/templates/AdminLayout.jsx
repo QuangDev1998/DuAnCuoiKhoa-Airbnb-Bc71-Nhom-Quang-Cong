@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { Modal } from "antd";
 import TempHeader from "../components/TempHeader/TempHeader";
 import TempFooter from "../components/TempFooter/TempFooter";
+import BackToTop from "../pages/Backtotop/Backtotop";
 
 export default function AdminLayout({ content }) {
   const loginData = useSelector((state) => state.userSlice.loginData);
@@ -36,7 +37,6 @@ export default function AdminLayout({ content }) {
     <div>
       <TempHeader />
       {renderLayout()}
-      <TempFooter />
     </div>
   );
 }
