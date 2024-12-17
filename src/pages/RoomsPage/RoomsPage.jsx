@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { phongServices } from "../../services/phongServices";
 import SelectForm from "../HomePage/SelectForm";
+import { useNavigate } from "react-router-dom";
 
 export default function RoomsPage() {
   const [phongArr, setPhongArr] = useState([]);
-
+  const navigate = useNavigate();
   // Gọi API lấy danh sách phòng
   useEffect(() => {
     phongServices

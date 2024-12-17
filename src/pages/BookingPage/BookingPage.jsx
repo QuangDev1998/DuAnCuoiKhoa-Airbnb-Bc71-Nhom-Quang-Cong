@@ -2,12 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchDetailRoomAction } from "../../redux/thunks/detailRoomThunks";
-import {
-  CheckCircleOutlined,
-  CheckOutlined,
-  EnvironmentOutlined,
-  InfoCircleOutlined,
-} from "@ant-design/icons";
+import { CheckOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import { Image } from "antd";
 import InfoRoomLeft from "./InfoRoomLeft";
 import InfoRoomRight from "./InfoRoomRight";

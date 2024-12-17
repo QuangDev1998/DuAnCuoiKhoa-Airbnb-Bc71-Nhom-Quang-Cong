@@ -6,6 +6,12 @@ import { addDays } from "date-fns";
 import { DateRangePicker } from "react-date-range";
 import dayjs from "dayjs";
 import { viTriServices } from "../../services/viTriServices";
+import {
+  setNgayDen,
+  setNgayDi,
+  setTotalDay,
+} from "../../redux/slices/bookingSlice";
+import { useDispatch } from "react-redux";
 
 export default function SelectForm() {
   const [selectedLocationId, setSelectedLocationId] = useState(null);
@@ -20,6 +26,7 @@ export default function SelectForm() {
   const [locations, setLocations] = useState([]);
   const [openLocation, setOpenLocation] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     viTriServices
@@ -44,6 +51,11 @@ export default function SelectForm() {
 
   const handleDateChange = (item) => {
     setDateRange([item.selection]);
+    let { startDate, endDate } = item.selection;
+    dispatch(setNgayDen(startDate));
+    dispatch(setNgayDi(endDate));
+    let days = Math.round((endDate - startDate) / (1000 * 3600 * 24));
+    dispatch(setTotalDay(days));
   };
 
   const handleSearch = () => {

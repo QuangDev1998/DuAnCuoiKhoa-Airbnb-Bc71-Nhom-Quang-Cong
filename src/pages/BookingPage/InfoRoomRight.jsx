@@ -36,7 +36,7 @@ export default function InfoRoomRight() {
       })
       .catch((err) => {
         message.error("Thêm thất bại");
-        console.log(err);
+        console.error(err);
       });
   };
   const dispatch = useDispatch();
@@ -45,8 +45,6 @@ export default function InfoRoomRight() {
     listComment.map((cmt) => {
       total += cmt.saoBinhLuan;
     });
-    console.log("total", total);
-    console.log(listComment.length);
     let num = total / listComment.length;
     return parseFloat(num.toFixed(2));
   };
