@@ -26,7 +26,7 @@ const detailRoomSlice = createSlice({
       state.infoRoom = action.payload;
     });
     builder.addCase(fetchDetailRoomAction.rejected, (state, action) => {
-      console.log(action.payload);
+      console.error(action.error);
     });
     // fetchListCommentByIdRoomAction
     builder.addCase(
@@ -38,7 +38,7 @@ const detailRoomSlice = createSlice({
     builder.addCase(
       fetchListCommentByIdRoomAction.rejected,
       (state, action) => {
-        console.log(action.payload);
+        console.error(action.error);
       }
     );
   },

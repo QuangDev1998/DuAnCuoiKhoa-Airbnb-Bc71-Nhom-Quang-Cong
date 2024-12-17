@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchListCommentByIdRoomAction } from "../../redux/thunks/detailRoomThunks";
-import { Button, Form, Input, Rate, message } from "antd";
+import { Form, Input, Rate, message } from "antd";
 import dayjs from "dayjs";
 import { binhLuanServices } from "../../services/binhLuanServices";
+import { useNavigate } from "react-router-dom";
 
 export default function Comment({ idRoom }) {
   const { listComment } = useSelector((state) => state.detailRoomSlice);
@@ -13,18 +14,17 @@ export default function Comment({ idRoom }) {
 
   const { TextArea } = Input;
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchListCommentByIdRoomAction(idRoom));
   }, []);
   const onFinish = (values) => {
-    console.log("Success:", values);
     let valuesClone = {
       ...values,
       maPhong: idRoom,
       maNguoiBinhLuan: user.id,
       ngayBinhLuan: dayjs().format("DD-MM-YY hh:mm"),
     };
-    console.log("valuesClone", valuesClone);
     binhLuanServices
       .addComment(token, valuesClone)
       .then((result) => {
@@ -33,11 +33,11 @@ export default function Comment({ idRoom }) {
       })
       .catch((err) => {
         message.error("Thêm thất bại");
-        console.log(err);
+        console.error(err);
       });
   };
   const onFinishFailed = (errorInfo) => {
-    console.log("Failed:", errorInfo);
+    console.error("Failed:", errorInfo);
   };
   const renderListComment = () => {
     return listComment.map(
@@ -146,7 +146,17 @@ export default function Comment({ idRoom }) {
           </Form>
         </div>
       ) : (
-        <div>Đăng nhập để bình luận</div>
+        <div
+          onClick={() => {
+            navigate("/");
+          }}
+          className="mb-5"
+        >
+          {" "}
+          <a href="" className="hover:underline text-primary">
+            Đăng nhập để bình luận
+          </a>{" "}
+        </div>
       )}
 
       {/* list comment */}

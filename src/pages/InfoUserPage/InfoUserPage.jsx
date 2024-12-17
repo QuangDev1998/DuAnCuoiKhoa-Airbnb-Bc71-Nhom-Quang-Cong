@@ -9,13 +9,16 @@ import {
 import ModalUpHinh from "./ModalUpHinh";
 import { fetchInfoUserAction } from "../../redux/thunks/infoUserThunks";
 import ModalEditInfoUser from "./ModalEditInfoUser";
+import { message } from "antd";
 
 export default function InfoUserPage() {
-  const { id: idUser } = useSelector((state) => state.userSlice.loginData.user);
+  const idUser = useSelector((state) => state.userSlice.loginData?.user.id);
   const { infoUser } = useSelector((state) => state.infoUserSlice);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchInfoUserAction(idUser));
+    if (idUser) {
+      dispatch(fetchInfoUserAction(idUser));
+    }
   }, []);
   return (
     <div>
@@ -45,71 +48,83 @@ export default function InfoUserPage() {
         ></div>
       </div>
       {/* info */}
-      <div className=" grid lg:flex gap-10 py-5">
+      <div className="container grid lg:flex gap-10 py-5">
         {/* info left */}
         <div
-          className="block lg:sticky space-y-3 top-0 basis-1/4 p-5 border-solid border rounded-md"
+          className="block lg:sticky top-0 basis-1/4"
           style={{
             minHeight: "500px",
             maxHeight: "100vh",
           }}
         >
-          {/* avatar */}
-          <div>
-            {infoUser.avatar ? (
-              <img
-                src={infoUser.avatar}
-                alt=""
-                className="mx-auto h-36 w-36 object-cover rounded-full"
-              />
-            ) : (
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
-                alt=""
-                className="mx-auto h-36 w-36 object-cover rounded-full"
-              />
-            )}
-          </div>
-          <div className="w-full flex justify-center">
-            <button
-              className="button-primary my-3"
-              onClick={() => {
-                dispatch(setIsModalUpHinhOpenAction(true));
-              }}
-            >
-              Cập nhật ảnh
-            </button>
-          </div>
-          <div className="divide-y-2">
+          <div className=" space-y-3   p-5 border-solid border rounded-md">
+            {/* avatar */}
             <div>
-              <div className="flex justify-start gap-3">
+              {infoUser.avatar ? (
                 <img
-                  className="w-6"
-                  src="https://cdn-icons-png.flaticon.com/512/5972/5972778.png"
+                  src={infoUser.avatar}
                   alt=""
+                  className="mx-auto h-36 w-36 object-cover rounded-full"
                 />
-                <h1 className="font-bold text-xl">Xác minh danh tính</h1>
-              </div>
-              <p className="my-5">
-                Xác minh danh tính của bạn với huy hiệu xác minh danh tính.
-              </p>
-              <button className="mb-5 button-primary">Nhận huy hiệu</button>
+              ) : (
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
+                  alt=""
+                  className="mx-auto h-36 w-36 object-cover rounded-full"
+                />
+              )}
             </div>
-            <div>
-              <h1 className="font-bold text-xl">ADMIN ĐÃ XÁC NHẬN</h1>
-              <ul>
-                <li>
-                  <CheckOutlined /> Địa chỉ email
-                </li>
-                <li>
-                  <CheckOutlined /> Số điện thoại
-                </li>
-              </ul>
+            <div className="w-full flex justify-center">
+              <button
+                className="button-primary my-3"
+                onClick={() => {
+                  dispatch(setIsModalUpHinhOpenAction(true));
+                }}
+              >
+                Cập nhật ảnh
+              </button>
+            </div>
+            <div className="divide-y-2">
+              <div>
+                <div className="flex justify-start gap-3">
+                  <img
+                    className="w-6"
+                    src="https://cdn-icons-png.flaticon.com/512/5972/5972778.png"
+                    alt=""
+                  />
+                  <h1 className="font-bold text-xl">Xác minh danh tính</h1>
+                </div>
+                <p>Xác minh danh tính của bạn để nhận huy hiệu .</p>
+                <p>
+                  <i className="fa fa-award text-primary mr-3" />
+                  Chủ nhà siêu cấp
+                </p>
+                <button
+                  className="mb-5 button-primary"
+                  onClick={() => {
+                    message.info("Hiện chưa có danh hiệu mới");
+                  }}
+                >
+                  Nhận huy hiệu
+                </button>
+              </div>
+              <div>
+                <h1 className="font-bold text-xl">ADMIN ĐÃ XÁC NHẬN</h1>
+                <ul>
+                  <li>
+                    <CheckOutlined /> Địa chỉ email
+                  </li>
+                  <li>
+                    <CheckOutlined /> Số điện thoại
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>
+
         {/* info right */}
-        <div className="basis-3/4 space-y-3">
+        <div className="basis-3/4 space-y-3 p-5">
           <h1 className="text-xl font-bold">
             Xin chào, tôi là {infoUser.name}
           </h1>

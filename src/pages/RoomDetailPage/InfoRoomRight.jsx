@@ -36,7 +36,7 @@ export default function InfoRoomRight() {
       })
       .catch((err) => {
         message.error("Thêm thất bại");
-        console.log(err);
+        console.error(err);
       });
   };
   const dispatch = useDispatch();
@@ -45,8 +45,6 @@ export default function InfoRoomRight() {
     listComment.map((cmt) => {
       total += cmt.saoBinhLuan;
     });
-    console.log("total", total);
-    console.log(listComment.length);
     let num = total / listComment.length;
     return parseFloat(num.toFixed(2));
   };
@@ -54,9 +52,11 @@ export default function InfoRoomRight() {
     let totalKhach = soLuongKhach;
     totalKhach += option;
     if (totalKhach < 1) {
+      dispatch(setSoLuongKhach(1));
       return message.warning("Phải có tối thiểu 1 khách");
     }
     if (totalKhach > infoRoom.khach) {
+      dispatch(setSoLuongKhach(infoRoom.khach));
       return message.warning("Đã đạt số lượng khách tối đa");
     }
     dispatch(setSoLuongKhach(totalKhach));
@@ -64,7 +64,7 @@ export default function InfoRoomRight() {
   let tienNgay = infoRoom.giaTien * totalDay;
   let tienTruocThue = tienNgay + 8;
   return (
-    <div className="basis-1/3 sticky top-0 h-96">
+    <div className="basis-1/3 sticky top-0 w-full lg:h-80">
       <div className="p-5 space-y-5 divide-y-2 border rounded-lg shadow-lg">
         <div className="space-y-3">
           <div className="flex justify-between">

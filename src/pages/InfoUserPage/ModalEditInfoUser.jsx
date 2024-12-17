@@ -86,7 +86,7 @@ export default function ModalEditInfoUser() {
 
         <Row gutter={24}>
           {/* Col left */}
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={24} md={12}>
             {/* email */}
             <Form.Item
               name="email"
@@ -163,7 +163,7 @@ export default function ModalEditInfoUser() {
             </Form.Item>
           </Col>
           {/* Col right */}
-          <Col className="gutter-row" span={12}>
+          <Col className="gutter-row" span={24} md={12}>
             {/* name */}
             <Form.Item
               name="name"

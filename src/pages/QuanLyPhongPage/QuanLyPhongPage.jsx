@@ -31,10 +31,7 @@ export default function QuanLyPhongPage() {
         <h1 className="text-2xl font-bold">Quản lý phòng</h1>
         <button
           onClick={() => dispatch(setIsModalOpenAction(true))}
-          className="py-2 px-3 cursor-pointer text-white rounded-md shadow-md"
-          style={{
-            backgroundColor: "rgb(254 107 110)",
-          }}
+          className="button-primary"
         >
           + Thêm phòng mới
         </button>

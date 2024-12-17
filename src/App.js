@@ -3,7 +3,6 @@ import "react-date-range/dist/styles.css";
 import "react-date-range/dist/theme/default.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
-import TempHeader from "./components/TempHeader/TempHeader";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import TempLoginPage from "./pages/TempLoginPage/TempLoginPage";
 import AdminLayout from "./templates/AdminLayout";
@@ -12,7 +11,7 @@ import QuanLyViTriPage from "./pages/QuanLyViTriPage/QuanLyViTriPage";
 import QuanLyPhongPage from "./pages/QuanLyPhongPage/QuanLyPhongPage";
 import QuanLyBookingPage from "./pages/QuanLyBookingPage/QuanLyBookingPage";
 import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
-import BookingPage from "./pages/BookingPage/BookingPage";
+import RoomDetailPage from "./pages/RoomDetailPage/RoomDetailPage";
 import Spinner from "./components/Spinner/Spinner";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
 import Layout from "./templates/Layout";
@@ -46,7 +45,10 @@ function App() {
             path="/admin/QuanLyBooking"
             element={<AdminLayout content={<QuanLyBookingPage />} />}
           />
-          <Route path="/room-booking/:id" element={<BookingPage />} />
+          <Route
+            path="/room-detail/:id"
+            element={<Layout content={<RoomDetailPage />} />}
+          />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </BrowserRouter>

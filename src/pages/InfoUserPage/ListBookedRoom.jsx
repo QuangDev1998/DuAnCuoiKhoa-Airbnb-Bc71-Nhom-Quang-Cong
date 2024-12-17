@@ -69,7 +69,7 @@ export default function ListBookedRoom({ idUser }) {
           <Card
             hoverable
             onClick={() => {
-              navigate(`/room-booking/${room.id}`);
+              navigate(`/room-detail/${room.id}`);
             }}
             data-aos="zoom-in"
           >
@@ -119,8 +119,20 @@ export default function ListBookedRoom({ idUser }) {
   };
   return (
     <div>
-      <h1 className="text-xl font-bold">Phòng đã thuê</h1>
-      {renderListBookedRoom()}
+      {/* trường hợp khách chưa đặt phòng => dẫn về home */}
+      {listBookedRoom.length > 0 ? (
+        <div>
+          <h1 className="text-xl font-bold">Phòng đã thuê</h1>
+          {renderListBookedRoom()}
+        </div>
+      ) : (
+        <div>
+          <h1 className="text-xl font-bold">Phòng đã thuê</h1>
+          <a href="/" className="hover:underline text-primary">
+            Hiện bạn chưa có phòng, bạn có muốn đặt phòng?
+          </a>
+        </div>
+      )}
     </div>
   );
 }

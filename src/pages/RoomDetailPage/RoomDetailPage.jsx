@@ -2,19 +2,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchDetailRoomAction } from "../../redux/thunks/detailRoomThunks";
-import {
-  CheckCircleOutlined,
-  CheckOutlined,
-  EnvironmentOutlined,
-  InfoCircleOutlined,
-} from "@ant-design/icons";
+import { CheckOutlined, EnvironmentOutlined } from "@ant-design/icons";
 import { Image } from "antd";
 import InfoRoomLeft from "./InfoRoomLeft";
 import InfoRoomRight from "./InfoRoomRight";
 import Comment from "./Comment";
 import ModalCalendar from "./ModalCalendar";
 
-export default function BookingPage() {
+export default function RoomDetailPage() {
   const { infoRoom } = useSelector((state) => state.detailRoomSlice);
   const dispatch = useDispatch();
   const params = useParams();
@@ -24,22 +19,28 @@ export default function BookingPage() {
   }, []);
   const renderTienIch = () => {
     let tienIchContent = [];
-    const amenitiesMapping = {
-      mayGiat: "Máy giặt",
-      banLa: "Bàn là",
-      tivi: "Tivi",
-      dieuHoa: "Điều hòa",
-      wifi: "Wifi",
-      bep: "Bếp",
-      doXe: "Bãi đỗ xe",
-      hoBoi: "Hồ bơi",
-      baiUi: "Bàn ủi",
+    // mapping tên và icon cho key
+    const tienIchMapping = {
+      mayGiat: { label: "Máy giặt", icon: <i class="fa fa-water"></i> },
+      banLa: { label: "Bàn là", icon: <i class="fa fa-tshirt"></i> },
+      tivi: { label: "Tivi", icon: <i class="fa fa-desktop"></i> },
+      dieuHoa: {
+        label: "Điều hòa",
+        icon: <i class="fa fa-temperature-low"></i>,
+      },
+      wifi: { label: "Wifi", icon: <i class="fa fa-wifi"></i> },
+      bep: { label: "Bếp", icon: <i class="fa fa-utensils"></i> },
+      doXe: { label: "Bãi đỗ xe", icon: <i class="fa fa-car-side"></i> },
+      hoBoi: { label: "Hồ bơi", icon: <i class="fa fa-swimming-pool"></i> },
+      baiUi: { label: "Bàn ủi", icon: <i class="fa fa-water"></i> },
     };
+    // loop qua mỗi key nếu khớp => push vào array để render
     Object.keys(infoRoom).forEach((key) => {
-      if (infoRoom[key] && amenitiesMapping[key]) {
+      if (infoRoom[key] && tienIchMapping[key]) {
+        const { label, icon } = tienIchMapping[key];
         tienIchContent.push(
           <div key={key}>
-            <CheckOutlined /> {amenitiesMapping[key]}
+            {icon} {label}
           </div>
         );
       }
@@ -48,7 +49,7 @@ export default function BookingPage() {
     return tienIchContent;
   };
   return (
-    <div className="py-10 space-y-5">
+    <div className="py-10 space-y-5 container">
       <h1 className="text-2xl font-bold">{infoRoom.tenPhong}</h1>
       <div className="flex">
         <p>
@@ -72,7 +73,7 @@ export default function BookingPage() {
           {/* tiện ích đi kèm */}
           <div>
             <h1 className="text-xl font-bold">Các tiện ích đi kèm</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               {renderTienIch()}
             </div>
           </div>

@@ -21,7 +21,7 @@ export default function InfoRoomLeft() {
       <div className="py-5 space-y-3">
         <div className="flex gap-2">
           <div>
-            <InfoCircleOutlined />
+            <i class="fa fa-home"></i>
           </div>
           <div>
             <h1 className="font-bold">Toàn bộ nhà</h1>
@@ -32,7 +32,7 @@ export default function InfoRoomLeft() {
         </div>
         <div className="flex gap-2">
           <div>
-            <InfoCircleOutlined />
+            <i class="fa fa-broom"></i>
           </div>
           <div>
             <h1 className="font-bold">Vệ sinh tăng cường</h1>
@@ -44,10 +44,10 @@ export default function InfoRoomLeft() {
         </div>
         <div className="flex gap-2">
           <div>
-            <InfoCircleOutlined />
+            <i class="fa fa-award"></i>
           </div>
           <div>
-            <h1 className="font-bold">Phong là Chủ nhà siêu cấp</h1>
+            <h1 className="font-bold">Chủ nhà siêu cấp</h1>
             <p className="text-gray-500">
               Chủ nhà siêu cấp là những chủ nhà có kinh nghiệm, được đánh giá
               cao và là những người cam kết mang lại quãng thời gian ở tuyệt vời
@@ -57,7 +57,7 @@ export default function InfoRoomLeft() {
         </div>
         <div className="flex gap-2">
           <div>
-            <InfoCircleOutlined />
+            <i class="fa fa-stopwatch"></i>
           </div>
           <div>
             <h1 className="font-bold">Miễn phí hủy trong 48 giờ</h1>

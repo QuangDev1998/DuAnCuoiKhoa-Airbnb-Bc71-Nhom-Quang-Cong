@@ -30,14 +30,14 @@ const quanLyBookingSlice = createSlice({
       state.listBooking = action.payload;
     });
     builder.addCase(fetchListBookingAction.rejected, (state, action) => {
-      console.log(action.payload);
+      console.error(action.error);
     });
     // fetchBookingInfoAction
     builder.addCase(fetchBookingInfoAction.fulfilled, (state, action) => {
       state.bookingInfo = action.payload;
     });
     builder.addCase(fetchBookingInfoAction.rejected, (state, action) => {
-      console.log(action.payload);
+      console.error(action.error);
     });
   },
 });

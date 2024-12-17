@@ -10,7 +10,7 @@ export default function ModalUpHinh({ idUser }) {
   const { isModalUpHinhOpen, infoUser } = useSelector(
     (state) => state.infoUserSlice
   );
-  const { token } = useSelector((state) => state.userSlice.loginData);
+  const token = useSelector((state) => state.userSlice.loginData?.token);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
 

@@ -32,10 +32,12 @@ export default function QuanLyNguoiDungPage() {
         <button
           onClick={() => dispatch(setIsModalOpenAction(true))}
           className=" button-primary"
-          style={{
-            backgroundColor: "rgb(254 107 110)",
-            padding: "12px 8px",
-          }}
+          style={
+            {
+              // backgroundColor: "rgb(254 107 110)",
+              // padding: "12px 8px",
+            }
+          }
         >
           + Thêm người dùng mới
         </button>
