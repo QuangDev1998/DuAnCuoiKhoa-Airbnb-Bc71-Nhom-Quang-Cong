@@ -82,7 +82,8 @@ export default function RoomsVitri() {
                 <div>
                   <h3 className="text-lg font-semibold">{room.tenPhong}</h3>
                   <p className="text-sm text-gray-500 mt-1">
-                    {`${room.khach} khách • ${room.phongNgu} phòng ngủ • ${room.giuong} giường • ${room.phongTam} phòng tắm`}
+                    {room.khach} khách • {room.phongNgu} phòng ngủ •{" "}
+                    {room.giuong} giường • {room.phongTam} phòng tắm
                   </p>
                   <p className="text-gray-700 mt-2 text-sm line-clamp-2">
                     {room.moTa}

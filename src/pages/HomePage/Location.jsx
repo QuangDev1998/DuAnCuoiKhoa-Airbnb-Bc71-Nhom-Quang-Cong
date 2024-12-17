@@ -36,11 +36,12 @@ export default function Locations() {
   };
 
   return (
-    <div className="container mx-auto py-10">
+    <div className="container mx-auto py-10 ">
       <h1 className="text-3xl font-bold mb-6">Ở bất cứ đâu</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 duration-300 ">
         {cards.map((card) => (
           <div
+            data-aos="flip-right"
             key={card.id}
             className="cursor-pointer border rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 flex flex-col justify-between"
             onClick={() => handleNavigate(card.id)}

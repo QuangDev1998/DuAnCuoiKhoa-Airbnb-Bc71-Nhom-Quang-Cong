@@ -1,10 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Form, Input, DatePicker, Select, Button, message } from "antd";
-import axios from "axios";
+import { authServices } from "../../services/authServices";
 
-export default function TempFormRegister() {
-  const [loading, setLoading] = useState(false);
-
+export default function TempFormRegister({ setModalContent }) {
   // Hàm xử lý khi người dùng gửi form
   const handleSubmit = async (values) => {
     const { name, email, password, phone, birthday, gender } = values;
@@ -24,35 +22,15 @@ export default function TempFormRegister() {
       gender: genderValue,
       role: "user", // Giả sử bạn đang tạo người dùng bình thường
     };
-
-    try {
-      setLoading(true);
-      // Gửi yêu cầu POST đến API
-      const response = await axios.post(
-        "https://airbnbnew.cybersoft.edu.vn/api/auth/signup",
-        data,
-        {
-          headers: {
-            accept: "application/json",
-            tokenCybersoft:
-              "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3AiOiJCb290Y2FtcCA3MSIsIkhldEhhblN0cmluZyI6IjA0LzA0LzIwMjUiLCJIZXRIYW5UaW1lIjoiMTc0MzcyNDgwMDAwMCIsIm5iZiI6MTcxNDA2NDQwMCwiZXhwIjoxNzQzODcyNDAwfQ.mCs_Uc9yOttTBIcqgCCUbpVNO-U3VhT9Azo8o6CD--E",
-            "Content-Type": "application/json-patch+json",
-          },
-        }
-      );
-
-      // Kiểm tra kết quả trả về từ API
-      if (response.data.success) {
-        message.success("Đăng ký thành công!");
-      } else {
-        message.error("Đăng ký không thành công!");
-      }
-    } catch (error) {
-      console.error(error);
-      message.error("Có lỗi xảy ra, vui lòng thử lại!");
-    } finally {
-      setLoading(false);
-    }
+    authServices
+      .register(data)
+      .then((result) => {
+        message.success("Đăng ký thành công");
+        window.location.href = "/";
+      })
+      .catch((err) => {
+        message.error("Đăng ký không thành công");
+      });
   };
 
   return (
@@ -135,7 +113,6 @@ export default function TempFormRegister() {
             type="primary"
             htmlType="submit"
             className="w-full bg-red-500 hover:bg-red-600 text-white font-semibold h-10 rounded-md"
-            loading={loading}
           >
             Đăng ký
           </Button>

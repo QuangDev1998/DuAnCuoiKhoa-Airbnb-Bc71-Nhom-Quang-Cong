@@ -9,17 +9,21 @@ import { viTriServices } from "../../services/viTriServices";
 import {
   setNgayDen,
   setNgayDi,
+  setSoLuongKhach,
   setTotalDay,
 } from "../../redux/slices/bookingSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function SelectForm() {
   const [selectedLocationId, setSelectedLocationId] = useState(null);
-  const [guestCount, setGuestCount] = useState(1);
+  // const [guestCount, setGuestCount] = useState(1);
+  const { ngayDen, ngayDi, soLuongKhach } = useSelector(
+    (state) => state.bookingSlice
+  );
   const [dateRange, setDateRange] = useState([
     {
-      startDate: new Date(),
-      endDate: addDays(new Date(), 7),
+      startDate: ngayDen,
+      endDate: ngayDi,
       key: "selection",
     },
   ]);
@@ -110,15 +114,15 @@ export default function SelectForm() {
           shape="circle"
           icon={<MinusOutlined />}
           size="small"
-          disabled={guestCount <= 1}
-          onClick={() => setGuestCount(guestCount - 1)}
+          disabled={soLuongKhach <= 1}
+          onClick={() => dispatch(setSoLuongKhach(soLuongKhach - 1))}
         />
-        <span className="font-semibold">{guestCount}</span>
+        <span className="font-semibold">{soLuongKhach}</span>
         <Button
           shape="circle"
           icon={<PlusOutlined />}
           size="small"
-          onClick={() => setGuestCount(guestCount + 1)}
+          onClick={() => dispatch(setSoLuongKhach(soLuongKhach + 1))}
         />
       </div>
     </div>
@@ -180,7 +184,7 @@ export default function SelectForm() {
             <p className="text-sm font-semibold text-gray-600 mb-1">
               Thêm khách
             </p>
-            <span className="text-gray-800">{guestCount} khách</span>
+            <span className="text-gray-800">{soLuongKhach} khách</span>
           </div>
         </Popover>
 

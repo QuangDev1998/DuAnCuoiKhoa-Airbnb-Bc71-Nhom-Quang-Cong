@@ -2,11 +2,12 @@ import React from "react";
 import { Button, Form, Input, message } from "antd";
 import { authServices } from "../../services/authServices";
 import { useNavigate } from "react-router-dom";
-import { setLoginData } from "../../redux/slices/userSlice";
-import { useDispatch } from "react-redux";
+import { setLoginData, setModalContent } from "../../redux/slices/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 import { CloseOutlined } from "@ant-design/icons";
 
 export default function TempFormLogin({ onLoginSuccess }) {
+  const { isModalOpen, modalContent } = useSelector((state) => state.userSlice);
   let navigate = useNavigate();
   let dispatch = useDispatch();
 
@@ -77,7 +78,9 @@ export default function TempFormLogin({ onLoginSuccess }) {
         <div className="flex justify-between mt-4">
           <Button
             className="bg-red-500 hover:bg-red-600 text-white font-medium px-6 rounded-md"
-            onClick={() => message.info("Chuyển sang đăng ký")}
+            onClick={() => {
+              dispatch(setModalContent("register"));
+            }}
           >
             Đăng ký
           </Button>
