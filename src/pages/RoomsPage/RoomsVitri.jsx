@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { phongServices } from "../../services/phongServices";
 import SelectForm from "../HomePage/SelectForm";
 
 export default function RoomsVitri() {
   const { id } = useParams();
   const [rooms, setRooms] = useState([]);
-
+  const navigate = useNavigate();
+  const handleRoomClick = (id) => {
+    navigate(`/room-detail/${id}`);
+  };
   // Mapping maViTri thành tên địa điểm
   const locationMapping = {
     1: "Hồ Chí Minh",
@@ -67,8 +70,10 @@ export default function RoomsVitri() {
           </h2>
           {rooms.map((room) => (
             <div
+              data-aos="zoom-in"
               key={room.id}
-              className="flex border rounded-lg shadow-md overflow-hidden bg-white"
+              onClick={() => handleRoomClick(room.id)} // Gắn onClick
+              className="flex border rounded-lg shadow-md overflow-hidden bg-white duration-300 cursor-pointer hover:shadow-lg"
             >
               {/* Hình ảnh */}
               <img
@@ -105,6 +110,7 @@ export default function RoomsVitri() {
         {/* Cột bản đồ */}
         <div>
           <iframe
+            data-aos="zoom-in"
             title="Google Maps"
             className="w-full h-full rounded-lg shadow-lg"
             src={`https://www.google.com/maps?q=${

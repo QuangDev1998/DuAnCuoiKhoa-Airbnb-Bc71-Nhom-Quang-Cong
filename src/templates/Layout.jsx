@@ -1,6 +1,7 @@
 import React from "react";
 import Header from "../components/TempHeader/TempHeader";
 import TempFooter from "../components/TempFooter/TempFooter";
+import BackToTop from "../pages/Backtotop/Backtotop";
 
 export default function Layout({ content }) {
   return (
@@ -8,6 +9,7 @@ export default function Layout({ content }) {
       <Header />
       {content}
       <TempFooter />
+      <BackToTop />
     </div>
   );
 }

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 export default function RoomsPage() {
   const [phongArr, setPhongArr] = useState([]);
   const navigate = useNavigate();
+
   // Gọi API lấy danh sách phòng
   useEffect(() => {
     phongServices
@@ -22,6 +23,11 @@ export default function RoomsPage() {
       });
   }, []);
 
+  // Hàm xử lý click
+  const handleRoomClick = (id) => {
+    navigate(`/room-detail/${id}`);
+  };
+
   return (
     <div>
       <div
@@ -35,26 +41,27 @@ export default function RoomsPage() {
           height: "50vh",
         }}
       >
-        <div className="flex justify-center  z-10">
+        <div className="flex justify-center z-10">
           <h1 className="text-white text-2xl">Danh Sách Các Phòng Hiện Tại</h1>
         </div>
         <div
-          className="absolute top-0 left-0 w-full h-full opacity-80  "
+          className="absolute top-0 left-0 w-full h-full opacity-80"
           style={{
             backgroundImage: "linear-gradient(195deg,#4c4c4c,#191919)",
           }}
         ></div>
       </div>
       <SelectForm />
-      <div className=" container ">
-        <div className="p-4  ">
+      <div className="container">
+        <div className="p-4">
           <h1 className="text-2xl font-bold mb-6">Danh sách phòng</h1>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 ">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {phongArr.map((phong) => (
               <div
                 data-aos="zoom-in"
                 key={phong.id}
-                className="rounded-lg shadow-lg overflow-hidden border flex flex-col duration-300"
+                onClick={() => handleRoomClick(phong.id)} // Thêm onClick
+                className="rounded-lg shadow-lg overflow-hidden border flex flex-col duration-300 cursor-pointer hover:shadow-2xl"
               >
                 {/* Hình ảnh */}
                 <div className="relative">
@@ -73,7 +80,6 @@ export default function RoomsPage() {
                   <h3 className="font-semibold text-lg truncate">
                     {phong.tenPhong}
                   </h3>
-
                   <p className="text-gray-500 text-sm">
                     {phong.startDate
                       ? `Ngày ${phong.startDate} - Ngày ${phong.endDate}`
