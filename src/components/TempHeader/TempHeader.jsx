@@ -80,7 +80,7 @@ export default function TempHeader() {
           : "bg-transparent h-28"
       } flex items-center pb-2`}
     >
-      <div className="container flex justify-between items-center mx-auto">
+      <div className="container flex justify-between items-center mx-auto px-4">
         {/* Logo */}
         <a
           onClick={handleGohome}
@@ -95,7 +95,7 @@ export default function TempHeader() {
         </a>
 
         {/* Menu items */}
-        <ul className="items-stretch hidden space-x-3 lg:flex">
+        <ul className="items-stretch hidden space-x-3 lg:flex mr-20  ">
           <li className="flex">
             <NavLink
               onClick={handleGohome}
