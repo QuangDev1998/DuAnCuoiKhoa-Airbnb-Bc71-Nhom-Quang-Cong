@@ -72,7 +72,7 @@ export default function SelectForm() {
   const locationContent = (
     <div className="p-4">
       <p className="font-bold text-lg mb-2">Tìm kiếm địa điểm</p>
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         <div
           className={`flex flex-col items-center justify-center cursor-pointer ${
             selectedLocationId === null ? "opacity-50" : ""
@@ -141,9 +141,11 @@ export default function SelectForm() {
   );
 
   return (
-    <div className="flex items-center justify-center my-20">
-      {" "}
-      <div className="container w-full bg-white border rounded-full shadow-sm py-2 px-4 grid grid-cols-3 items-center relative">
+    <div className="flex items-center justify-center my-10 px-4 sm:px-6 md:px-8">
+      <div
+        className="container w-full bg-white border rounded-lg md:rounded-full shadow-sm py-4 px-4 grid grid-cols-1 
+      md:grid-cols-3 gap-4 md:gap-0 relative"
+      >
         {/* Địa điểm */}
         <Popover
           content={locationContent}
@@ -152,9 +154,9 @@ export default function SelectForm() {
           open={openLocation}
           onOpenChange={(visible) => setOpenLocation(visible)}
         >
-          <div className="text-center cursor-pointer">
+          <div className="text-center cursor-pointer border-b md:border-b-0">
             <p className="text-sm font-semibold text-gray-600 mb-1">Địa điểm</p>
-            <span className="text-gray-800">
+            <span className="text-gray-800 text-base sm:text-lg">
               {selectedLocationId === null
                 ? "Chọn địa điểm"
                 : locations.find((loc) => loc.id === selectedLocationId)
@@ -165,11 +167,11 @@ export default function SelectForm() {
 
         {/* Thời gian */}
         <Popover content={dateContent} trigger="click" placement="bottom">
-          <div className="text-center border-l border-r px-4 cursor-pointer">
+          <div className="text-center border-b md:border-b-0 md:border-l md:border-r px-4 cursor-pointer">
             <p className="text-sm font-semibold text-gray-600 mb-1">
               Thời gian
             </p>
-            <span className="text-gray-800">
+            <span className="text-gray-800 text-base sm:text-lg">
               {dayjs(dateRange[0].startDate).format("DD/MM/YYYY")} -{" "}
               {dayjs(dateRange[0].endDate).format("DD/MM/YYYY")}
             </span>
@@ -178,21 +180,23 @@ export default function SelectForm() {
 
         {/* Thêm khách */}
         <Popover content={guestContent} trigger="click" placement="bottom">
-          <div className="text-center cursor-pointer">
+          <div className="text-center cursor-pointer border-b md:border-b-0">
             <p className="text-sm font-semibold text-gray-600 mb-1">
               Thêm khách
             </p>
-            <span className="text-gray-800">{soLuongKhach} khách</span>
+            <span className="text-gray-800 text-base sm:text-lg">
+              {soLuongKhach} khách
+            </span>
           </div>
         </Popover>
 
         {/* Nút tìm kiếm */}
-        <div className="absolute right-2 top-1/2 transform -translate-y-1/2">
+        <div className="absolute right-4 bottom-[-20px] md:bottom-auto md:top-1/2 transform md:-translate-y-1/2">
           <Button
             type="primary"
             shape="circle"
             icon={<SearchOutlined />}
-            className="bg-red-500 hover:bg-red-600"
+            className="bg-red-500 hover:bg-red-600 text-white"
             onClick={handleSearch}
           />
         </div>
