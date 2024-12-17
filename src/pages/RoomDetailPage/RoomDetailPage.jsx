@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { fetchDetailRoomAction } from "../../redux/thunks/detailRoomThunks";
-import { CheckOutlined, EnvironmentOutlined } from "@ant-design/icons";
+import { EnvironmentOutlined } from "@ant-design/icons";
 import { Image } from "antd";
 import InfoRoomLeft from "./InfoRoomLeft";
 import InfoRoomRight from "./InfoRoomRight";
@@ -49,7 +49,7 @@ export default function RoomDetailPage() {
     return tienIchContent;
   };
   return (
-    <div className="py-10 space-y-5 container">
+    <div className="pt-28 space-y-5 container">
       <h1 className="text-2xl font-bold">{infoRoom.tenPhong}</h1>
       <div className="flex">
         <p>

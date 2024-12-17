@@ -7,15 +7,27 @@ export default function InfoRoomLeft() {
 
   return (
     <div className="basis-2/3 divide-y-2 space-y-5">
-      <div className="">
-        <h1 className="text-xl font-bold">
-          Toàn bộ căn hộ. Chủ nhà{" "}
-          <span className="underline uppercase">nnhatsang</span>{" "}
-        </h1>
-        <p>
-          {infoRoom.khach} Khách - {infoRoom.phongNgu} Phòng ngủ -{" "}
-          {infoRoom.giuong} Giường - {infoRoom.phongTam} Phòng tắm
-        </p>
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-xl font-bold">
+            Toàn bộ căn hộ. Chủ nhà{" "}
+            <span className="underline uppercase">nnhatsang</span>{" "}
+          </h1>
+          <p>
+            {infoRoom.khach} Khách - {infoRoom.phongNgu} Phòng ngủ -{" "}
+            {infoRoom.giuong} Giường - {infoRoom.phongTam} Phòng tắm
+          </p>
+        </div>
+        <div className="relative">
+          <img
+            className="w-12 h-12 rounded-full"
+            src="https://avatars.githubusercontent.com/u/93591100?v=4"
+            alt=""
+          />
+          <div className="absolute top-7 left-7 ">
+            <i class="fa fa-award text-primary"></i>
+          </div>
+        </div>
       </div>
       {/* 4 quyền lợi */}
       <div className="py-5 space-y-3">

@@ -8,6 +8,7 @@ import {
 } from "../../redux/slices/bookingSlice";
 import dayjs from "dayjs";
 import { bookingServices } from "../../services/bookingServices";
+import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 
 export default function InfoRoomRight() {
   const { infoRoom, listComment } = useSelector(
@@ -18,8 +19,12 @@ export default function InfoRoomRight() {
   );
   const loginData = useSelector((state) => state.userSlice?.loginData);
   const user = loginData?.user;
+  const dispatch = useDispatch();
+
   const bookingAction = () => {
     if (!user) {
+      dispatch(setModalContent("login"));
+      dispatch(setIsModalOpen(true));
       return message.warning("Đăng nhập để đặt phòng");
     }
     let body = {
@@ -39,7 +44,6 @@ export default function InfoRoomRight() {
         console.error(err);
       });
   };
-  const dispatch = useDispatch();
   const calculateRating = () => {
     let total = 0;
     listComment.map((cmt) => {

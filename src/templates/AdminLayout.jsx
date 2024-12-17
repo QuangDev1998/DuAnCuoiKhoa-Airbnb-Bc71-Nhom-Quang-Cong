@@ -34,7 +34,7 @@ export default function AdminLayout({ content }) {
   };
   return (
     <div>
-      {/* <TempHeader /> */}
+      <TempHeader />
       {renderLayout()}
       <TempFooter />
     </div>

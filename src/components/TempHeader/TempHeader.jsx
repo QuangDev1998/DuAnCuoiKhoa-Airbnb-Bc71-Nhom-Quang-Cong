@@ -1,26 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { message, Modal } from "antd";
+
 import TempFormLogin from "../../pages/TempLoginPage/TempFormLogin"; // Form đăng nhập
 import TempFormRegister from "../../pages/TempLoginPage/TempFormRegister"; // Form đăng ký (nếu có)
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import airbnbLogo from "../../assets/image/airbnb-1.aabeefedaf30b8c7011a022cdb5a6425.png";
+import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 
 export default function TempHeader() {
-  const user = useSelector((state) => state.userSlice.loginData); // Kiểm tra trạng thái đăng nhập
+  const user = useSelector((state) => state.userSlice.loginData);
+  const { isModalOpen, modalContent } = useSelector((state) => state.userSlice); /// Kiểm tra trạng thái đăng nhập
   const [showDropdown, setShowDropdown] = useState(false); // Trạng thái hiển thị dropdown
-  const [isModalOpen, setIsModalOpen] = useState(false); // Trạng thái hiển thị Modal
-  const [modalContent, setModalContent] = useState("login"); // Nội dung Modal ("login" hoặc "register")
+  // const [isModalOpen, setIsModalOpen] = useState(false); // Trạng thái hiển thị Modal
+  // const [modalContent, setModalContent] = useState("login"); // Nội dung Modal ("login" hoặc "register")
   const dropdownRef = useRef(null); // Tham chiếu đến dropdown để xử lý click ngoài
   const userIconRef = useRef(null); // Tham chiếu đến biểu tượng người dùng
-
+  const dispatch = useDispatch();
   const handleLogout = () => {
     localStorage.removeItem("USER_LOGIN"); // Xóa thông tin đăng nhập khỏi localStorage
     message.success("Đăng xuất thành công!"); // Hiển thị thông báo đăng xuất
     setTimeout(() => {
       setShowDropdown(false); // Ẩn dropdown sau khi logout
-      window.location.reload(); // Reload lại trang
+      window.location.href = "/"; // Reload lại trang
     }, 1000);
   };
 
@@ -29,12 +32,12 @@ export default function TempHeader() {
   };
 
   const handleOpenModal = (content) => {
-    setModalContent(content); // Đặt nội dung cho modal (login/register)
-    setIsModalOpen(true); // Mở Modal
+    dispatch(setModalContent(content));
+    dispatch(setIsModalOpen(true));
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); // Đóng Modal
+    dispatch(setIsModalOpen(false));
   };
 
   useEffect(() => {
@@ -214,9 +217,15 @@ export default function TempHeader() {
       {/* Modal for Login/Register */}
       <Modal open={isModalOpen} onCancel={handleCloseModal} footer={null}>
         {modalContent === "login" ? (
-          <TempFormLogin onLoginSuccess={handleCloseModal} />
+          <TempFormLogin
+            onLoginSuccess={handleCloseModal}
+            setModalContent={setModalContent}
+          />
         ) : (
-          <TempFormRegister onRegisterSuccess={handleCloseModal} />
+          <TempFormRegister
+            onRegisterSuccess={handleCloseModal}
+            setModalContent={setModalContent}
+          />
         )}
       </Modal>
     </header>

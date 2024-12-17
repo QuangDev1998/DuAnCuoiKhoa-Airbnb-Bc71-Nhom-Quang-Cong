@@ -50,6 +50,7 @@ export default function Slider({ content }) {
     <Layout
       style={{
         minHeight: "100vh",
+        paddingTop: "112px",
       }}
     >
       <Sider

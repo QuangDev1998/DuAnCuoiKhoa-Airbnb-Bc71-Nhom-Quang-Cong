@@ -4,7 +4,6 @@ import "react-date-range/dist/theme/default.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import TempLoginPage from "./pages/TempLoginPage/TempLoginPage";
 import AdminLayout from "./templates/AdminLayout";
 import QuanLyNguoiDungPage from "./pages/QuanLyNguoiDungPage/QuanLyNguoiDungPage";
 import QuanLyViTriPage from "./pages/QuanLyViTriPage/QuanLyViTriPage";
@@ -24,7 +23,6 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Layout />} />
-          <Route path="/login" element={<TempLoginPage />} />
           <Route
             path="/info-user"
             element={<Layout content={<InfoUserPage />} />}
