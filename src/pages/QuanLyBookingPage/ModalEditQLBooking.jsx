@@ -16,11 +16,9 @@ export default function ModalQLBooking({ fetchSearchBooking, valueInput }) {
     dispatch(setIsModalEditOpenAction(false));
   };
   const handleOk = (values) => {
-    console.log(values);
     bookingServices
       .editBooking(values.id, values)
       .then((result) => {
-        console.log(result);
         fetchBookingInfoAction(bookingInfo.id);
         fetchSearchBooking(valueInput);
         message.success("Cập nhật thành công");

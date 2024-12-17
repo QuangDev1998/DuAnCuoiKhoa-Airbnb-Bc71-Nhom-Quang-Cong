@@ -25,7 +25,6 @@ export default function ModalUpHinh({ idUser }) {
   };
   const handleOk = (values) => {
     values.avatar = values.avatar[0].originFileObj;
-    console.log(values);
     let formData = new FormData();
     formData.append("formFile", values.avatar, values.avatar.name);
     nguoiDungServices
@@ -35,6 +34,7 @@ export default function ModalUpHinh({ idUser }) {
         dispatch(fetchInfoUserAction(idUser));
       })
       .catch((err) => {
+        console.error(err);
         message.error("Cập nhật thất bại");
       });
   };

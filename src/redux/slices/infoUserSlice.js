@@ -43,7 +43,7 @@ const infoUserSlice = createSlice({
       state.infoUser = action.payload;
     });
     builder.addCase(fetchInfoUserAction.rejected, (state, action) => {
-      console.log(action.error);
+      console.error(action.error);
     });
     // createListIdBookingAction
     builder.addCase(createListIdBookingAction.fulfilled, (state, action) => {
@@ -51,14 +51,14 @@ const infoUserSlice = createSlice({
       state.listBooked = action.payload.listBooked;
     });
     builder.addCase(createListIdBookingAction.rejected, (state, action) => {
-      console.log(action.error);
+      console.error(action.error);
     });
     // createListIdBookingAction
     builder.addCase(createListBookedRoomAction.fulfilled, (state, action) => {
       state.listBookedRoom = action.payload;
     });
     builder.addCase(createListBookedRoomAction.rejected, (state, action) => {
-      console.log(action.error);
+      console.error(action.error);
     });
   },
 });

@@ -37,7 +37,6 @@ export const createListBookedRoomAction = createAsyncThunk(
         return listBookedRoomClone.push(listPhong[index]);
       }
     });
-    console.log("listBookedRoomClone", listBookedRoomClone);
     return listBookedRoomClone;
   }
 );
