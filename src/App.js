@@ -15,6 +15,7 @@ import InfoUserPage from "./pages/InfoUserPage/InfoUserPage";
 import BookingPage from "./pages/BookingPage/BookingPage";
 import Spinner from "./components/Spinner/Spinner";
 import NotFoundPage from "./pages/NotFoundPage/NotFoundPage";
+import Layout from "./templates/Layout";
 
 AOS.init();
 function App() {
@@ -22,10 +23,13 @@ function App() {
     <div>
       <Spinner />
       <BrowserRouter>
-        <TempHeader />
         <Routes>
+          <Route path="/" element={<Layout />} />
           <Route path="/login" element={<TempLoginPage />} />
-          <Route path="/info-user" element={<InfoUserPage />} />
+          <Route
+            path="/info-user"
+            element={<Layout content={<InfoUserPage />} />}
+          />
           <Route
             path="/admin/QuanLyNguoiDung"
             element={<AdminLayout content={<QuanLyNguoiDungPage />} />}
