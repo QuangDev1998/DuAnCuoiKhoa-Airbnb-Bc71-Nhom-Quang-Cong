@@ -8,7 +8,7 @@ const TempFooter = () => {
   const { themeMode } = useSelector((state) => state.darkModeSlice);
 
   return (
-    <footer className={` ${themeMode} bg-gray-100 py-8 `}>
+    <footer id="contactSection" className={` ${themeMode} bg-gray-100 py-8 `}>
       <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
         {/* GIỚI THIỆU */}
         <div>
