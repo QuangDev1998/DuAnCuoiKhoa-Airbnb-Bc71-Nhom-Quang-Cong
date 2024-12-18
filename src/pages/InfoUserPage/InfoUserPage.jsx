@@ -16,6 +16,7 @@ export default function InfoUserPage() {
   const idUser = useSelector((state) => state.userSlice.loginData?.user.id);
   const { infoUser } = useSelector((state) => state.infoUserSlice);
   const dispatch = useDispatch();
+  const { themeMode } = useSelector((state) => state.darkModeSlice);
   useEffect(() => {
     if (idUser) {
       dispatch(fetchInfoUserAction(idUser));
@@ -27,12 +28,12 @@ export default function InfoUserPage() {
     return message.warning("Đăng nhập để xem thông tin cá nhân");
   };
   return (
-    <div>
+    <div className={`${themeMode}`}>
       {idUser ? (
         <div>
           {/* banner */}
           <div
-            className="relative -z-10 w-full flex items-center justify-center"
+            className="relative w-full flex items-center justify-center"
             style={{
               backgroundImage:
                 "url(https://images.unsplash.com/photo-1520769945061-0a448c463865?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80&#39)",

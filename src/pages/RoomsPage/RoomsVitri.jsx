@@ -9,6 +9,7 @@ export default function RoomsVitri() {
   const { id } = useParams();
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
+  const { themeMode } = useSelector((state) => state.darkModeSlice);
   const handleRoomClick = (id) => {
     navigate(`/room-detail/${id}`);
   };
@@ -38,9 +39,9 @@ export default function RoomsVitri() {
   }, [id]);
 
   return (
-    <div>
+    <div className={`${themeMode}`}>
       <div
-        className="relative -z-10 w-full flex items-center justify-center"
+        className="relative w-full flex items-center justify-center"
         style={{
           backgroundImage:
             "url(https://images.unsplash.com/photo-1520769945061-0a448c463865?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80)",

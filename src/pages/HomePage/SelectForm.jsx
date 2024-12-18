@@ -26,6 +26,7 @@ export default function SelectForm() {
       key: "selection",
     },
   ]);
+  const { themeMode } = useSelector((state) => state.darkModeSlice);
   const [locations, setLocations] = useState([]);
   const [openLocation, setOpenLocation] = useState(false);
   const navigate = useNavigate();
@@ -130,9 +131,13 @@ export default function SelectForm() {
   const dateContent = (
     <div className="p-4">
       <DateRangePicker
+        classNames={{
+          definedRangesWrapper: "hidden", // custom class for DefinedRange
+          // dateRangeWrapper: "custom-date-range", // custom class for DateRange
+        }}
         ranges={dateRange}
         onChange={handleDateChange}
-        months={2}
+        months={1}
         direction="horizontal"
         minDate={new Date()}
         rangeColors={["rgb(254, 107, 110)"]}
@@ -141,7 +146,9 @@ export default function SelectForm() {
   );
 
   return (
-    <div className="flex items-center justify-center my-10 px-4 sm:px-6 md:px-8">
+    <div
+      className={` ${themeMode} flex items-center justify-center my-10 px-4 sm:px-6 md:px-8 `}
+    >
       <div
         className="container w-full bg-white border rounded-lg md:rounded-full shadow-sm py-4 px-4 grid grid-cols-1 
       md:grid-cols-3 gap-4 md:gap-0 relative"

@@ -66,7 +66,11 @@ export default function Slider({ content }) {
   };
 
   return (
-    <Layout>
+    <Layout
+      style={{
+        minHeight: "100vh",
+      }}
+    >
       <Sider collapsible collapsed={collapsed} trigger={null} style={bgAdmin}>
         <div className="demo-logo-vertical" />
         <Menu

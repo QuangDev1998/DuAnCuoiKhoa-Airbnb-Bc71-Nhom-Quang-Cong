@@ -1,9 +1,10 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Locations() {
   const navigate = useNavigate();
-
+  const { themeMode } = useSelector((state) => state.darkModeSlice);
   const cards = [
     {
       id: 1,
@@ -36,7 +37,7 @@ export default function Locations() {
   };
 
   return (
-    <div className="container mx-auto py-10 ">
+    <div className={` ${themeMode}  container mx-auto py-10 `}>
       <h1 className="text-3xl font-bold mb-6">Ở bất cứ đâu</h1>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 duration-300 ">
         {cards.map((card) => (
@@ -57,10 +58,7 @@ export default function Locations() {
               />
             </div>
 
-            <div
-              className="p-8 text-center"
-              style={{ height: "20%", backgroundColor: "white" }}
-            >
+            <div className="p-8 text-center" style={{ height: "20%" }}>
               <h2 className="text-lg font-semibold">{card.title}</h2>
             </div>
           </div>

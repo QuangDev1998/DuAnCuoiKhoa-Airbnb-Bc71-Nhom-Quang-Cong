@@ -1,13 +1,15 @@
 import React from "react";
+import { useSelector } from "react-redux";
 
 const TempFooter = () => {
   const handleLinkClick = () => {
     window.location.href = "https://www.airbnb.com.vn/";
   };
+  const { themeMode } = useSelector((state) => state.darkModeSlice);
 
   return (
-    <footer className="bg-gray-100 py-8">
-      <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-gray-800">
+    <footer className={` ${themeMode} bg-gray-100 py-8 `}>
+      <div className="container mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
         {/* GIỚI THIỆU */}
         <div>
           <h3 className="text-lg font-semibold mb-4">GIỚI THIỆU</h3>

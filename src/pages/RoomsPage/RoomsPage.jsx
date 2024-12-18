@@ -9,6 +9,8 @@ export default function RoomsPage() {
   const [phongArr, setPhongArr] = useState([]);
   const navigate = useNavigate();
   const { soLuongKhach } = useSelector((state) => state.bookingSlice);
+  const { themeMode } = useSelector((state) => state.darkModeSlice);
+
   useEffect(() => {
     phongServices
       .getListPhong()
@@ -29,7 +31,7 @@ export default function RoomsPage() {
   };
 
   return (
-    <div>
+    <div className={`${themeMode}`}>
       <div
         className="relative w-full flex items-center justify-center"
         style={{
@@ -63,7 +65,7 @@ export default function RoomsPage() {
                   data-aos="zoom-in"
                   key={phong.id}
                   onClick={() => handleRoomClick(phong.id)} // Thêm onClick
-                  className="rounded-lg shadow-lg overflow-hidden border flex flex-col duration-300 cursor-pointer hover:shadow-2xl"
+                  className="bg-white rounded-lg shadow-lg overflow-hidden border flex flex-col duration-300 cursor-pointer hover:shadow-2xl"
                 >
                   {/* Hình ảnh */}
                   <div className="relative">
@@ -79,14 +81,10 @@ export default function RoomsPage() {
 
                   {/* Nội dung */}
                   <div className="p-4 flex flex-col justify-between flex-grow">
-                    <h3 className="font-semibold text-lg truncate">
+                    <h3 className="font-semibold text-lg truncate text-black">
                       {phong.tenPhong}
                     </h3>
-                    <p className="text-gray-500 text-sm">
-                      {phong.startDate
-                        ? `Ngày ${phong.startDate} - Ngày ${phong.endDate}`
-                        : "Ngày không xác định"}
-                    </p>
+
                     <p className="text-black text-base font-semibold mt-3">
                       ${phong.giaTien} / night
                     </p>

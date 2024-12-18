@@ -14,6 +14,7 @@ export default function RoomDetailPage() {
   const dispatch = useDispatch();
   const params = useParams();
   const idRoom = params.id;
+  const { themeMode } = useSelector((state) => state.darkModeSlice);
   useEffect(() => {
     dispatch(fetchDetailRoomAction(idRoom));
   }, []);

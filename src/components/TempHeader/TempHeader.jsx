@@ -9,7 +9,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import airbnbLogo from "../../assets/image/airbnb-1.aabeefedaf30b8c7011a022cdb5a6425.png";
 import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 import DarkLightToggle from "../DarkLightToggle/DarkLightToggle";
-
+import { Dropdown, Space } from "antd";
+import { DownOutlined, SmileOutlined } from "@ant-design/icons";
 export default function TempHeader() {
   const user = useSelector((state) => state.userSlice.loginData);
   const { isModalOpen, modalContent } = useSelector((state) => state.userSlice);
@@ -19,8 +20,8 @@ export default function TempHeader() {
   const location = useLocation(); // Lấy đường dẫn hiện tại
   const userIconRef = useRef(null);
   const dispatch = useDispatch();
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { themeMode } = useSelector((state) => state.darkModeSlice);
-
   const isRoomDetailPage = location.pathname.includes("/room-detail/");
   const handleLogout = () => {
     localStorage.removeItem("USER_LOGIN");
@@ -29,6 +30,9 @@ export default function TempHeader() {
       setShowDropdown(false);
       window.location.href = "/";
     }, 1000);
+  };
+  const toggleDropdown = () => {
+    setIsDropdownOpen((prev) => !prev);
   };
   useEffect(() => {
     // Nếu ở trang "/room-detail/", set isScrolled = true và không thay đổi
@@ -98,7 +102,8 @@ export default function TempHeader() {
         </a>
 
         {/* Menu items */}
-        <ul className="items-stretch hidden space-x-3 lg:flex mr-20  ">
+
+        <ul className="items-stretch hidden space-x-3 lg:flex mr-10  ">
           <li className="flex">
             <NavLink
               onClick={handleGohome}
@@ -108,48 +113,79 @@ export default function TempHeader() {
             </NavLink>
           </li>
           <li className="flex">
-            <a
-              className={`flex items-center px-3 font-normal transition cursor-pointer ${
-                isScrolled || isRoomDetailPage ? "text-black" : "text-white"
-              } hover:text-red-600`}
-            >
-              About
-            </a>
+            {themeMode === "dark" ? (
+              <a
+                className={`flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600`}
+              >
+                Booking
+              </a>
+            ) : (
+              <a
+                className={`flex items-center px-3 font-normal transition cursor-pointer ${
+                  isScrolled || isRoomDetailPage ? "text-black" : "text-white"
+                } hover:text-red-600`}
+              >
+                Booking
+              </a>
+            )}
           </li>
           <li className="flex">
-            <a
-              className={`flex items-center px-3 font-normal transition cursor-pointer ${
-                isScrolled || isRoomDetailPage ? "text-black" : "text-white"
-              } hover:text-red-600`}
-            >
-              Services
-            </a>
+            {themeMode === "dark" ? (
+              <a
+                className={`flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600`}
+              >
+                Location
+              </a>
+            ) : (
+              <a
+                className={`flex items-center px-3 font-normal transition cursor-pointer ${
+                  isScrolled || isRoomDetailPage ? "text-black" : "text-white"
+                } hover:text-red-600`}
+              >
+                Location
+              </a>
+            )}
           </li>
           <li className="flex">
-            <a
-              className={`flex items-center px-3 font-normal transition cursor-pointer ${
-                isScrolled || isRoomDetailPage ? "text-black" : "text-white"
-              } hover:text-red-600`}
-            >
-              Pricing
-            </a>
+            {themeMode === "dark" ? (
+              <a
+                className={`flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600`}
+              >
+                Favourite
+              </a>
+            ) : (
+              <a
+                className={`flex items-center px-3 font-normal transition cursor-pointer ${
+                  isScrolled || isRoomDetailPage ? "text-black" : "text-white"
+                } hover:text-red-600`}
+              >
+                Favourite
+              </a>
+            )}
           </li>
           <li className="flex">
-            <a
-              className={`flex items-center px-3 font-normal transition cursor-pointer ${
-                isScrolled || isRoomDetailPage ? "text-black" : "text-white"
-              } hover:text-red-600`}
-            >
-              Contact
-            </a>
+            {themeMode === "dark" ? (
+              <a
+                className={`flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600`}
+              >
+                Contact
+              </a>
+            ) : (
+              <a
+                className={`flex items-center px-3 font-normal transition cursor-pointer ${
+                  isScrolled || isRoomDetailPage ? "text-black" : "text-white"
+                } hover:text-red-600`}
+              >
+                Contact
+              </a>
+            )}
           </li>
-          <li>
-            <DarkLightToggle />
-          </li>
+          <li></li>
         </ul>
 
         {/* User Section */}
-        <div className="items-center flex-shrink-0 hidden lg:flex px-8 relative">
+        <div className="gap-3 items-center flex-shrink-0 flex px-8 relative">
+          <DarkLightToggle />
           {user ? (
             <>
               <div
@@ -184,7 +220,7 @@ export default function TempHeader() {
                   }}
                 >
                   <ul>
-                    <li className="px-4 py-2  ">{user.user.name}</li>
+                    <li className="px-4 py-2 text-black  ">{user.user.name}</li>
                     <li className="px-4  text-gray-500 ">{user.user.email}</li>
                   </ul>
                   <ul>
@@ -256,15 +292,64 @@ export default function TempHeader() {
             </>
           )}
         </div>
-      </div>
+        {/* Dropdown Menu cho Mobile */}
+        <div className="block lg:hidden">
+          <button
+            onClick={toggleDropdown}
+            className="text-white text-2xl focus:outline-none"
+          >
+            <i className="fa fa-align-justify"></i>
+          </button>
 
+          {/* Hiển thị menu items khi mở dropdown */}
+          <div
+            className={`absolute top-full left-0 w-[100vw] text-white  overflow-hidden transform transition-transform duration-1000 ${
+              isDropdownOpen
+                ? "translate-y-0 opacity-100"
+                : "-translate-y-full opacity-0"
+            }`}
+          >
+            {isDropdownOpen && (
+              <ul className="container  bg-gray-700 rounded-lg">
+                <li className="px-6 py-3 hover:bg-gray-600 border-b border-gray-600">
+                  <a
+                    to="/"
+                    className="block text-left text-red-400 font-semibold"
+                  >
+                    Home
+                  </a>
+                </li>
+                <li className="px-6 py-3 hover:bg-gray-600 text-left">
+                  <a to="/about" className="block text-left">
+                    About
+                  </a>
+                </li>
+                <li className="px-6 py-3 hover:bg-gray-600 text-left">
+                  <a to="/services" className="block text-left">
+                    Services
+                  </a>
+                </li>
+                <li className="px-6 py-3 hover:bg-gray-600 text-left">
+                  <a to="/pricing" className="block text-left">
+                    Pricing
+                  </a>
+                </li>
+                <li className="px-6 py-3 hover:bg-gray-600 text-left">
+                  <a to="/contact" className="block text-left">
+                    Contact
+                  </a>
+                </li>
+              </ul>
+            )}
+          </div>
+        </div>
+      </div>
       <Modal open={isModalOpen} onCancel={handleCloseModal} footer={null}>
         {modalContent === "login" ? (
           <TempFormLogin
             onLoginSuccess={() => {
               dispatch(setIsModalOpen(false)); // Đóng modal
               setShowDropdown(false); // Đóng dropdown
-              message.success("Đăng nhập thành công!");
             }}
             setModalContent={setModalContent}
           />
