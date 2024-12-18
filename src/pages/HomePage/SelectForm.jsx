@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, Popover } from "antd";
 import { SearchOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
 import dayjs from "dayjs";
 import { viTriServices } from "../../services/viTriServices";
 import {
@@ -130,15 +130,10 @@ export default function SelectForm() {
 
   const dateContent = (
     <div className="p-4">
-      <DateRangePicker
-        classNames={{
-          definedRangesWrapper: "hidden", // custom class for DefinedRange
-          // dateRangeWrapper: "custom-date-range", // custom class for DateRange
-        }}
+      <DateRange
         ranges={dateRange}
         onChange={handleDateChange}
         months={1}
-        direction="horizontal"
         minDate={new Date()}
         rangeColors={["rgb(254, 107, 110)"]}
       />

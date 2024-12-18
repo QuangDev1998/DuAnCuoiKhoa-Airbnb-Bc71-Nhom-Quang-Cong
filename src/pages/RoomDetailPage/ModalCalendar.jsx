@@ -7,7 +7,7 @@ import {
   setTotalDay,
 } from "../../redux/slices/bookingSlice";
 import { Modal } from "antd";
-import { DateRangePicker } from "react-date-range";
+import { DateRange } from "react-date-range";
 
 export default function ModalCalendar() {
   const { totalDay, isModalCalendarOpen, ngayDen, ngayDi } = useSelector(
@@ -44,7 +44,7 @@ export default function ModalCalendar() {
       footer={null}
       width="600px"
     >
-      <DateRangePicker
+      <DateRange
         onChange={onchangeDate}
         showSelectionPreview={true}
         moveRangeOnFirstSelection={false}
@@ -52,6 +52,7 @@ export default function ModalCalendar() {
         rangeColors={["rgb(254, 107, 110)"]}
         ranges={dateRange}
         direction="horizontal"
+        minDate={new Date()}
       />
     </Modal>
   );

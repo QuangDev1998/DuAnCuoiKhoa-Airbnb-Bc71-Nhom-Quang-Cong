@@ -13,6 +13,7 @@ import { Dropdown, Space } from "antd";
 import { DownOutlined, SmileOutlined } from "@ant-design/icons";
 export default function TempHeader() {
   const user = useSelector((state) => state.userSlice.loginData);
+  const { infoUser } = useSelector((state) => state.infoUserSlice);
   const { isModalOpen, modalContent } = useSelector((state) => state.userSlice);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false); // Thêm state theo dõi scroll
@@ -23,6 +24,7 @@ export default function TempHeader() {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { themeMode } = useSelector((state) => state.darkModeSlice);
   const isRoomDetailPage = location.pathname.includes("/room-detail/");
+
   const handleLogout = () => {
     localStorage.removeItem("USER_LOGIN");
     message.success("Đăng xuất thành công!");
@@ -195,9 +197,9 @@ export default function TempHeader() {
                 } hover:ring-4 hover:ring-red-400`}
                 onClick={() => setShowDropdown((prev) => !prev)}
               >
-                {user.user.avatar ? (
+                {infoUser.avatar ? (
                   <img
-                    src={user.user.avatar}
+                    src={infoUser.avatar}
                     alt=""
                     className="w-12 h-12 rounded-full"
                   />
@@ -206,7 +208,7 @@ export default function TempHeader() {
                 )}
               </div>
               <p className="ml-3 text-primary text-lg uppercase">
-                {user.user.name}
+                {infoUser.name}
               </p>
 
               {showDropdown && (
@@ -220,8 +222,8 @@ export default function TempHeader() {
                   }}
                 >
                   <ul>
-                    <li className="px-4 py-2 text-black  ">{user.user.name}</li>
-                    <li className="px-4  text-gray-500 ">{user.user.email}</li>
+                    <li className="px-4 py-2 text-black  ">{infoUser.name}</li>
+                    <li className="px-4  text-gray-500 ">{infoUser.email}</li>
                   </ul>
                   <ul>
                     <li>
