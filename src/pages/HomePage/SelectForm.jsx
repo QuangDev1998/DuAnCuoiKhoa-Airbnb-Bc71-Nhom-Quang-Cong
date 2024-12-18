@@ -142,10 +142,10 @@ export default function SelectForm() {
 
   return (
     <div
-      className={` ${themeMode} flex items-center justify-center my-10 px-4 sm:px-6 md:px-8 `}
+      className={` ${themeMode} container md:flex grid grid-cols-1  items-center justify-center my-10 px-4 sm:px-6 md:px-8 `}
     >
       <div
-        className="container w-full bg-white border rounded-lg md:rounded-full shadow-sm py-4 px-4 grid grid-cols-1 
+        className=" w-full bg-white border rounded-lg md:rounded-full shadow-sm py-4 px-4 grid grid-cols-1 
       md:grid-cols-3 gap-4 md:gap-0 relative"
       >
         {/* Địa điểm */}
@@ -193,16 +193,15 @@ export default function SelectForm() {
         </Popover>
 
         {/* Nút tìm kiếm */}
-        <div className="absolute right-4 bottom-[-20px] md:bottom-auto md:top-1/2 transform md:-translate-y-1/2">
-          <Button
-            type="primary"
-            shape="circle"
-            icon={<SearchOutlined />}
-            className="bg-red-500 hover:bg-red-600 text-white"
-            onClick={handleSearch}
-          />
-        </div>
+        {/* <div className="absolute right-4 bottom-[-20px] md:bottom-auto md:top-1/2 transform md:-translate-y-1/2"></div> */}
       </div>
+      <Button
+        type="primary"
+        shape="circle"
+        icon={<SearchOutlined />}
+        className="bg-red-500 hover:bg-red-600 text-white mx-auto"
+        onClick={handleSearch}
+      />
     </div>
   );
 }

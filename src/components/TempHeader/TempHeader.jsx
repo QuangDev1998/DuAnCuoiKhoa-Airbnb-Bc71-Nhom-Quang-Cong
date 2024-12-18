@@ -89,7 +89,7 @@ export default function TempHeader() {
           : "bg-transparent h-28"
       } flex items-center pb-2`}
     >
-      <div className="container flex justify-between items-center mx-auto px-4">
+      <div className="container flex justify-center md:justify-between items-center mx-auto">
         {/* Logo */}
         <a
           onClick={handleGohome}
@@ -207,7 +207,7 @@ export default function TempHeader() {
                   <i className="fas fa-user text-xl"></i>
                 )}
               </div>
-              <p className="ml-3 text-primary text-lg uppercase">
+              <p className="ml-3 hidden md:block text-primary text-lg uppercase">
                 {infoUser.name}
               </p>
 
@@ -298,7 +298,7 @@ export default function TempHeader() {
         <div className="block lg:hidden">
           <button
             onClick={toggleDropdown}
-            className="text-white text-2xl focus:outline-none"
+            className="text-gray-500 text-2xl focus:outline-none"
           >
             <i className="fa fa-align-justify"></i>
           </button>
