@@ -8,6 +8,7 @@ import infoUserSlice from "./slices/infoUserSlice";
 import detailRoomSlice from "./slices/detailRoomSlice";
 import bookingSlice from "./slices/bookingSlice";
 import spinnerSlice from "./slices/spinnerSlice";
+import darkModeSlice from "./slices/darkModeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
     detailRoomSlice,
     bookingSlice,
     spinnerSlice,
+    darkModeSlice,
   },
 });

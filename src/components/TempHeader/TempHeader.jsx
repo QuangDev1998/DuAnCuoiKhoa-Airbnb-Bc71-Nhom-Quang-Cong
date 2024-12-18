@@ -8,6 +8,7 @@ import TempFormRegister from "../../pages/TempLoginPage/TempFormRegister";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import airbnbLogo from "../../assets/image/airbnb-1.aabeefedaf30b8c7011a022cdb5a6425.png";
 import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
+import DarkLightToggle from "../DarkLightToggle/DarkLightToggle";
 
 export default function TempHeader() {
   const user = useSelector((state) => state.userSlice.loginData);
@@ -18,6 +19,8 @@ export default function TempHeader() {
   const location = useLocation(); // Lấy đường dẫn hiện tại
   const userIconRef = useRef(null);
   const dispatch = useDispatch();
+  const { themeMode } = useSelector((state) => state.darkModeSlice);
+
   const isRoomDetailPage = location.pathname.includes("/room-detail/");
   const handleLogout = () => {
     localStorage.removeItem("USER_LOGIN");
@@ -74,7 +77,7 @@ export default function TempHeader() {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
+      className={`${themeMode} fixed top-0 left-0 w-full z-50 transition-all duration-500 ${
         isScrolled || isRoomDetailPage
           ? "bg-white shadow-md h-20"
           : "bg-transparent h-28"
@@ -139,6 +142,9 @@ export default function TempHeader() {
             >
               Contact
             </a>
+          </li>
+          <li>
+            <DarkLightToggle />
           </li>
         </ul>
 
