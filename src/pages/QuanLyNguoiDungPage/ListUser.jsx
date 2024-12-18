@@ -47,6 +47,7 @@ export default function ListUser({ valueInput }) {
       title: "Tên",
       dataIndex: "name",
       key: "name",
+      ellipsis: true,
       render: (_, dataObject) => {
         return (
           <div className="md:flex items-center">
@@ -60,7 +61,7 @@ export default function ListUser({ valueInput }) {
               <Avatar icon={<UserOutlined />} className="mr-2" />
             )}
 
-            <p>{dataObject.name}</p>
+            <p className="truncate">{dataObject.name}</p>
           </div>
         );
       },
@@ -74,8 +75,9 @@ export default function ListUser({ valueInput }) {
       title: "Email",
       dataIndex: "email",
       key: "email",
+
       render: (_, dataObject) => {
-        return <p className="underline">{dataObject.email}</p>;
+        return <p className="underline truncate">{dataObject.email}</p>;
       },
     },
     {

@@ -28,7 +28,7 @@ export default function ListViTri({ valueInput }) {
     // cập nhật lại currentPage và call api search => set list theo page mới
     dispatch(setCurrentPageAction(pageIndex));
     viTriServices
-      .findViTri(pageIndex, pageSize, valueInput)
+      .findViTri2(pageIndex, pageSize, valueInput)
       .then((result) => {
         dispatch(setListViTriAction(result.data.content.data));
       })

@@ -153,19 +153,34 @@ export default function TempHeader() {
                 } hover:ring-4 hover:ring-red-400`}
                 onClick={() => setShowDropdown((prev) => !prev)}
               >
-                <i className="fas fa-user text-xl"></i>
+                {user.user.avatar ? (
+                  <img
+                    src={user.user.avatar}
+                    alt=""
+                    className="w-12 h-12 rounded-full"
+                  />
+                ) : (
+                  <i className="fas fa-user text-xl"></i>
+                )}
               </div>
+              <p className="ml-3 text-primary text-lg uppercase">
+                {user.user.name}
+              </p>
 
               {showDropdown && (
                 <div
                   ref={dropdownRef}
-                  className="absolute right-0 mt-2 bg-white shadow-md rounded-lg overflow-hidden"
+                  className="absolute right-0 mt-2 bg-white shadow-md rounded-lg overflow-hidden divide-y-2 space-y-2"
                   style={{
                     zIndex: 1000,
                     width: "250px",
                     top: "calc(100% + 8px)",
                   }}
                 >
+                  <ul>
+                    <li className="px-4 py-2  ">{user.user.name}</li>
+                    <li className="px-4  text-gray-500 ">{user.user.email}</li>
+                  </ul>
                   <ul>
                     <li>
                       <a

@@ -14,6 +14,10 @@ export let viTriServices = {
     http.get(
       `/api/vi-tri/phan-trang-tim-kiem?pageIndex=1&pageSize=8&keyword=${tinhThanh}`
     ),
+  findViTri2: (pageIndex, pageSize, keyword) =>
+    http.get(
+      `/api/vi-tri/phan-trang-tim-kiem?pageIndex=${pageIndex}&pageSize=${pageSize}&keyword=${keyword}`
+    ),
   getViTriInfo: (id) => http.get(`/api/vi-tri/${id}`),
   editViTri: (id, viTriData, tokenBearer) =>
     http.put(`/api/vi-tri/${id}`, viTriData, {

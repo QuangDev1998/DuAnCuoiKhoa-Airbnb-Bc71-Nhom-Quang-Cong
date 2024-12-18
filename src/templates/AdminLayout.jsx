@@ -2,9 +2,6 @@ import React from "react";
 import Slider from "../components/Sider/Slider";
 import { useSelector } from "react-redux";
 import { Modal } from "antd";
-import TempHeader from "../components/TempHeader/TempHeader";
-import TempFooter from "../components/TempFooter/TempFooter";
-import BackToTop from "../pages/Backtotop/Backtotop";
 
 export default function AdminLayout({ content }) {
   const loginData = useSelector((state) => state.userSlice.loginData);
@@ -33,10 +30,5 @@ export default function AdminLayout({ content }) {
       return <Slider content={content} />;
     }
   };
-  return (
-    <div>
-      <TempHeader />
-      {renderLayout()}
-    </div>
-  );
+  return <div>{renderLayout()}</div>;
 }

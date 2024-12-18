@@ -26,7 +26,6 @@ export default function ModalEditInfoUser() {
   };
   const handleOk = (values) => {
     values.birthday = dayjs(values.birthday).format("DD-MM-YYYY");
-    console.log(values);
     nguoiDungServices
       .editUser(infoUser.id, values)
       .then((result) => {
@@ -34,6 +33,7 @@ export default function ModalEditInfoUser() {
         message.success("Cập nhật thành công");
       })
       .catch((err) => {
+        console.error(err);
         message.error("Cập nhật thất bại");
       });
   };

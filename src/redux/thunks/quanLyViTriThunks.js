@@ -3,7 +3,7 @@ import { viTriServices } from "../../services/viTriServices";
 export const fetchListViTriAction = createAsyncThunk(
   "quanLyViTriSlice/fetchListViTriAction",
   async ({ currentPage, valueInput }) => {
-    const result = await viTriServices.findViTri(currentPage, 3, valueInput);
+    const result = await viTriServices.findViTri2(currentPage, 3, valueInput);
     return result.data.content;
   }
 );

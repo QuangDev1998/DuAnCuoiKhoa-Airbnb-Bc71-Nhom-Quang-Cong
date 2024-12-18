@@ -23,16 +23,19 @@ export default function ListBooking({ fetchSearchBooking, valueInput }) {
       title: "Mã đặt phòng",
       dataIndex: "id",
       key: "id",
+      sorter: (a, b) => a.id - b.id,
     },
     {
       title: "Mã phòng",
       dataIndex: "maPhong",
       key: "maPhong",
+      sorter: (a, b) => a.maPhong - b.maPhong,
     },
     {
       title: "Mã người dùng",
       dataIndex: "maNguoiDung",
       key: "maNguoiDung",
+      sorter: (a, b) => a.maNguoiDung - b.maNguoiDung,
     },
     {
       title: "Ngày đến",
@@ -48,6 +51,7 @@ export default function ListBooking({ fetchSearchBooking, valueInput }) {
       title: "Số khách",
       dataIndex: "soLuongKhach",
       key: "soLuongKhach",
+      sorter: (a, b) => a.soLuongKhach - b.soLuongKhach,
     },
     {
       title: "Thao tác",
@@ -112,5 +116,13 @@ export default function ListBooking({ fetchSearchBooking, valueInput }) {
   const confirm = (id) => {
     handleDeleteBooking(id);
   };
-  return <Table dataSource={renderListBooking()} columns={columns} />;
+  return (
+    <Table
+      dataSource={renderListBooking()}
+      columns={columns}
+      showSorterTooltip={{
+        target: "sorter-icon",
+      }}
+    />
+  );
 }

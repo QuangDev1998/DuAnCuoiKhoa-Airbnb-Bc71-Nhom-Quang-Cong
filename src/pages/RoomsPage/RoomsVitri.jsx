@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { phongServices } from "../../services/phongServices";
 import SelectForm from "../HomePage/SelectForm";
+import { useSelector } from "react-redux";
 
 export default function RoomsVitri() {
+  const { soLuongKhach } = useSelector((state) => state.bookingSlice);
   const { id } = useParams();
   const [rooms, setRooms] = useState([]);
   const navigate = useNavigate();
@@ -68,43 +70,45 @@ export default function RoomsVitri() {
           <h2 className="text-2xl font-bold mb-4">
             Chỗ ở tại khu vực bản đồ đã chọn
           </h2>
-          {rooms.map((room) => (
-            <div
-              data-aos="zoom-in"
-              key={room.id}
-              onClick={() => handleRoomClick(room.id)}
-              className="flex border rounded-lg shadow-md overflow-hidden bg-white duration-300 cursor-pointer hover:shadow-lg"
-            >
-              {/* Hình ảnh */}
-              <img
-                src={room.hinhAnh}
-                alt={room.tenPhong}
-                className="w-48 h-48 object-cover"
-              />
+          {rooms
+            .filter((room) => room.khach >= soLuongKhach)
+            .map((room) => (
+              <div
+                data-aos="zoom-in"
+                key={room.id}
+                onClick={() => handleRoomClick(room.id)}
+                className="flex border rounded-lg shadow-md overflow-hidden bg-white duration-300 cursor-pointer hover:shadow-lg"
+              >
+                {/* Hình ảnh */}
+                <img
+                  src={room.hinhAnh}
+                  alt={room.tenPhong}
+                  className="w-48 h-48 object-cover"
+                />
 
-              {/* Thông tin phòng */}
-              <div className="flex-1 p-4 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-lg font-semibold">{room.tenPhong}</h3>
-                  <p className="text-sm text-gray-500 mt-1">
-                    {room.khach} khách • {room.phongNgu} phòng ngủ •{" "}
-                    {room.giuong} giường • {room.phongTam} phòng tắm
-                  </p>
-                  <p className="text-gray-700 mt-2 text-sm line-clamp-2">
-                    {room.moTa}
-                  </p>
-                </div>
-                <div className="flex items-center justify-between mt-2">
-                  <p className="text-lg font-bold">${room.giaTien} / đêm</p>
-                  <p className="text-xs font-medium text-gray-500">
-                    {room.wifi ? "WiFi • " : ""}
-                    {room.mayGiat ? "Máy giặt • " : ""}
-                    {room.hoBoi ? "Hồ bơi" : ""}
-                  </p>
+                {/* Thông tin phòng */}
+                <div className="flex-1 p-4 flex flex-col justify-between">
+                  <div>
+                    <h3 className="text-lg font-semibold">{room.tenPhong}</h3>
+                    <p className="text-sm text-gray-500 mt-1">
+                      {room.khach} khách • {room.phongNgu} phòng ngủ •{" "}
+                      {room.giuong} giường • {room.phongTam} phòng tắm
+                    </p>
+                    <p className="text-gray-700 mt-2 text-sm line-clamp-2">
+                      {room.moTa}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between mt-2">
+                    <p className="text-lg font-bold">${room.giaTien} / đêm</p>
+                    <p className="text-xs font-medium text-gray-500">
+                      {room.wifi ? "WiFi • " : ""}
+                      {room.mayGiat ? "Máy giặt • " : ""}
+                      {room.hoBoi ? "Hồ bơi" : ""}
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
         </div>
 
         {/* Cột bản đồ */}
