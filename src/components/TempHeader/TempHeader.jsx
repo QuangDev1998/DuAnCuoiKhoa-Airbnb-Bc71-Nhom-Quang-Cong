@@ -234,14 +234,19 @@ export default function TempHeader() {
                         Dashboard
                       </a>
                     </li>
-                    <li>
-                      <a
-                        href="/admin/QuanLyNguoiDung"
-                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                      >
-                        To page Admin
-                      </a>
-                    </li>
+                    {user.user.role === "ADMIN" ? (
+                      <li>
+                        <a
+                          href="/admin/QuanLyNguoiDung"
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                        >
+                          To page Admin
+                        </a>
+                      </li>
+                    ) : (
+                      <></>
+                    )}
+
                     <li>
                       <button
                         onClick={handleLogout}
