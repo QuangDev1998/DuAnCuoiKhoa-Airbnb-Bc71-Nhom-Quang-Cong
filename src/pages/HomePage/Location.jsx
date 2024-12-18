@@ -37,20 +37,22 @@ export default function Locations() {
   };
 
   return (
-    <div className={` ${themeMode}  container mx-auto py-10 `}>
-      <h1 className="text-3xl font-bold mb-6">Ở bất cứ đâu</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-9 duration-300 ">
+    <div
+      className={` ${themeMode} container mx-auto px-4 sm:px-6 lg:px-8 py-10`}
+    >
+      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold mb-6 text-center lg:text-left">
+        Ở bất cứ đâu
+      </h1>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
         {cards.map((card) => (
           <div
-            data-aos="flip-right"
             key={card.id}
-            className=" md:h96  cursor-pointer border rounded-lg shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 flex flex-col justify-between"
+            className="aspect-[3/4] border rounded-lg shadow-md overflow-hidden 
+                   hover:shadow-xl transition duration-300 flex flex-col"
             onClick={() => handleNavigate(card.id)}
-            // style={{ height: "450px" }}
           >
             {/* Phần ảnh */}
-            <div style={{ height: "80%" }}>
-              {" "}
+            <div className="h-[75%]">
               <img
                 src={card.image}
                 alt={card.title}
@@ -58,8 +60,11 @@ export default function Locations() {
               />
             </div>
 
-            <div className="p-8 text-center" style={{ height: "20%" }}>
-              <h2 className="text-lg font-semibold">{card.title}</h2>
+            {/* Phần nội dung */}
+            <div className="h-[25%] bg-white p-3 flex items-center justify-center text-center">
+              <h2 className="text-sm sm:text-base md:text-lg font-semibold leading-tight">
+                {card.title}
+              </h2>
             </div>
           </div>
         ))}
