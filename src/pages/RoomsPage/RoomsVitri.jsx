@@ -78,13 +78,13 @@ export default function RoomsVitri() {
                 data-aos="zoom-in"
                 key={room.id}
                 onClick={() => handleRoomClick(room.id)}
-                className="flex border rounded-lg shadow-md overflow-hidden bg-white duration-300 cursor-pointer hover:shadow-lg"
+                className="md:flex grid grid-cols-1 border rounded-lg shadow-md overflow-hidden bg-white duration-300 cursor-pointer hover:shadow-lg"
               >
                 {/* Hình ảnh */}
                 <img
                   src={room.hinhAnh}
                   alt={room.tenPhong}
-                  className="w-48 h-48 object-cover"
+                  className=" md:w-48 w-full h-48 object-cover"
                 />
 
                 {/* Thông tin phòng */}
