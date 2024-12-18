@@ -51,11 +51,11 @@ export default function Carousel() {
       </div>
 
       {/* Swoosh Hero Image */}
-      <div className="absolute bottom-0 left-0 w-full z-20">
+      <div className="absolute bottom-[-1px] left-0 w-full z-20">
         <img
           src={swooshHero}
           alt="Swoosh Hero"
-          className="w-full object-cover"
+          className="w-full h-[200px] sm:h-[250px] md:h-[300px] object-cover translate-y-10"
         />
       </div>
     </div>

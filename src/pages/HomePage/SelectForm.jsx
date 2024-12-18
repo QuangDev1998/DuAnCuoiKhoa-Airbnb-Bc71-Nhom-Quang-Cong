@@ -141,13 +141,8 @@ export default function SelectForm() {
   );
 
   return (
-    <div
-      className={` ${themeMode} container md:flex grid grid-cols-1  items-center justify-center my-10 px-4 sm:px-6 md:px-8 `}
-    >
-      <div
-        className=" w-full bg-white border rounded-lg md:rounded-full shadow-sm py-4 px-4 grid grid-cols-1 
-      md:grid-cols-3 gap-4 md:gap-0 relative"
-      >
+    <div className={` ${themeMode}  mt-16 mb-10 px-2`}>
+      <div className=" container  w-full bg-white border rounded-lg md:rounded-full shadow-sm py-2 grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0">
         {/* Địa điểm */}
         <Popover
           content={locationContent}
@@ -156,9 +151,9 @@ export default function SelectForm() {
           open={openLocation}
           onOpenChange={(visible) => setOpenLocation(visible)}
         >
-          <div className="text-center cursor-pointer border-b md:border-b-0">
+          <div className="flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r px-4 cursor-pointer">
             <p className="text-sm font-semibold text-gray-600 mb-1">Địa điểm</p>
-            <span className="text-gray-800 text-base sm:text-lg">
+            <span className="text-black text-lg sm:text-xl">
               {selectedLocationId === null
                 ? "Chọn địa điểm"
                 : locations.find((loc) => loc.id === selectedLocationId)
@@ -169,7 +164,7 @@ export default function SelectForm() {
 
         {/* Thời gian */}
         <Popover content={dateContent} trigger="click" placement="bottom">
-          <div className="text-center border-b md:border-b-0 md:border-l md:border-r px-4 cursor-pointer">
+          <div className="flex flex-col items-center justify-center text-center border-b md:border-b-0 md:border-r px-4 cursor-pointer">
             <p className="text-sm font-semibold text-gray-600 mb-1">
               Thời gian
             </p>
@@ -181,27 +176,32 @@ export default function SelectForm() {
         </Popover>
 
         {/* Thêm khách */}
-        <Popover content={guestContent} trigger="click" placement="bottom">
-          <div className="text-center cursor-pointer border-b md:border-b-0">
-            <p className="text-sm font-semibold text-gray-600 mb-1">
-              Thêm khách
-            </p>
-            <span className="text-gray-800 text-base sm:text-lg">
-              {soLuongKhach} khách
-            </span>
-          </div>
-        </Popover>
+        <div className="flex items-center justify-center text-center px-4">
+          <Popover content={guestContent} trigger="click" placement="bottom">
+            <div className="flex items-center cursor-pointer">
+              <div className="text-center">
+                <p className="text-sm font-semibold text-gray-600 mb-1">
+                  Thêm khách
+                </p>
+                <span className="text-gray-800 text-base sm:text-lg">
+                  {soLuongKhach} khách
+                </span>
+              </div>
 
-        {/* Nút tìm kiếm */}
-        {/* <div className="absolute right-4 bottom-[-20px] md:bottom-auto md:top-1/2 transform md:-translate-y-1/2"></div> */}
+              {/* Nút tìm kiếm */}
+              <div className="ml-10">
+                <Button
+                  type="primary"
+                  shape="circle"
+                  icon={<SearchOutlined />}
+                  className="bg-red-500 hover:bg-red-600 text-white cursor-pointer"
+                  onClick={handleSearch}
+                />
+              </div>
+            </div>
+          </Popover>
+        </div>
       </div>
-      <Button
-        type="primary"
-        shape="circle"
-        icon={<SearchOutlined />}
-        className="bg-red-500 hover:bg-red-600 text-white mx-auto"
-        onClick={handleSearch}
-      />
     </div>
   );
 }
