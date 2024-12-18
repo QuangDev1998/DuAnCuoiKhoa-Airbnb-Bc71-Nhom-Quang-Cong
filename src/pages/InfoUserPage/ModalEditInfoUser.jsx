@@ -19,6 +19,8 @@ export default function ModalEditInfoUser() {
   const { isModalEditOpen, infoUser } = useSelector(
     (state) => state.infoUserSlice
   );
+  const loginData = useSelector((state) => state.userSlice.loginData);
+
   const dispatch = useDispatch();
   const [form] = Form.useForm();
   const hideModal = () => {
@@ -29,7 +31,11 @@ export default function ModalEditInfoUser() {
     nguoiDungServices
       .editUser(infoUser.id, values)
       .then((result) => {
+        let loginJsonClone = { ...loginData, user: result.data.content };
+        let loginJson = JSON.stringify(loginJsonClone);
+        localStorage.setItem("USER_LOGIN", loginJson);
         dispatch(fetchInfoUserAction(infoUser.id));
+        window.location.reload();
         message.success("Cập nhật thành công");
       })
       .catch((err) => {

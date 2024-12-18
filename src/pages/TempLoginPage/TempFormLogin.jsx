@@ -4,7 +4,6 @@ import { authServices } from "../../services/authServices";
 import { useNavigate } from "react-router-dom";
 import { setLoginData, setModalContent } from "../../redux/slices/userSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { CloseOutlined } from "@ant-design/icons";
 
 export default function TempFormLogin({ onLoginSuccess }) {
   const { isModalOpen, modalContent } = useSelector((state) => state.userSlice);

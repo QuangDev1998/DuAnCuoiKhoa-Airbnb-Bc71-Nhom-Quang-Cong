@@ -10,6 +10,7 @@ export default function ModalUpHinh({ idUser }) {
   const { isModalUpHinhOpen, infoUser } = useSelector(
     (state) => state.infoUserSlice
   );
+  const loginData = useSelector((state) => state.userSlice.loginData);
   const token = useSelector((state) => state.userSlice.loginData?.token);
   const dispatch = useDispatch();
   const [form] = Form.useForm();
@@ -30,8 +31,12 @@ export default function ModalUpHinh({ idUser }) {
     nguoiDungServices
       .uploadHinhUser(formData, token)
       .then((result) => {
-        message.success("Cập nhật thành công");
+        let loginJsonClone = { ...loginData, user: result.data.content };
+        let loginJson = JSON.stringify(loginJsonClone);
+        localStorage.setItem("USER_LOGIN", loginJson);
         dispatch(fetchInfoUserAction(idUser));
+        window.location.reload();
+        message.success("Cập nhật thành công");
       })
       .catch((err) => {
         console.error(err);
