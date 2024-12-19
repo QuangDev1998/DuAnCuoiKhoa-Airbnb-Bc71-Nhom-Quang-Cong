@@ -16,21 +16,24 @@ export default function InfoRoomLeft() {
     let finalNum = parseFloat(num.toFixed(2));
     if (finalNum >= 4) {
       return (
-        <div className="absolute top-7 left-7 text-cyan-400">
+        <div className="  text-cyan-400">
+          <span>Bạch kim </span>
           <i class="fa fa-award "></i>
         </div>
       );
     }
     if (3 <= finalNum && finalNum < 4) {
       return (
-        <div className="absolute top-7 left-7 text-yellow-300">
+        <div className="  text-yellow-300">
+          <span>Vàng </span>
           <i class="fa fa-award "></i>
         </div>
       );
     }
     if (finalNum < 3) {
       return (
-        <div className="absolute top-7 left-7 text-gray-400">
+        <div className="  text-gray-400">
+          <span>Bạc </span>
           <i class="fa fa-award "></i>
         </div>
       );
@@ -49,7 +52,7 @@ export default function InfoRoomLeft() {
             {infoRoom.giuong} Giường - {infoRoom.phongTam} Phòng tắm
           </p>
         </div>
-        <div className="relative">
+        <div className="flex items-center justify-center gap-3">
           <img
             className="w-12 h-12 rounded-full"
             src="https://avatars.githubusercontent.com/u/93591100?v=4"
