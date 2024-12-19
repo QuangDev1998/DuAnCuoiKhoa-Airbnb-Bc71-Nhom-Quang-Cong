@@ -14,7 +14,7 @@ export default function TempFormRegister({ setModalContent }) {
 
     // Dữ liệu gửi lên API
     const data = {
-      id: 0, // Không cần thiết trong API yêu cầu, có thể bỏ qua hoặc giữ lại.
+      id: 0,
       name: name,
       email: email,
       password: password,

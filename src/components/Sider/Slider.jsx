@@ -137,7 +137,7 @@ export default function Slider({ content }) {
                       href="/info-user"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-black"
                     >
-                      Dashboard
+                      To Page User
                     </a>
                   </li>
                   <li>
@@ -145,7 +145,7 @@ export default function Slider({ content }) {
                       href="/"
                       className="block px-4 py-2 text-gray-700 hover:bg-gray-100 hover:text-black"
                     >
-                      To page Home
+                      To Page Home
                     </a>
                   </li>
                   <li>
