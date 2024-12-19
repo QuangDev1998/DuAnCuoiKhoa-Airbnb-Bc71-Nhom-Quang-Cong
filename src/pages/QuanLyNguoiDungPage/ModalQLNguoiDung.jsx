@@ -182,6 +182,14 @@ export default function ModalQLNguoiDung({ valueInput }) {
                   required: true,
                   message: "Vui lòng nhập mật khẩu!",
                 },
+                {
+                  pattern: new RegExp(/[A-Za-z]/),
+                  message: "Phải có ít nhất 1 chữ!",
+                },
+                {
+                  pattern: new RegExp(/\d/),
+                  message: "Phải có ít nhất 1 số!",
+                },
               ]}
               hasFeedback
             >
