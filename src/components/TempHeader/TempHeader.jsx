@@ -12,7 +12,7 @@ export default function TempHeader() {
   const user = useSelector((state) => state.userSlice.loginData);
   const { isModalOpen, modalContent } = useSelector((state) => state.userSlice);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false); // Thêm state theo dõi scroll
+  const [isScrolled, setIsScrolled] = useState(false);
   const dropdownRef = useRef(null);
   const dropdownRefMobi = useRef(null);
   const location = useLocation(); // Lấy đường dẫn hiện tại
@@ -33,42 +33,6 @@ export default function TempHeader() {
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (
-  //       dropdownRef.current &&
-  //       !dropdownRef.current.contains(event.target) &&
-  //       userIconRef.current &&
-  //       !userIconRef.current.contains(event.target)
-  //     ) {
-  //       setShowDropdown(false); // Ẩn dropdown khi click ra ngoài
-  //     }
-  //   };
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (
-  //       dropdownRefMobi.current &&
-  //       !dropdownRefMobi.current.contains(event.target) &&
-  //       userIconRef.current &&
-  //       !userIconRef.current.contains(event.target)
-  //     ) {
-  //       setShowDropdown(false); // Ẩn dropdown khi click ra ngoài
-  //     }
-  //   };
-
-  //   document.addEventListener("mousedown", handleClickOutside);
-
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
 
   useEffect(() => {
     if (isRoomDetailPage) {
@@ -362,7 +326,7 @@ export default function TempHeader() {
             </>
           )}
         </div>
-        {/* Dropdown Menu cho Mobile */}
+
         <div className="block lg:hidden">
           <button
             ref={dropdownRefMobi}
@@ -372,7 +336,6 @@ export default function TempHeader() {
             <i className="fa fa-align-justify"></i>
           </button>
 
-          {/* Hiển thị menu items khi mở dropdown */}
           <div
             className={`absolute top-full left-0 w-[100vw] text-white  overflow-hidden transform transition-transform duration-1000 ${
               isDropdownOpen
@@ -419,16 +382,16 @@ export default function TempHeader() {
         {modalContent === "login" ? (
           <TempFormLogin
             onLoginSuccess={() => {
-              dispatch(setIsModalOpen(false)); // Đóng modal
-              setShowDropdown(false); // Đóng dropdown
+              dispatch(setIsModalOpen(false));
+              setShowDropdown(false);
             }}
             setModalContent={setModalContent}
           />
         ) : (
           <TempFormRegister
             onRegisterSuccess={() => {
-              dispatch(setIsModalOpen(false)); // Đóng modal
-              setShowDropdown(false); // Đóng dropdown
+              dispatch(setIsModalOpen(false));
+              setShowDropdown(false);
               message.success("Đăng ký thành công!");
             }}
             setModalContent={setModalContent}
