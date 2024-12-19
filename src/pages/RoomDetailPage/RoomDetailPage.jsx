@@ -50,40 +50,42 @@ export default function RoomDetailPage() {
     return tienIchContent;
   };
   return (
-    <div className="pt-28 space-y-5 container">
-      <h1 className="text-2xl font-bold">{infoRoom.tenPhong}</h1>
-      <div className="flex">
-        <p>
-          <EnvironmentOutlined />
-        </p>
-        <a href="">Việt Nam</a>
-      </div>
-      {/* image */}
-      <div className="w-full">
-        <Image src={infoRoom.hinhAnh} className="rounded-lg" width="100%" />
-      </div>
-      <div className="divide-y-2 space-y-5">
-        {/* info */}
-        <div>
-          <div className="grid grid-cols-1 lg:flex gap-5 ">
-            {/* left */}
-            <InfoRoomLeft />
-            {/* right */}
-            <InfoRoomRight />
-          </div>
-          {/* tiện ích đi kèm */}
+    <div className={`${themeMode}`}>
+      <div className={`pt-28 space-y-5 container `}>
+        <h1 className="text-2xl font-bold">{infoRoom.tenPhong}</h1>
+        <div className="flex">
+          <p>
+            <EnvironmentOutlined />
+          </p>
+          <a href="">Việt Nam</a>
+        </div>
+        {/* image */}
+        <div className="w-full">
+          <Image src={infoRoom.hinhAnh} className="rounded-lg" width="100%" />
+        </div>
+        <div className="divide-y-2 space-y-5">
+          {/* info */}
           <div>
-            <h1 className="text-xl font-bold">Các tiện ích đi kèm</h1>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {renderTienIch()}
+            <div className="grid grid-cols-1 lg:flex gap-5 ">
+              {/* left */}
+              <InfoRoomLeft />
+              {/* right */}
+              <InfoRoomRight />
+            </div>
+            {/* tiện ích đi kèm */}
+            <div>
+              <h1 className="text-xl font-bold">Các tiện ích đi kèm</h1>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                {renderTienIch()}
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* comment list */}
-        <Comment idRoom={idRoom} />
+          {/* comment list */}
+          <Comment idRoom={idRoom} />
+        </div>
+        <ModalCalendar />
       </div>
-      <ModalCalendar />
     </div>
   );
 }

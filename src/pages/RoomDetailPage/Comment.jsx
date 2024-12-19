@@ -70,7 +70,11 @@ export default function Comment({ idRoom }) {
             <div>
               <div className="flex items-center gap-2">
                 <h1 className="text-lg font-bold">{tenNguoiBinhLuan}</h1>
-                <Rate disabled defaultValue={saoBinhLuan} />
+                <Rate
+                  disabled
+                  defaultValue={saoBinhLuan}
+                  className="bg-white"
+                />
               </div>
               <p className="text-sm text-gray-500">{ngayBinhLuan}</p>
             </div>
@@ -119,7 +123,7 @@ export default function Comment({ idRoom }) {
                 },
               ]}
             >
-              <Rate />
+              <Rate className="bg-white" />
             </Form.Item>
             <Form.Item
               name="noiDung"
