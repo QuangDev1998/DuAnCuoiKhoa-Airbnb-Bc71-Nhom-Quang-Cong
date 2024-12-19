@@ -28,6 +28,8 @@ export default function ModalEditInfoUser() {
   };
   const handleOk = (values) => {
     values.birthday = dayjs(values.birthday).format("DD-MM-YYYY");
+    const valuesClone = { ...values, role: infoUser.role };
+    values = valuesClone;
     nguoiDungServices
       .editUser(infoUser.id, values)
       .then((result) => {
