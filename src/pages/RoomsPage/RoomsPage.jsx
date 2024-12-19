@@ -30,6 +30,11 @@ export default function RoomsPage() {
     navigate(`/room-detail/${id}`);
   };
 
+  const handleSelectRoomByLocation = async (id) => {
+    const result = await phongServices.locationPhong(id);
+    setPhongArr(result.data.content);
+  };
+
   return (
     <div className={`${themeMode}`}>
       <div
@@ -53,7 +58,10 @@ export default function RoomsPage() {
           }}
         ></div>
       </div>
-      <SelectForm />
+      <SelectForm
+        isRoompage={true}
+        handleSelectRoomByLocation={handleSelectRoomByLocation}
+      />
       <div className="container">
         <div className="p-4">
           <h1 className="text-2xl font-bold mb-6">Danh sách phòng</h1>

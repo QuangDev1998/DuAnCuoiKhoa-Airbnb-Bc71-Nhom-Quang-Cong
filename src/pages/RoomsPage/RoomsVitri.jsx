@@ -51,7 +51,6 @@ export default function RoomsVitri() {
           height: "50vh",
         }}
       >
-        {/* Gradient Overlay */}
         <div
           className="absolute top-0 left-0 w-full h-full opacity-80"
           style={{
@@ -64,7 +63,7 @@ export default function RoomsVitri() {
           {locationMapping[id] || "Địa điểm không xác định"}
         </h1>
       </div>
-      <SelectForm />
+      <SelectForm isRoompage={false} handleSelectRoomByLocation={() => {}} />
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-4 py-4">
         {/* Cột danh sách phòng */}
         <div className="space-y-4">

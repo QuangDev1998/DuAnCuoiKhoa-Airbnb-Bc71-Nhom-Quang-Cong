@@ -13,7 +13,9 @@ import {
 } from "../../redux/slices/bookingSlice";
 import { useDispatch, useSelector } from "react-redux";
 
-export default function SelectForm() {
+export default function SelectForm(props) {
+  const { isRoompage, handleSelectRoomByLocation } = props;
+
   const [selectedLocationId, setSelectedLocationId] = useState(null);
   // const [guestCount, setGuestCount] = useState(1);
   const { ngayDen, ngayDi, soLuongKhach } = useSelector(
@@ -50,6 +52,9 @@ export default function SelectForm() {
 
   const handleSelectLocation = (id) => {
     setSelectedLocationId(id);
+    if (isRoompage) {
+      handleSelectRoomByLocation(id);
+    }
     setOpenLocation(false);
   };
 
