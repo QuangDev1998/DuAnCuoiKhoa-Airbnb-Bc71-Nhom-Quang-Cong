@@ -202,6 +202,7 @@ export default function ModalEditInfoUser() {
               hasFeedback
             >
               <DatePicker
+                maxDate={dayjs(new Date())}
                 format="DD/MM/YYYY"
                 style={{
                   width: "100%",
