@@ -63,7 +63,7 @@ export default function Locations() {
 
             {/* Phần nội dung */}
             <div className="h-[25%] bg-white p-3 flex items-center justify-center text-center">
-              <h2 className="text-sm sm:text-base md:text-lg font-semibold leading-tight">
+              <h2 className="text-sm sm:text-base md:text-lg font-semibold leading-tight text-black">
                 {card.title}
               </h2>
             </div>
