@@ -209,6 +209,7 @@ export default function ModalQLNguoiDung({ valueInput }) {
               hasFeedback
             >
               <DatePicker
+                maxDate={dayjs(new Date())}
                 format="DD/MM/YYYY"
                 style={{
                   width: "100%",
