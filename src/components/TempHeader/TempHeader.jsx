@@ -30,28 +30,21 @@ export default function TempHeader() {
       window.location.href = "/";
     }, 1000);
   };
-  const toggleDropdown = () => {
-    setIsDropdownOpen((prev) => !prev);
-  };
-
   useEffect(() => {
-    if (isRoomDetailPage) {
-      setIsScrolled(true);
-    } else {
-      const handleScroll = () => {
-        if (window.scrollY > 50) {
-          setShowDropdown(false);
-          setIsScrolled(true);
-          setIsDropdownOpen(false);
-        } else {
-          setIsScrolled(false);
-        }
-      };
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setShowDropdown(false);
+        setIsScrolled(true);
+        setIsDropdownOpen(false);
+      } else {
+        setIsScrolled(false);
+      }
+    };
 
-      window.addEventListener("scroll", handleScroll);
-      return () => window.removeEventListener("scroll", handleScroll);
-    }
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [isRoomDetailPage]);
+
   const handleGohome = () => {
     window.location.href = "/";
   };
@@ -64,46 +57,15 @@ export default function TempHeader() {
   const handleCloseModal = () => {
     dispatch(setIsModalOpen(false));
   };
-  const handleGoToList = () => {
-    const listElement = document.getElementById("listSection");
-    if (listElement) {
-      listElement.scrollIntoView({
+  const handleScrollTo = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({
         behavior: "smooth",
         block: "center",
       });
     }
   };
-  const handleGoToLocation = () => {
-    const locationElement = document.getElementById("locationSection");
-    if (locationElement) {
-      locationElement.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    }
-  };
-  const handleGoToContact = () => {
-    const contactElement = document.getElementById("contactSection");
-    if (contactElement) {
-      contactElement.scrollIntoView({
-        behavior: "smooth",
-        block: "center",
-      });
-    }
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   return (
     <header
@@ -157,14 +119,14 @@ export default function TempHeader() {
           <li className="flex">
             {themeMode === "dark" ? (
               <a
-                onClick={handleGoToList}
+                onClick={() => handleScrollTo("listSection")}
                 className="flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600"
               >
                 List
               </a>
             ) : (
               <a
-                onClick={handleGoToList}
+                onClick={() => handleScrollTo("listSection")}
                 className={`flex items-center px-3 font-normal transition cursor-pointer ${
                   isScrolled || isRoomDetailPage ? "text-black" : "text-white"
                 } hover:text-red-600`}
@@ -176,14 +138,14 @@ export default function TempHeader() {
           <li className="flex">
             {themeMode === "dark" ? (
               <a
-                onClick={handleGoToLocation}
+                onClick={() => handleScrollTo("locationSection")}
                 className="flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600"
               >
                 Favourite
               </a>
             ) : (
               <a
-                onClick={handleGoToLocation}
+                onClick={() => handleScrollTo("locationSection")}
                 className={`flex items-center px-3 font-normal transition cursor-pointer ${
                   isScrolled || isRoomDetailPage ? "text-black" : "text-white"
                 } hover:text-red-600`}
@@ -195,14 +157,14 @@ export default function TempHeader() {
           <li className="flex">
             {themeMode === "dark" ? (
               <a
-                onClick={handleGoToContact}
+                onClick={() => handleScrollTo("contactSection")}
                 className="flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600"
               >
                 Contact
               </a>
             ) : (
               <a
-                onClick={handleGoToContact}
+                onClick={() => handleScrollTo("contactSection")}
                 className={`flex items-center px-3 font-normal transition cursor-pointer ${
                   isScrolled || isRoomDetailPage ? "text-black" : "text-white"
                 } hover:text-red-600`}
@@ -330,7 +292,7 @@ export default function TempHeader() {
         <div className="block lg:hidden">
           <button
             ref={dropdownRefMobi}
-            onClick={toggleDropdown}
+            onClick={() => setIsDropdownOpen((prev) => !prev)}
             className="text-gray-500 text-2xl focus:outline-none"
           >
             <i className="fa fa-align-justify"></i>
@@ -359,17 +321,26 @@ export default function TempHeader() {
                   </NavLink>
                 </li>
                 <li className="px-6 py-3 hover:bg-gray-600 text-left">
-                  <a onClick={handleGoToList} className="block text-left">
+                  <a
+                    onClick={() => handleScrollTo("listSection")}
+                    className="block text-left"
+                  >
                     List
                   </a>
                 </li>
                 <li className="px-6 py-3 hover:bg-gray-600 text-left">
-                  <a onClick={handleGoToLocation} className="block text-left">
+                  <a
+                    onClick={() => handleScrollTo("locationSection")}
+                    className="block text-left"
+                  >
                     Favourite
                   </a>
                 </li>
                 <li className="px-6 py-3 hover:bg-gray-600 text-left">
-                  <a onClick={handleGoToContact} className="block text-left">
+                  <a
+                    onClick={() => handleScrollTo("contactSection")}
+                    className="block text-left"
+                  >
                     Contact
                   </a>
                 </li>
@@ -390,9 +361,8 @@ export default function TempHeader() {
         ) : (
           <TempFormRegister
             onRegisterSuccess={() => {
-              dispatch(setIsModalOpen(false));
+              dispatch(setModalContent("login"));
               setShowDropdown(false);
-              message.success("Đăng ký thành công!");
             }}
             setModalContent={setModalContent}
           />

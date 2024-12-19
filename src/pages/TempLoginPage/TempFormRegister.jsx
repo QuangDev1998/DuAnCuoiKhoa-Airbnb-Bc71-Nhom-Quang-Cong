@@ -2,8 +2,12 @@ import React from "react";
 import { Form, Input, DatePicker, Select, Button, message } from "antd";
 import { authServices } from "../../services/authServices";
 import dayjs from "dayjs";
+import { setModalContent } from "../../redux/slices/userSlice";
+import { useDispatch } from "react-redux";
 
-export default function TempFormRegister({ setModalContent }) {
+export default function TempFormRegister({ onRegisterSuccess }) {
+  const dispatch = useDispatch();
+  const [form] = Form.useForm();
   // Hàm xử lý khi người dùng gửi form
   const handleSubmit = async (values) => {
     const { name, email, password, phone, birthday, gender } = values;
@@ -25,9 +29,13 @@ export default function TempFormRegister({ setModalContent }) {
     };
     authServices
       .register(data)
-      .then((result) => {
+      .then(() => {
         message.success("Đăng ký thành công");
-        window.location.href = "/";
+        form.resetFields();
+        dispatch(setModalContent("login"));
+        if (onRegisterSuccess) {
+          onRegisterSuccess();
+        }
       })
       .catch((err) => {
         message.error("Đăng ký không thành công");
