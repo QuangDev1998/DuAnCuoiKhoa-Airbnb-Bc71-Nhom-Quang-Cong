@@ -258,7 +258,7 @@ export default function TempHeader() {
                         href="/info-user"
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       >
-                        To page User
+                        To Page User
                       </a>
                     </li>
                     {user.user.role === "ADMIN" ? (
@@ -267,7 +267,7 @@ export default function TempHeader() {
                           href="/admin/QuanLyNguoiDung"
                           className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                         >
-                          To page Admin
+                          To Page Admin
                         </a>
                       </li>
                     ) : (
