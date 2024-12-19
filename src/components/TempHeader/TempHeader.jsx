@@ -14,6 +14,7 @@ export default function TempHeader() {
   const [showDropdown, setShowDropdown] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false); // Thêm state theo dõi scroll
   const dropdownRef = useRef(null);
+  const dropdownRefMobi = useRef(null);
   const location = useLocation(); // Lấy đường dẫn hiện tại
   const userIconRef = useRef(null);
   const dispatch = useDispatch();
@@ -32,6 +33,43 @@ export default function TempHeader() {
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        userIconRef.current &&
+        !userIconRef.current.contains(event.target)
+      ) {
+        setShowDropdown(false); // Ẩn dropdown khi click ra ngoài
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRefMobi.current &&
+        !dropdownRefMobi.current.contains(event.target) &&
+        userIconRef.current &&
+        !userIconRef.current.contains(event.target)
+      ) {
+        setShowDropdown(false); // Ẩn dropdown khi click ra ngoài
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   useEffect(() => {
     if (isRoomDetailPage) {
       setIsScrolled(true);
@@ -326,6 +364,7 @@ export default function TempHeader() {
         {/* Dropdown Menu cho Mobile */}
         <div className="block lg:hidden">
           <button
+            ref={dropdownRefMobi}
             onClick={toggleDropdown}
             className="text-gray-500 text-2xl focus:outline-none"
           >
@@ -343,12 +382,12 @@ export default function TempHeader() {
             {isDropdownOpen && (
               <ul className="container  bg-gray-700 rounded-lg">
                 <li className="px-6 py-3 hover:bg-gray-600 border-b border-gray-600">
-                  <a
+                  <NavLink
                     to="/"
                     className="block text-left text-red-400 font-semibold"
                   >
                     Home
-                  </a>
+                  </NavLink>
                 </li>
                 <li className="px-6 py-3 hover:bg-gray-600 text-left">
                   <NavLink to="/rooms" className="block text-left">

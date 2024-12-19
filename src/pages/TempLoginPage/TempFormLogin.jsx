@@ -3,10 +3,9 @@ import { Button, Form, Input, message } from "antd";
 import { authServices } from "../../services/authServices";
 import { useNavigate } from "react-router-dom";
 import { setLoginData, setModalContent } from "../../redux/slices/userSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 export default function TempFormLogin({ onLoginSuccess }) {
-  const { isModalOpen, modalContent } = useSelector((state) => state.userSlice);
   let navigate = useNavigate();
   let dispatch = useDispatch();
 
