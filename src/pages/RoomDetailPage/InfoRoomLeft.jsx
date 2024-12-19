@@ -1,10 +1,41 @@
 import React from "react";
 import { InfoCircleOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
+import { format } from "date-fns";
 
 export default function InfoRoomLeft() {
-  const { infoRoom } = useSelector((state) => state.detailRoomSlice);
-
+  const { infoRoom, listComment } = useSelector(
+    (state) => state.detailRoomSlice
+  );
+  const ratingAward = () => {
+    let total = 0;
+    listComment.map((cmt) => {
+      total += cmt.saoBinhLuan;
+    });
+    let num = total / listComment.length;
+    let finalNum = parseFloat(num.toFixed(2));
+    if (finalNum >= 4) {
+      return (
+        <div className="absolute top-7 left-7 text-cyan-400">
+          <i class="fa fa-award "></i>
+        </div>
+      );
+    }
+    if (3 <= finalNum && finalNum < 4) {
+      return (
+        <div className="absolute top-7 left-7 text-yellow-300">
+          <i class="fa fa-award "></i>
+        </div>
+      );
+    }
+    if (finalNum < 3) {
+      return (
+        <div className="absolute top-7 left-7 text-gray-400">
+          <i class="fa fa-award "></i>
+        </div>
+      );
+    }
+  };
   return (
     <div className="basis-2/3 divide-y-2 space-y-5">
       <div className="flex justify-between items-center">
@@ -24,9 +55,7 @@ export default function InfoRoomLeft() {
             src="https://avatars.githubusercontent.com/u/93591100?v=4"
             alt=""
           />
-          <div className="absolute top-7 left-7 ">
-            <i class="fa fa-award text-primary"></i>
-          </div>
+          {ratingAward()}
         </div>
       </div>
       {/* 4 quyền lợi */}
