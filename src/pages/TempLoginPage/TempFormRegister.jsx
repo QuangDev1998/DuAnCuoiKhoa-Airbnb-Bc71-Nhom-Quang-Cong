@@ -89,17 +89,7 @@ export default function TempFormRegister({ onRegisterSuccess }) {
         </Form.Item>
 
         {/* Số điện thoại */}
-        <Form.Item
-          label="Phone number"
-          name="phone"
-          rules={[
-            { required: true, message: "Vui lòng nhập số điện thoại!" },
-            {
-              pattern: /^0\d{9}$/,
-              message: "Số điện thoại phải bắt đầu bằng 0 và đủ 10 chữ số!",
-            },
-          ]}
-        >
+        <Form.Item label="Phone number" required>
           <Input.Group compact>
             {/* Select mã vùng */}
             <Form.Item
@@ -117,10 +107,24 @@ export default function TempFormRegister({ onRegisterSuccess }) {
             <Form.Item
               name="localPhone"
               noStyle
+              dependencies={["countryCode"]}
               rules={[
                 {
-                  pattern: /^0\d{9}$/,
-                  message: "Số điện thoại phải bắt đầu bằng 0 và đủ 10 chữ số!",
+                  validator: (_, value, callback) => {
+                    if (!value) {
+                      return Promise.reject(
+                        new Error("Vui lòng nhập số điện thoại!")
+                      );
+                    }
+                    if (!/^0\d{9}$/.test(value)) {
+                      return Promise.reject(
+                        new Error(
+                          "Số điện thoại phải bắt đầu bằng 0 và đủ 10 chữ số!"
+                        )
+                      );
+                    }
+                    return Promise.resolve();
+                  },
                 },
               ]}
             >
