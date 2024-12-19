@@ -92,7 +92,7 @@ export default function ListPhong({ valueInput }) {
     },
     {
       title: "Thao tác",
-
+      fixed: "right",
       key: "action",
       render: (_, dataObject) => {
         return (
@@ -167,6 +167,7 @@ export default function ListPhong({ valueInput }) {
     <Table
       dataSource={renderListPhong()}
       columns={columns}
+      scroll={{ x: "max-content" }}
       pagination={{
         total: totalRow, // total để hiện số trang
         defaultCurrent: 1,

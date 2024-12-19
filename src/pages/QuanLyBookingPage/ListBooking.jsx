@@ -56,6 +56,7 @@ export default function ListBooking({ fetchSearchBooking, valueInput }) {
     {
       title: "Thao tác",
       key: "action",
+      fixed: "right",
       render: (_, dataObject) => {
         return (
           <div>
@@ -120,6 +121,7 @@ export default function ListBooking({ fetchSearchBooking, valueInput }) {
     <Table
       dataSource={renderListBooking()}
       columns={columns}
+      scroll={{ x: "max-content" }}
       showSorterTooltip={{
         target: "sorter-icon",
       }}

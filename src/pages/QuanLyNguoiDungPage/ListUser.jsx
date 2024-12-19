@@ -162,7 +162,7 @@ export default function ListUser({ valueInput }) {
     <Table
       dataSource={renderListUser()}
       columns={columns}
-      scroll={{ x: 1300 }}
+      scroll={{ x: "max-content" }}
       pagination={{
         total: totalRow, // total để hiện số trang
         defaultCurrent: 1,
