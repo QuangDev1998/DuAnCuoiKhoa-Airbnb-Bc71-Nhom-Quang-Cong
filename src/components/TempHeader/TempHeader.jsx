@@ -10,7 +10,6 @@ import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 import DarkLightToggle from "../DarkLightToggle/DarkLightToggle";
 export default function TempHeader() {
   const user = useSelector((state) => state.userSlice.loginData);
-  const { infoUser } = useSelector((state) => state.infoUserSlice);
   const { isModalOpen, modalContent } = useSelector((state) => state.userSlice);
   const [showDropdown, setShowDropdown] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false); // Thêm state theo dõi scroll
@@ -256,7 +255,7 @@ export default function TempHeader() {
                         href="/info-user"
                         className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                       >
-                        Dashboard
+                        To page User
                       </a>
                     </li>
                     {user.user.role === "ADMIN" ? (

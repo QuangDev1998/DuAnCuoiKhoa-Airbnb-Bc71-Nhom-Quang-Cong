@@ -38,7 +38,7 @@ export default function InfoRoomRight() {
       .createBooking(body)
       .then((result) => {
         message.success("Đặt phòng thành công");
-        message.info("Vào Dashboard để kiểm tra");
+        message.info("Vào To Page User để kiểm tra");
       })
       .catch((err) => {
         message.error("Đặt phòng thất bại");
