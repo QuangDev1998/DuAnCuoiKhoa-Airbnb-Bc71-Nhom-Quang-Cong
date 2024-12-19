@@ -25,6 +25,50 @@ export default function RoomsPage() {
         console.error("Lỗi khi gọi API:", err);
       });
   }, []);
+  const renderList = () => {
+    let roomClone = phongArr.filter((phong) => phong.khach >= soLuongKhach);
+    if (roomClone.length > 0) {
+      return roomClone.map((phong) => (
+        <div
+          data-aos="zoom-in"
+          key={phong.id}
+          onClick={() => handleRoomClick(phong.id)}
+          className="bg-white rounded-lg shadow-lg overflow-hidden border flex flex-col duration-300 cursor-pointer hover:shadow-2xl"
+        >
+          <div className="relative">
+            <img
+              src={phong.hinhAnh || "https://via.placeholder.com/300"}
+              alt={phong.tenPhong}
+              className="w-full h-52 object-cover"
+            />
+            <span className="absolute top-2 left-2 bg-white text-gray-800 text-xs px-2 py-1 rounded-lg shadow-md">
+              Guest favorite
+            </span>
+          </div>
+
+          <div className="p-4 flex flex-col justify-between flex-grow">
+            <h3 className="font-semibold text-lg truncate text-black">
+              {phong.tenPhong}
+            </h3>
+
+            <p className="text-black text-base font-semibold mt-3">
+              ${phong.giaTien} / night
+            </p>
+            <p className="text-gray-500 text-sm mt-1">
+              {phong.khach} khách · {phong.phongNgu} phòng ngủ · {phong.giuong}{" "}
+              giường · {phong.phongTam} phòng tắm
+            </p>
+          </div>
+        </div>
+      ));
+    } else {
+      return (
+        <div className="text-xl font-bold mb-4 text-primary ">
+          Hiện Tại Không Có Phòng Với Số Lượng Khách Theo Yêu Cầu
+        </div>
+      );
+    }
+  };
   // Hàm xử lý click
   const handleRoomClick = (id) => {
     navigate(`/room-detail/${id}`);
@@ -66,42 +110,7 @@ export default function RoomsPage() {
         <div className="p-4">
           <h1 className="text-2xl font-bold mb-6">Danh sách phòng</h1>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {phongArr
-              .filter((phong) => phong.khach >= soLuongKhach)
-              .map((phong) => (
-                <div
-                  data-aos="zoom-in"
-                  key={phong.id}
-                  onClick={() => handleRoomClick(phong.id)}
-                  className="bg-white rounded-lg shadow-lg overflow-hidden border flex flex-col duration-300 cursor-pointer hover:shadow-2xl"
-                >
-                  <div className="relative">
-                    <img
-                      src={phong.hinhAnh || "https://via.placeholder.com/300"}
-                      alt={phong.tenPhong}
-                      className="w-full h-52 object-cover"
-                    />
-                    <span className="absolute top-2 left-2 bg-white text-gray-800 text-xs px-2 py-1 rounded-lg shadow-md">
-                      Guest favorite
-                    </span>
-                  </div>
-
-                  {/* Nội dung */}
-                  <div className="p-4 flex flex-col justify-between flex-grow">
-                    <h3 className="font-semibold text-lg truncate text-black">
-                      {phong.tenPhong}
-                    </h3>
-
-                    <p className="text-black text-base font-semibold mt-3">
-                      ${phong.giaTien} / night
-                    </p>
-                    <p className="text-gray-500 text-sm mt-1">
-                      {phong.khach} khách · {phong.phongNgu} phòng ngủ ·{" "}
-                      {phong.giuong} giường · {phong.phongTam} phòng tắm
-                    </p>
-                  </div>
-                </div>
-              ))}
+            {renderList()}
           </div>
         </div>
       </div>
