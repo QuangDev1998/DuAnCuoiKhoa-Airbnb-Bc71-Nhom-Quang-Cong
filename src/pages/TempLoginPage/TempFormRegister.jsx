@@ -77,7 +77,13 @@ export default function TempFormRegister({ onRegisterSuccess }) {
         <Form.Item
           label="Password"
           name="password"
-          rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập mật khẩu!" },
+            {
+              pattern: /[a-zA-Z]/,
+              message: "Mật khẩu phải chứa ít nhất một chữ cái!",
+            },
+          ]}
         >
           <Input.Password placeholder="Nhập mật khẩu" />
         </Form.Item>
@@ -86,11 +92,47 @@ export default function TempFormRegister({ onRegisterSuccess }) {
         <Form.Item
           label="Phone number"
           name="phone"
-          rules={[{ required: true, message: "Vui lòng nhập số điện thoại!" }]}
+          rules={[
+            { required: true, message: "Vui lòng nhập số điện thoại!" },
+            {
+              pattern: /^0\d{9}$/,
+              message: "Số điện thoại phải bắt đầu bằng 0 và đủ 10 chữ số!",
+            },
+          ]}
         >
-          <Input placeholder="Điền số điện thoại..." />
+          <Input.Group compact>
+            {/* Select mã vùng */}
+            <Form.Item
+              name="countryCode"
+              noStyle
+              rules={[{ required: true, message: "Vui lòng chọn mã vùng!" }]}
+            >
+              <Select placeholder="Mã vùng" style={{ width: "30%" }}>
+                <Select.Option value="+84">+84 (Vietnam)</Select.Option>
+                <Select.Option value="+44">+44 (UK)</Select.Option>
+                <Select.Option value="+61">+61 (Australia)</Select.Option>
+              </Select>
+            </Form.Item>
+            {/* Input số điện thoại */}
+            <Form.Item
+              name="localPhone"
+              noStyle
+              rules={[
+                { required: true, message: "Vui lòng nhập số điện thoại!" },
+                {
+                  pattern: /^0\d{9}$/,
+                  message: "Số điện thoại phải bắt đầu bằng 0 và đủ 10 chữ số!",
+                },
+              ]}
+            >
+              <Input
+                style={{ width: "70%" }}
+                placeholder="Nhập số điện thoại (10 số, bắt đầu bằng 0)"
+                maxLength={10}
+              />
+            </Form.Item>
+          </Input.Group>
         </Form.Item>
-
         {/* Ngày sinh và Giới tính */}
         <div className="flex gap-4">
           <Form.Item

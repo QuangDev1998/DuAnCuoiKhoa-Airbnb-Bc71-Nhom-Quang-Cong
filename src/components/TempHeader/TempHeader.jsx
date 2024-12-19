@@ -30,6 +30,7 @@ export default function TempHeader() {
       window.location.href = "/";
     }, 1000);
   };
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -41,10 +42,27 @@ export default function TempHeader() {
       }
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isRoomDetailPage]);
+    const handleClickOutside = (event) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target) &&
+        userIconRef.current &&
+        !userIconRef.current.contains(event.target)
+      ) {
+        setShowDropdown(false);
+      }
+    };
 
+    // Gắn các sự kiện
+    window.addEventListener("scroll", handleScroll);
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Dọn dẹp các sự kiện khi component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isRoomDetailPage]);
   const handleGohome = () => {
     window.location.href = "/";
   };

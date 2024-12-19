@@ -12,7 +12,6 @@ import {
   setTotalDay,
 } from "../../redux/slices/bookingSlice";
 import { useDispatch, useSelector } from "react-redux";
-
 export default function SelectForm(props) {
   const { isRoompage, handleSelectRoomByLocation } = props;
 
@@ -21,6 +20,7 @@ export default function SelectForm(props) {
   const { ngayDen, ngayDi, soLuongKhach } = useSelector(
     (state) => state.bookingSlice
   );
+
   const [dateRange, setDateRange] = useState([
     {
       startDate: ngayDen,
