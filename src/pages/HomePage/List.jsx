@@ -38,7 +38,7 @@ export default function List() {
         key={vitri.id}
         hoverable
         onClick={() => handleNavigation(vitri.id)}
-        className="flex flex-row items-center gap-0 rounded-lg shadow-md p-1 bg-white cursor-pointer" // Sử dụng gap-0 để loại bỏ khoảng cách không cần thiết
+        className="flex flex-row items-center gap-0 rounded-lg shadow-md p-1 bg-white cursor-pointer"
       >
         <div className="flex gap-3">
           {/* Phần ảnh bên trái */}

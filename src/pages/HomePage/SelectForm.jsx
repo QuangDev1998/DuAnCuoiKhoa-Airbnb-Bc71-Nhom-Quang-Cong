@@ -15,9 +15,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 export default function SelectForm(props) {
   const { isRoompage, handleSelectRoomByLocation } = props;
-
   const [selectedLocationId, setSelectedLocationId] = useState(null);
-  // const [guestCount, setGuestCount] = useState(1);
+  const { themeMode } = useSelector((state) => state.darkModeSlice);
+  const [locations, setLocations] = useState([]);
+  const [openLocation, setOpenLocation] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { ngayDen, ngayDi, soLuongKhach } = useSelector(
     (state) => state.bookingSlice
   );
@@ -28,12 +31,6 @@ export default function SelectForm(props) {
       key: "selection",
     },
   ]);
-  const { themeMode } = useSelector((state) => state.darkModeSlice);
-  const [locations, setLocations] = useState([]);
-  const [openLocation, setOpenLocation] = useState(false);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-
   useEffect(() => {
     viTriServices
       .findViTri("", 1, 8)

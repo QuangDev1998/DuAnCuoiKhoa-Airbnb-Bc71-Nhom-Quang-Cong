@@ -18,8 +18,6 @@ export default function Carousel() {
           <source src={videoBanner} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-
-        {/* Overlay */}
         <div className="absolute w-full h-full bg-black opacity-50"></div>
       </div>
 

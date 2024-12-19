@@ -17,10 +17,10 @@ export default function TempHeader() {
   const dropdownRefMobi = useRef(null);
   const location = useLocation(); // Lấy đường dẫn hiện tại
   const userIconRef = useRef(null);
-  const dispatch = useDispatch();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { themeMode } = useSelector((state) => state.darkModeSlice);
   const isRoomDetailPage = location.pathname.includes("/room-detail/");
+  const dispatch = useDispatch();
 
   const handleLogout = () => {
     localStorage.removeItem("USER_LOGIN");

@@ -72,7 +72,7 @@ export default function RoomsPage() {
                 <div
                   data-aos="zoom-in"
                   key={phong.id}
-                  onClick={() => handleRoomClick(phong.id)} // Thêm onClick
+                  onClick={() => handleRoomClick(phong.id)}
                   className="bg-white rounded-lg shadow-lg overflow-hidden border flex flex-col duration-300 cursor-pointer hover:shadow-2xl"
                 >
                   <div className="relative">
