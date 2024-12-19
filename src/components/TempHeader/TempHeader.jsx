@@ -31,18 +31,79 @@ export default function TempHeader() {
     }, 1000);
   };
 
+  //   const handleScroll = () => {
+  //     if (window.scrollY > 50) {
+  //       setShowDropdown(false);
+  //       setIsScrolled(true);
+  //       setIsDropdownOpen(false);
+  //     } else {
+  //       setIsScrolled(false);
+  //     }
+  //   };
+
+  //   const handleClickOutside = (event) => {
+  //     if (
+  //       dropdownRef.current &&
+  //       !dropdownRef.current.contains(event.target) &&
+  //       userIconRef.current &&
+  //       !userIconRef.current.contains(event.target)
+  //     ) {
+  //       setShowDropdown(false);
+  //     }
+  //   };
+
+  //   // Gắn các sự kiện
+  //   window.addEventListener("scroll", handleScroll);
+  //   document.addEventListener("mousedown", handleClickOutside);
+
+  //   // Dọn dẹp các sự kiện khi component unmount
+  //   return () => {
+  //     window.removeEventListener("scroll", handleScroll);
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, [isRoomDetailPage]);
+
+  // // ************
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (
+  //       dropdownRefMobi.current &&
+  //       !dropdownRefMobi.current.contains(event.target)
+  //     ) {
+  //       setIsDropdownOpen(false); // Đóng menu khi click bên ngoài
+  //     }
+  //   };
+
+  //   const handleScroll = () => {
+  //     setIsDropdownOpen(false); // Đóng menu khi cuộn trang
+  //   };
+
+  //   // Gắn sự kiện
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   window.addEventListener("scroll", handleScroll);
+
+  //   // Dọn dẹp sự kiện khi component unmount
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //     window.removeEventListener("scroll", handleScroll);
+  //   };
+  // }, []);
+
+  // **************
+
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
-        setShowDropdown(false);
+        setShowDropdown(false); // Đóng dropdown trên desktop
         setIsScrolled(true);
-        setIsDropdownOpen(false);
+        setIsDropdownOpen(false); // Đóng menu trên mobi
       } else {
         setIsScrolled(false);
       }
     };
 
     const handleClickOutside = (event) => {
+      // Xử lý cho dropdown desktop
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target) &&
@@ -51,22 +112,30 @@ export default function TempHeader() {
       ) {
         setShowDropdown(false);
       }
+
+      // Xử lý cho dropdown mobi
+      if (
+        dropdownRefMobi.current &&
+        !dropdownRefMobi.current.contains(event.target)
+      ) {
+        setIsDropdownOpen(false);
+      }
     };
 
-    // Gắn các sự kiện
+    // Gắn sự kiện
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("mousedown", handleClickOutside);
 
-    // Dọn dẹp các sự kiện khi component unmount
+    // Dọn dẹp sự kiện khi component unmount
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isRoomDetailPage]);
+
   const handleGohome = () => {
     window.location.href = "/";
   };
-
   const handleOpenModal = (content) => {
     dispatch(setModalContent(content));
     dispatch(setIsModalOpen(true));
@@ -307,9 +376,8 @@ export default function TempHeader() {
           )}
         </div>
 
-        <div className="block lg:hidden">
+        <div className="block lg:hidden" ref={dropdownRefMobi}>
           <button
-            ref={dropdownRefMobi}
             onClick={() => setIsDropdownOpen((prev) => !prev)}
             className="text-gray-500 text-2xl focus:outline-none"
           >

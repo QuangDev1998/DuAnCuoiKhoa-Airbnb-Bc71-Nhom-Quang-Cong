@@ -118,7 +118,6 @@ export default function TempFormRegister({ onRegisterSuccess }) {
               name="localPhone"
               noStyle
               rules={[
-                { required: true, message: "Vui lòng nhập số điện thoại!" },
                 {
                   pattern: /^0\d{9}$/,
                   message: "Số điện thoại phải bắt đầu bằng 0 và đủ 10 chữ số!",
