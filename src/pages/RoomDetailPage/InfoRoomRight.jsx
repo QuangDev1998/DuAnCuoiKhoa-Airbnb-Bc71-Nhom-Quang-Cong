@@ -37,10 +37,11 @@ export default function InfoRoomRight() {
     bookingServices
       .createBooking(body)
       .then((result) => {
-        message.success("Thêm thành công");
+        message.success("Đặt phòng thành công");
+        message.info("Vào Dashboard để kiểm tra");
       })
       .catch((err) => {
-        message.error("Thêm thất bại");
+        message.error("Đặt phòng thất bại");
         console.error(err);
       });
   };

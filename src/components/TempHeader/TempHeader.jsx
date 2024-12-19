@@ -221,9 +221,9 @@ export default function TempHeader() {
                 } hover:ring-4 hover:ring-red-400`}
                 onClick={() => setShowDropdown((prev) => !prev)}
               >
-                {infoUser.avatar ? (
+                {user.user.avatar ? (
                   <img
-                    src={infoUser.avatar}
+                    src={user.user.avatar}
                     alt=""
                     className="w-12 h-12 rounded-full"
                   />
@@ -232,7 +232,7 @@ export default function TempHeader() {
                 )}
               </div>
               <p className="ml-3 hidden md:block text-primary text-lg uppercase">
-                {infoUser.name}
+                {user.user.name}
               </p>
 
               {showDropdown && (
@@ -246,8 +246,8 @@ export default function TempHeader() {
                   }}
                 >
                   <ul>
-                    <li className="px-4 py-2 text-black  ">{infoUser.name}</li>
-                    <li className="px-4  text-gray-500 ">{infoUser.email}</li>
+                    <li className="px-4 py-2 text-black  ">{user.user.name}</li>
+                    <li className="px-4  text-gray-500 ">{user.user.email}</li>
                   </ul>
                   <ul>
                     <li>
