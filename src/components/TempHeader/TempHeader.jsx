@@ -33,42 +33,42 @@ export default function TempHeader() {
   const toggleDropdown = () => {
     setIsDropdownOpen((prev) => !prev);
   };
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target) &&
-        userIconRef.current &&
-        !userIconRef.current.contains(event.target)
-      ) {
-        setShowDropdown(false); // Ẩn dropdown khi click ra ngoài
-      }
-    };
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (
+  //       dropdownRef.current &&
+  //       !dropdownRef.current.contains(event.target) &&
+  //       userIconRef.current &&
+  //       !userIconRef.current.contains(event.target)
+  //     ) {
+  //       setShowDropdown(false); // Ẩn dropdown khi click ra ngoài
+  //     }
+  //   };
 
-    document.addEventListener("mousedown", handleClickOutside);
+  //   document.addEventListener("mousedown", handleClickOutside);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        dropdownRefMobi.current &&
-        !dropdownRefMobi.current.contains(event.target) &&
-        userIconRef.current &&
-        !userIconRef.current.contains(event.target)
-      ) {
-        setShowDropdown(false); // Ẩn dropdown khi click ra ngoài
-      }
-    };
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
+  // useEffect(() => {
+  //   const handleClickOutside = (event) => {
+  //     if (
+  //       dropdownRefMobi.current &&
+  //       !dropdownRefMobi.current.contains(event.target) &&
+  //       userIconRef.current &&
+  //       !userIconRef.current.contains(event.target)
+  //     ) {
+  //       setShowDropdown(false); // Ẩn dropdown khi click ra ngoài
+  //     }
+  //   };
 
-    document.addEventListener("mousedown", handleClickOutside);
+  //   document.addEventListener("mousedown", handleClickOutside);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
 
   useEffect(() => {
     if (isRoomDetailPage) {
@@ -78,6 +78,7 @@ export default function TempHeader() {
         if (window.scrollY > 50) {
           setShowDropdown(false);
           setIsScrolled(true);
+          setIsDropdownOpen(false);
         } else {
           setIsScrolled(false);
         }

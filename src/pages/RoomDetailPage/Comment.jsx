@@ -4,7 +4,7 @@ import { fetchListCommentByIdRoomAction } from "../../redux/thunks/detailRoomThu
 import { Form, Input, Rate, message } from "antd";
 import dayjs from "dayjs";
 import { binhLuanServices } from "../../services/binhLuanServices";
-import { useNavigate } from "react-router-dom";
+import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 
 export default function Comment({ idRoom }) {
   const { listComment } = useSelector((state) => state.detailRoomSlice);
@@ -14,7 +14,6 @@ export default function Comment({ idRoom }) {
 
   const { TextArea } = Input;
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   useEffect(() => {
     dispatch(fetchListCommentByIdRoomAction(idRoom));
   }, []);
@@ -29,10 +28,10 @@ export default function Comment({ idRoom }) {
       .addComment(token, valuesClone)
       .then((result) => {
         dispatch(fetchListCommentByIdRoomAction(idRoom));
-        message.success("Thêm thành công");
+        message.success("Bình luận thành công");
       })
       .catch((err) => {
-        message.error("Thêm thất bại");
+        message.error("Bình luận thất bại");
         console.error(err);
       });
   };
@@ -152,14 +151,15 @@ export default function Comment({ idRoom }) {
       ) : (
         <div
           onClick={() => {
-            navigate("/");
+            dispatch(setModalContent("login"));
+            dispatch(setIsModalOpen(true));
           }}
           className="mb-5"
         >
           {" "}
-          <a href="" className="hover:underline text-primary">
+          <p className="hover:underline text-primary cursor-pointer">
             Đăng nhập để bình luận
-          </a>{" "}
+          </p>{" "}
         </div>
       )}
 
