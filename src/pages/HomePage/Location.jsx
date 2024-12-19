@@ -47,9 +47,11 @@ export default function Locations() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
         {cards.map((card) => (
           <div
+            data-aos="flip-right"
+            data-aos-duration="1000"
             key={card.id}
             className="aspect-[3/4] border rounded-lg shadow-md overflow-hidden 
-                   hover:shadow-xl transition duration-300 flex flex-col"
+                   hover:shadow-xl transition duration-300 flex flex-col  "
             onClick={() => handleNavigate(card.id)}
           >
             {/* Phần ảnh */}

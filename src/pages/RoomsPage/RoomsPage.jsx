@@ -75,7 +75,6 @@ export default function RoomsPage() {
                   onClick={() => handleRoomClick(phong.id)} // Thêm onClick
                   className="bg-white rounded-lg shadow-lg overflow-hidden border flex flex-col duration-300 cursor-pointer hover:shadow-2xl"
                 >
-                  {/* Hình ảnh */}
                   <div className="relative">
                     <img
                       src={phong.hinhAnh || "https://via.placeholder.com/300"}
