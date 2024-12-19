@@ -1,6 +1,7 @@
 import React from "react";
 import { Form, Input, DatePicker, Select, Button, message } from "antd";
 import { authServices } from "../../services/authServices";
+import dayjs from "dayjs";
 
 export default function TempFormRegister({ setModalContent }) {
   // Hàm xử lý khi người dùng gửi form
@@ -90,7 +91,11 @@ export default function TempFormRegister({ setModalContent }) {
             rules={[{ required: true, message: "Vui lòng chọn ngày sinh!" }]}
             className="flex-1"
           >
-            <DatePicker className="w-full" placeholder="Chọn ngày sinh" />
+            <DatePicker
+              maxDate={dayjs(new Date())}
+              className="w-full"
+              placeholder="Chọn ngày sinh"
+            />
           </Form.Item>
 
           <Form.Item
