@@ -1,5 +1,5 @@
 import { StarFilled } from "@ant-design/icons";
-import { message } from "antd";
+import { message, Popconfirm } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -66,6 +66,10 @@ export default function InfoRoomRight() {
     }
     dispatch(setSoLuongKhach(totalKhach));
   };
+  const confirm = (e) => {
+    bookingAction();
+  };
+
   let tienNgay = infoRoom.giaTien * totalDay;
   let tienTruocThue = tienNgay + 8;
   return (
@@ -152,15 +156,22 @@ export default function InfoRoomRight() {
             <p className="font-bold">$ {tienTruocThue}</p>
           </div>
           <div>
-            <button
-              onClick={bookingAction}
-              className=" button-primary w-full font-bold "
-              style={{
-                padding: "12px 0px",
-              }}
+            <Popconfirm
+              title="Xác nhận"
+              description="Bạn có muốn đặt phòng?"
+              onConfirm={confirm}
+              okText="Có"
+              cancelText="Không"
             >
-              Đặt phòng
-            </button>
+              <button
+                className=" button-primary w-full font-bold "
+                style={{
+                  padding: "12px 0px",
+                }}
+              >
+                Đặt phòng
+              </button>
+            </Popconfirm>
           </div>
         </div>
       </div>

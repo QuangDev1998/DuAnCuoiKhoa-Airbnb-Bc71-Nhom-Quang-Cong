@@ -95,7 +95,7 @@ export default function Slider({ content }) {
             }}
           />
           {/* User Section */}
-          <div className="items-center flex-shrink-0 hidden lg:flex px-8 relative">
+          <div className="items-center flex-shrink-0  flex px-8 relative">
             <div
               ref={userIconRef}
               className={`w-12 h-12 rounded-full flex items-center justify-center cursor-pointer bg-gray-800 text-white transition-all duration-300 ${
