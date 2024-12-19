@@ -22,7 +22,7 @@ export default function Carousel() {
       </div>
 
       {/* Logo and Text */}
-      <div className="absolute z-10 text-white px-4 text-center lg:text-left lg:left-[10%] top-[30%] sm:top-[35%] md:top-[40%] lg:top-[45%]">
+      <div className="absolute z-10 md:block hidden text-white px-4 text-center lg:text-left lg:left-[10%] top-[30%] sm:top-[35%] md:top-[40%] lg:top-[45%]">
         <div className="flex flex-col items-center lg:items-start">
           <div className="flex items-center space-x-4 mb-2">
             <img

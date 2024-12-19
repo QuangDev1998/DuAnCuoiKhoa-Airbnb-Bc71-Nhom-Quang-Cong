@@ -17,14 +17,12 @@ export default function TempFormLogin({ onLoginSuccess }) {
         dispatch(setLoginData(result.data.content));
         let loginJson = JSON.stringify(result.data.content);
         localStorage.setItem("USER_LOGIN", loginJson);
-
         // Gọi hàm đóng Modal
         if (onLoginSuccess) {
           onLoginSuccess();
         }
-
-        // Điều hướng đến trang quản lý người dùng
-        navigate("/");
+        // Điều hướng đến trang cần
+        navigate();
       })
       .catch((err) => {
         message.error("Đăng nhập thất bại, vui lòng thử lại!");

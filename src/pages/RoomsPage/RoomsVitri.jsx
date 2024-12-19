@@ -44,7 +44,13 @@ export default function RoomsVitri() {
           {/* Thông tin phòng */}
           <div className="flex-1 p-4 flex flex-col justify-between">
             <div>
-              <h3 className="text-lg font-semibold">{room.tenPhong}</h3>
+              <h3
+                className={`text-lg font-semibold ${
+                  themeMode === "dark" ? "text-black" : "text-black"
+                }`}
+              >
+                {room.tenPhong}
+              </h3>
               <p className="text-sm text-gray-500 mt-1">
                 {room.khach} khách • {room.phongNgu} phòng ngủ • {room.giuong}{" "}
                 giường • {room.phongTam} phòng tắm
