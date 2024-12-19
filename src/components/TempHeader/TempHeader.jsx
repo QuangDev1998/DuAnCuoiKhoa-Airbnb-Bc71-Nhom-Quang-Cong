@@ -39,6 +39,7 @@ export default function TempHeader() {
     } else {
       const handleScroll = () => {
         if (window.scrollY > 50) {
+          setShowDropdown(false);
           setIsScrolled(true);
         } else {
           setIsScrolled(false);
