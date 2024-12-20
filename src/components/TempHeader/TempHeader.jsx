@@ -32,66 +32,6 @@ export default function TempHeader() {
     }, 1000);
   };
 
-  //   const handleScroll = () => {
-  //     if (window.scrollY > 50) {
-  //       setShowDropdown(false);
-  //       setIsScrolled(true);
-  //       setIsDropdownOpen(false);
-  //     } else {
-  //       setIsScrolled(false);
-  //     }
-  //   };
-
-  //   const handleClickOutside = (event) => {
-  //     if (
-  //       dropdownRef.current &&
-  //       !dropdownRef.current.contains(event.target) &&
-  //       userIconRef.current &&
-  //       !userIconRef.current.contains(event.target)
-  //     ) {
-  //       setShowDropdown(false);
-  //     }
-  //   };
-
-  //   // Gắn các sự kiện
-  //   window.addEventListener("scroll", handleScroll);
-  //   document.addEventListener("mousedown", handleClickOutside);
-
-  //   // Dọn dẹp các sự kiện khi component unmount
-  //   return () => {
-  //     window.removeEventListener("scroll", handleScroll);
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, [isRoomDetailPage]);
-
-  // // ************
-  // useEffect(() => {
-  //   const handleClickOutside = (event) => {
-  //     if (
-  //       dropdownRefMobi.current &&
-  //       !dropdownRefMobi.current.contains(event.target)
-  //     ) {
-  //       setIsDropdownOpen(false); // Đóng menu khi click bên ngoài
-  //     }
-  //   };
-
-  //   const handleScroll = () => {
-  //     setIsDropdownOpen(false); // Đóng menu khi cuộn trang
-  //   };
-
-  //   // Gắn sự kiện
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   window.addEventListener("scroll", handleScroll);
-
-  //   // Dọn dẹp sự kiện khi component unmount
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //     window.removeEventListener("scroll", handleScroll);
-  //   };
-  // }, []);
-
-  // **************
-
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -185,82 +125,73 @@ export default function TempHeader() {
               Home
             </NavLink>
           </li>
-          <li className="flex">
-            {themeMode === "dark" ? (
-              <NavLink
-                to="/rooms"
-                className="flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600"
-              >
-                Rooms
-              </NavLink>
-            ) : (
-              <NavLink
-                to="/rooms"
-                className={`flex items-center px-3 font-normal transition cursor-pointer ${
-                  isScrolled || isRoomDetailPage ? "text-black" : "text-white"
-                } hover:text-red-600`}
-              >
-                Rooms
-              </NavLink>
-            )}
-          </li>
-          <li className="flex">
-            {themeMode === "dark" ? (
-              <a
-                onClick={() => handleScrollTo("listSection")}
-                className="flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600"
-              >
-                List
-              </a>
-            ) : (
-              <a
-                onClick={() => handleScrollTo("listSection")}
-                className={`flex items-center px-3 font-normal transition cursor-pointer ${
-                  isScrolled || isRoomDetailPage ? "text-black" : "text-white"
-                } hover:text-red-600`}
-              >
-                List
-              </a>
-            )}
-          </li>
-          <li className="flex">
-            {themeMode === "dark" ? (
-              <a
-                onClick={() => handleScrollTo("locationSection")}
-                className="flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600"
-              >
-                Favourite
-              </a>
-            ) : (
-              <a
-                onClick={() => handleScrollTo("locationSection")}
-                className={`flex items-center px-3 font-normal transition cursor-pointer ${
-                  isScrolled || isRoomDetailPage ? "text-black" : "text-white"
-                } hover:text-red-600`}
-              >
-                Favourite
-              </a>
-            )}
-          </li>
-          <li className="flex">
-            {themeMode === "dark" ? (
-              <a
-                onClick={() => handleScrollTo("contactSection")}
-                className="flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600"
-              >
-                Contact
-              </a>
-            ) : (
-              <a
-                onClick={() => handleScrollTo("contactSection")}
-                className={`flex items-center px-3 font-normal transition cursor-pointer ${
-                  isScrolled || isRoomDetailPage ? "text-black" : "text-white"
-                } hover:text-red-600`}
-              >
-                Contact
-              </a>
-            )}
-          </li>
+
+          {[
+            { label: "Rooms", link: "/rooms", section: null },
+            {
+              label: "List",
+              link: null,
+              section: "listSection",
+              showOnHome: true,
+            },
+            {
+              label: "Favourite",
+              link: null,
+              section: "locationSection",
+              showOnHome: true,
+            },
+            { label: "Contact", link: null, section: "contactSection" },
+          ]
+            .filter(({ showOnHome }) => {
+              // Chỉ hiển thị mục "List" và "Favourite" trên trang Home
+              if (showOnHome && window.location.pathname !== "/") {
+                return false;
+              }
+              return true;
+            })
+            .map(({ label, link, section }) => (
+              <li key={label} className="flex">
+                {themeMode === "dark" ? (
+                  link ? (
+                    <NavLink
+                      to={link}
+                      className="flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600"
+                    >
+                      {label}
+                    </NavLink>
+                  ) : (
+                    <a
+                      onClick={() => handleScrollTo(section)}
+                      className="flex items-center px-3 font-normal transition cursor-pointer text-white hover:text-red-600"
+                    >
+                      {label}
+                    </a>
+                  )
+                ) : link ? (
+                  <NavLink
+                    to={link}
+                    className={`flex items-center px-3 font-normal transition cursor-pointer ${
+                      isScrolled || isRoomDetailPage
+                        ? "text-black"
+                        : "text-white"
+                    } hover:text-red-600`}
+                  >
+                    {label}
+                  </NavLink>
+                ) : (
+                  <a
+                    onClick={() => handleScrollTo(section)}
+                    className={`flex items-center px-3 font-normal transition cursor-pointer ${
+                      isScrolled || isRoomDetailPage
+                        ? "text-black"
+                        : "text-white"
+                    } hover:text-red-600`}
+                  >
+                    {label}
+                  </a>
+                )}
+              </li>
+            ))}
         </ul>
 
         <div className="gap-3 items-center flex-shrink-0 flex px-8 relative">
@@ -393,44 +324,54 @@ export default function TempHeader() {
             }`}
           >
             {isDropdownOpen && (
-              <ul className="container  bg-gray-700 rounded-lg">
-                <li className="px-6 py-3 hover:bg-gray-600 border-b border-gray-600">
-                  <NavLink
-                    to="/"
-                    className="block text-left text-red-400 font-semibold"
-                  >
-                    Home
-                  </NavLink>
-                </li>
-                <li className="px-6 py-3 hover:bg-gray-600 text-left">
-                  <NavLink to="/rooms" className="block text-left">
-                    Rooms
-                  </NavLink>
-                </li>
-                <li className="px-6 py-3 hover:bg-gray-600 text-left">
-                  <a
-                    onClick={() => handleScrollTo("listSection")}
-                    className="block text-left"
-                  >
-                    List
-                  </a>
-                </li>
-                <li className="px-6 py-3 hover:bg-gray-600 text-left">
-                  <a
-                    onClick={() => handleScrollTo("locationSection")}
-                    className="block text-left"
-                  >
-                    Favourite
-                  </a>
-                </li>
-                <li className="px-6 py-3 hover:bg-gray-600 text-left">
-                  <a
-                    onClick={() => handleScrollTo("contactSection")}
-                    className="block text-left"
-                  >
-                    Contact
-                  </a>
-                </li>
+              <ul className="container bg-gray-700 rounded-lg">
+                {[
+                  { label: "Home", link: "/", action: null },
+                  { label: "Rooms", link: "/rooms", action: null },
+                  {
+                    label: "List",
+                    link: null,
+                    action: () => handleScrollTo("listSection"),
+                    showOnHome: true,
+                  },
+                  {
+                    label: "Favourite",
+                    link: null,
+                    action: () => handleScrollTo("locationSection"),
+                    showOnHome: true,
+                  },
+                  {
+                    label: "Contact",
+                    link: null,
+                    action: () => handleScrollTo("contactSection"),
+                  },
+                ]
+                  .filter(({ showOnHome }) => {
+                    // Chỉ hiển thị mục "List" và "Favourite" trên trang Home
+                    if (showOnHome && window.location.pathname !== "/") {
+                      return false;
+                    }
+                    return true;
+                  })
+                  .map(({ label, link, action }) => (
+                    <li
+                      key={label}
+                      className="px-6 py-3 hover:bg-gray-600 text-left border-b border-gray-600 last:border-b-0"
+                    >
+                      {link ? (
+                        <NavLink
+                          to={link}
+                          className="block text-left text-red-400 font-semibold"
+                        >
+                          {label}
+                        </NavLink>
+                      ) : (
+                        <a onClick={action} className="block text-left">
+                          {label}
+                        </a>
+                      )}
+                    </li>
+                  ))}
               </ul>
             )}
           </div>
