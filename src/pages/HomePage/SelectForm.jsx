@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Popover } from "antd";
+import { Button, message, Popover } from "antd";
 import { SearchOutlined, MinusOutlined, PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { DateRange } from "react-date-range";
@@ -67,6 +67,12 @@ export default function SelectForm(props) {
   };
 
   const handleSearch = () => {
+    if (isRoompage && selectedLocationId === null) {
+      // Hiển thị thông báo nếu đang ở trang rooms mà chưa chọn địa điểm
+      message.warning("Vui lòng chọn địa điểm trước khi tìm kiếm!");
+      return;
+    }
+
     if (selectedLocationId === null) {
       navigate("/rooms");
     } else {
