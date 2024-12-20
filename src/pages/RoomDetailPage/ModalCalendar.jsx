@@ -8,6 +8,8 @@ import {
 } from "../../redux/slices/bookingSlice";
 import { Modal } from "antd";
 import { DateRange } from "react-date-range";
+import { vi } from "date-fns/locale";
+import { addDays } from "date-fns";
 
 export default function ModalCalendar() {
   const { totalDay, isModalCalendarOpen, ngayDen, ngayDi } = useSelector(
@@ -52,7 +54,9 @@ export default function ModalCalendar() {
         rangeColors={["rgb(254, 107, 110)"]}
         ranges={dateRange}
         direction="horizontal"
-        minDate={new Date()}
+        minDate={new Date()} // sớm nhất hôm nay
+        locale={vi}
+        maxDate={addDays(new Date(), 180)} // max 6 tháng
       />
     </Modal>
   );

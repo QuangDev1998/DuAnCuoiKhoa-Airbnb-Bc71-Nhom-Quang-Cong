@@ -91,11 +91,11 @@ export default function InfoRoomRight() {
               </a>
             </div>
           </div>
-          <div className="border-2 border-black rounded-lg">
+          <div className="border-2  rounded-lg">
             {/* nhận / trả phòng*/}
             <div className="flex items-center justify-between">
               <div
-                className="p-3 cursor-pointer grow border-r-2 border-black"
+                className="p-3 cursor-pointer grow border-r-2 "
                 onClick={() => {
                   dispatch(setIsModalCalendarOpen(true));
                 }}
@@ -114,7 +114,7 @@ export default function InfoRoomRight() {
               </div>
             </div>
             {/* khách */}
-            <div className="p-3 border-t-2 border-black">
+            <div className="p-3 border-t-2 ">
               <h1 className="font-bold text-center">Khách</h1>
               <div className="flex justify-evenly items-center">
                 <button

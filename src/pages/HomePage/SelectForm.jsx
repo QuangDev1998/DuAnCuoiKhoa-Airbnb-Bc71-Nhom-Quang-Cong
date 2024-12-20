@@ -12,6 +12,8 @@ import {
   setTotalDay,
 } from "../../redux/slices/bookingSlice";
 import { useDispatch, useSelector } from "react-redux";
+import { vi } from "date-fns/locale";
+import { addDays } from "date-fns";
 export default function SelectForm(props) {
   const { isRoompage, handleSelectRoomByLocation } = props;
   const [selectedLocationId, setSelectedLocationId] = useState(null);
@@ -136,8 +138,10 @@ export default function SelectForm(props) {
         ranges={dateRange}
         onChange={handleDateChange}
         months={1}
-        minDate={new Date()}
+        minDate={new Date()} // sớm nhất hôm nay
         rangeColors={["rgb(254, 107, 110)"]}
+        locale={vi}
+        maxDate={addDays(new Date(), 180)} // max 6 tháng
       />
     </div>
   );
