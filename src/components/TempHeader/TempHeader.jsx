@@ -231,17 +231,22 @@ export default function TempHeader() {
                 >
                   <ul>
                     <li className="px-4 py-2 text-black  ">{user.user.name}</li>
-                    <li className="px-4  text-gray-500 ">{user.user.email}</li>
+                    <li className="px-4 truncate  text-gray-500 ">
+                      {user.user.email}
+                    </li>
                   </ul>
                   <ul>
-                    <li>
-                      <a
-                        href="/info-user"
-                        className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
-                      >
-                        To Page User
-                      </a>
-                    </li>
+                    {location.pathname !== "/info-user" && (
+                      <li>
+                        <a
+                          href="/info-user"
+                          className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
+                        >
+                          To Page User
+                        </a>
+                      </li>
+                    )}
+
                     {user.user.role === "ADMIN" ? (
                       <li>
                         <a
@@ -258,7 +263,7 @@ export default function TempHeader() {
                     <li>
                       <button
                         onClick={handleLogout}
-                        className="block w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100"
+                        className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-100"
                       >
                         Sign out
                       </button>
