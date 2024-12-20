@@ -215,9 +215,14 @@ export default function TempHeader() {
                   <i className="fas fa-user text-xl"></i>
                 )}
               </div>
-              <p className="ml-3 hidden md:block text-primary text-lg uppercase">
-                {user.user.name}
-              </p>
+              <div className="relative group cursor-pointer">
+                <p className="hidden md:block text-primary text-base uppercase truncate max-w-[70px]">
+                  {user.user.name}
+                </p>
+                <span className="absolute left-0 top-full mt-2 w-max uppercase bg-white text-primary text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  {user.user.name}
+                </span>
+              </div>
 
               {showDropdown && (
                 <div
@@ -230,7 +235,7 @@ export default function TempHeader() {
                   }}
                 >
                   <ul>
-                    <li className="px-4 py-2 text-black  ">{user.user.name}</li>
+                    <li className="px-4 py-2 text-black">{user.user.name}</li>
                     <li className="px-4 truncate  text-gray-500 ">
                       {user.user.email}
                     </li>
