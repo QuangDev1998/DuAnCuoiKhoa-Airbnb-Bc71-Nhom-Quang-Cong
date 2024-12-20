@@ -17,7 +17,6 @@ export default function ListBookedRoom({ idUser }) {
     (state) => state.infoUserSlice
   );
   const { listViTri } = useSelector((state) => state.quanLyViTriSlice);
-  // tạo list chứa ID phòng
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
@@ -30,6 +29,7 @@ export default function ListBookedRoom({ idUser }) {
         console.error(err);
       });
   }, []);
+  // tạo list chứa ID phòng
   useEffect(() => {
     dispatch(createListIdBookingAction(idUser));
   }, [dispatch, idUser]);

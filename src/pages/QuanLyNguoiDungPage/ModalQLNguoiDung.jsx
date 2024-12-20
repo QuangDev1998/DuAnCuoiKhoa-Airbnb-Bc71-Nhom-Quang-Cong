@@ -40,6 +40,7 @@ export default function ModalQLNguoiDung({ valueInput }) {
       .then((result) => {
         // => update list
         dispatch(fetchListUserAction({ currentPage, valueInput }));
+        dispatch(setIsModalOpenAction(false));
         message.success("Thêm thành công");
       })
       .catch((err) => {

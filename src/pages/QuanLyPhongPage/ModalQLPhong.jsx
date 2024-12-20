@@ -53,6 +53,7 @@ export default function ModalQLPhong({ valueInput }) {
           .then((result) => {
             // => update list
             dispatch(fetchListPhongAction({ currentPage, valueInput }));
+            dispatch(setIsModalOpenAction(false));
             message.success("Thêm thành công");
           })
           .catch((err) => {

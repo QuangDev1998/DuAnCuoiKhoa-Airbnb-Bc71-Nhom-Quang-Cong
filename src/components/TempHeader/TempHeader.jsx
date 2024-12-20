@@ -24,6 +24,7 @@ export default function TempHeader() {
 
   const handleLogout = () => {
     localStorage.removeItem("USER_LOGIN");
+    localStorage.removeItem("LIST_ID_BOOKING");
     message.success("Đăng xuất thành công!");
     setTimeout(() => {
       setShowDropdown(false);

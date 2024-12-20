@@ -38,6 +38,7 @@ export default function ModalEditQLViTri({ valueInput }) {
           // => update list
           dispatch(fetchViTriInfoAction(values.id));
           dispatch(fetchListViTriAction({ currentPage, valueInput }));
+          dispatch(setIsModalEditOpenAction(false));
           message.success("Cập nhật thành công");
         })
         .catch((err) => {

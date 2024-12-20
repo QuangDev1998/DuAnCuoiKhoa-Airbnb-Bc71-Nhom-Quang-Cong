@@ -21,6 +21,7 @@ export default function ModalQLBooking({ fetchSearchBooking, valueInput }) {
       .then((result) => {
         fetchBookingInfoAction(bookingInfo.id);
         fetchSearchBooking(valueInput);
+        dispatch(setIsModalEditOpenAction(false));
         message.success("Cập nhật thành công");
       })
       .catch((err) => {

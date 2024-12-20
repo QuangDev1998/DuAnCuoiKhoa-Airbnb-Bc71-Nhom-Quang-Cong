@@ -50,6 +50,7 @@ export default function ModalEditQLPhong({ valueInput }) {
           // => update list
           dispatch(fetchPhongInfoAction(values.id));
           dispatch(fetchListPhongAction({ currentPage, valueInput }));
+          dispatch(setIsModalEditOpenAction(false));
           message.success("Cập nhật thành công");
         })
         .catch((err) => {

@@ -21,6 +21,19 @@ export default function InfoRoomRight() {
   const user = loginData?.user;
   const dispatch = useDispatch();
 
+  const isBooked = () => {
+    // lấy list id từ localeStorage để tham chiếu phòng khi booking
+    let listIdBookingJson = localStorage.getItem("LIST_ID_BOOKING");
+    const listIdBooking = listIdBookingJson
+      ? JSON.parse(listIdBookingJson)
+      : null;
+    let index = listIdBooking.findIndex((id) => id === infoRoom.id);
+    if (index !== -1) {
+      return true;
+    }
+    return false;
+  };
+
   const bookingAction = () => {
     if (!user) {
       dispatch(setModalContent("login"));
@@ -67,6 +80,9 @@ export default function InfoRoomRight() {
     dispatch(setSoLuongKhach(totalKhach));
   };
   const confirm = (e) => {
+    if (isBooked()) {
+      return message.warning("Bạn đã đặt phòng này");
+    }
     bookingAction();
   };
 

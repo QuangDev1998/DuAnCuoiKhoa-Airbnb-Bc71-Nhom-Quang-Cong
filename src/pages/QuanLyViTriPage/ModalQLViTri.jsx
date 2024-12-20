@@ -42,6 +42,7 @@ export default function ModalQLViTri({ valueInput }) {
           .then((result) => {
             // => update list
             dispatch(fetchListViTriAction({ currentPage, valueInput }));
+            dispatch(setIsModalOpenAction(false));
             message.success("Thêm thành công");
           })
           .catch((err) => {

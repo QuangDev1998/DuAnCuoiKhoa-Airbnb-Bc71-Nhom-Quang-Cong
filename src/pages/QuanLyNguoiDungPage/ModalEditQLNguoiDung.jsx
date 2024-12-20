@@ -44,6 +44,7 @@ export default function ModalEditQLNguoiDung({ valueInput }) {
         // => => update list
         dispatch(fetchUserInfoAction(userInfo.id));
         dispatch(fetchListUserAction({ currentPage, valueInput }));
+        dispatch(setIsModalEditOpenAction(false));
         message.success("Cập nhật thành công");
       })
       .catch((err) => {
