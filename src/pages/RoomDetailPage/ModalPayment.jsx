@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsModalPaymentOpen } from "../../redux/slices/bookingSlice";
-import { Input, Modal, Radio, Space, Tabs } from "antd";
+import { DatePicker, Form, Input, Modal, Radio, Space, Tabs } from "antd";
+import dayjs from "dayjs";
 
 export default function ModalPayment({ bookingAction }) {
   const { isModalPaymentOpen, tienTruocThue } = useSelector(
@@ -25,6 +26,10 @@ export default function ModalPayment({ bookingAction }) {
     setValue(e.target.value);
     setOptionTab(e.target.value);
   };
+  const onFinish = (values) => {
+    bookingAction();
+  };
+  const onFinishFailed = (errorInfo) => {};
   const renderContentTab1 = () => {
     return (
       <div>
@@ -67,44 +72,154 @@ export default function ModalPayment({ bookingAction }) {
   const renderContentTab2 = () => {
     if (optionTab1 === "online") {
       return (
-        <div className="space-y-3">
-          {/* số thẻ */}
-          <div className="grid grid-cols-1 md:flex items-center gap-3">
-            <p>Số thẻ:</p>
-            <div className="flex gap-2 items-center">
-              <Input value={9999} className="max-w-14" />-
-              <Input value={9999} className="max-w-14" />-
-              <Input value={9999} className="max-w-14" />-
-              <Input value={9999} className="max-w-14" />
-            </div>
-          </div>
-          {/* mã thẻ */}
-          <div className="grid grid-cols-1 md:flex items-center gap-3">
-            <p>Mã thẻ:</p>
-            <div className="flex gap-2 items-center">
-              <Input value={999} className="max-w-12" />
-            </div>
-          </div>
-          {/* HSD */}
-          <div className="grid grid-cols-1 md:flex items-center gap-3">
-            <div>HSD:</div>
-            <div className="flex gap-2 items-center">
-              <Input value={11} className="max-w-10" /> /
-              <Input value={11} className="max-w-10" /> /
-              <Input value={2077} className="max-w-14" />
-            </div>
-          </div>
-          {/* chủ thẻ */}
-          <div className="grid grid-cols-1 md:flex items-center gap-3">
-            <div>Chủ thẻ:</div>
-            <div className="flex gap-2">
-              <Input value={"Nguyễn Văn A"} className="" />
-            </div>
-          </div>
-          <p>
-            Số tiền cần thanh toán :{" "}
-            <span className="font-bold">{tienTruocThue} $</span>
-          </p>
+        <Form
+          name="basic"
+          style={{
+            maxWidth: "100%",
+          }}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
+          autoComplete="off"
+        >
+          <Form.Item
+            label="Số thẻ"
+            name="soThe"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Số thẻ không được để trống!",
+              },
+              {
+                required: true,
+                message: "Phải là số",
+                pattern: new RegExp(/^[0-9]+$/),
+              },
+            ]}
+          >
+            <Space>
+              <Form.Item
+                name="soThe1"
+                hasFeedback
+                rules={[
+                  {
+                    required: true,
+                    message: "Phải có 4 số",
+                    pattern: new RegExp(/^\d{4}$/),
+                  },
+                  {
+                    required: true,
+                    message: "Số thẻ không được để trống!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="soThe2"
+                hasFeedback
+                rules={[
+                  {
+                    required: true,
+                    message: "Phải có 4 số",
+                    pattern: new RegExp(/^\d{4}$/),
+                  },
+                  {
+                    required: true,
+                    message: "Số thẻ không được để trống!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="soThe3"
+                hasFeedback
+                rules={[
+                  {
+                    required: true,
+                    message: "Phải có 4 số",
+                    pattern: new RegExp(/^\d{4}$/),
+                  },
+                  {
+                    required: true,
+                    message: "Số thẻ không được để trống!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+              <Form.Item
+                name="soThe4"
+                hasFeedback
+                rules={[
+                  {
+                    required: true,
+                    message: "Phải có 4 số",
+                    pattern: new RegExp(/^\d{4}$/),
+                  },
+                  {
+                    required: true,
+                    message: "Số thẻ không được để trống!",
+                  },
+                ]}
+              >
+                <Input />
+              </Form.Item>
+            </Space>
+          </Form.Item>
+
+          <Form.Item
+            label="Mã thẻ"
+            name="maThe"
+            hasFeedback
+            wrapperCol={{
+              span: 4,
+            }}
+            rules={[
+              {
+                required: true,
+                message: "Phải có 3 số",
+                pattern: new RegExp(/^\d{3}$/),
+              },
+              {
+                required: true,
+                message: "Mã thẻ không được để trống!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Ngày hết hạn"
+            name="HSD"
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: "Ngày hết hạn không được để trống!",
+              },
+            ]}
+          >
+            <DatePicker format={"MM/YYYY"} picker="month" minDate={dayjs()} />
+          </Form.Item>
+          <Form.Item
+            label="Tên chủ thẻ"
+            name="chuThe"
+            rules={[
+              {
+                required: true,
+                message: "Phải là chữ",
+                pattern: new RegExp(/^[a-zA-Z]/),
+              },
+              {
+                required: true,
+                message: "Tên chủ thẻ không được để trống!",
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
           <div className="flex justify-between mt-5">
             <button
               className="button-outline-primary"
@@ -114,16 +229,11 @@ export default function ModalPayment({ bookingAction }) {
             >
               Quay lại
             </button>
-            <button
-              className="button-primary"
-              onClick={() => {
-                bookingAction();
-              }}
-            >
+            <button className="button-primary" type="submit">
               Thanh toán
             </button>
           </div>
-        </div>
+        </Form>
       );
     } else {
       return (

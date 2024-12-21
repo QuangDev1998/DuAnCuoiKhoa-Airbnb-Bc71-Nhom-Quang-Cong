@@ -42,14 +42,14 @@ export default function InfoRoomRight() {
       dispatch(setIsModalOpen(true));
       return message.warning("Đăng nhập để đặt phòng");
     } else {
+      // phòng đã đặt
+      if (isBooked()) {
+        return message.warning("Bạn đã đặt phòng này");
+      }
       dispatch(setIsModalPaymentOpen(true));
     }
   };
   const bookingAction = () => {
-    // phòng đã đặt
-    if (isBooked()) {
-      return message.warning("Bạn đã đặt phòng này");
-    }
     let body = {
       maPhong: infoRoom.id,
       ngayDen: dayjs(ngayDen.setDate(ngayDen.getDate() + 1)),
