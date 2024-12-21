@@ -29,7 +29,9 @@ export default function ModalPayment({ bookingAction }) {
   const onFinish = (values) => {
     bookingAction();
   };
-  const onFinishFailed = (errorInfo) => {};
+  const onFinishFailed = (errorInfo) => {
+    console.error(errorInfo);
+  };
   const renderContentTab1 = () => {
     return (
       <div>
@@ -81,6 +83,7 @@ export default function ModalPayment({ bookingAction }) {
           onFinishFailed={onFinishFailed}
           autoComplete="off"
         >
+          {/* soThe */}
           <Form.Item
             label="Số thẻ"
             name="soThe"
@@ -97,6 +100,7 @@ export default function ModalPayment({ bookingAction }) {
               },
             ]}
           >
+            {/* 4 ô số thẻ */}
             <Space>
               <Form.Item
                 name="soThe1"
@@ -168,7 +172,7 @@ export default function ModalPayment({ bookingAction }) {
               </Form.Item>
             </Space>
           </Form.Item>
-
+          {/* mã thẻ */}
           <Form.Item
             label="Mã thẻ"
             name="maThe"
@@ -190,6 +194,7 @@ export default function ModalPayment({ bookingAction }) {
           >
             <Input />
           </Form.Item>
+          {/* HSD */}
           <Form.Item
             label="Ngày hết hạn"
             name="HSD"
@@ -203,6 +208,7 @@ export default function ModalPayment({ bookingAction }) {
           >
             <DatePicker format={"MM/YYYY"} picker="month" minDate={dayjs()} />
           </Form.Item>
+          {/* chủ thẻ */}
           <Form.Item
             label="Tên chủ thẻ"
             name="chuThe"
@@ -280,18 +286,12 @@ export default function ModalPayment({ bookingAction }) {
 
   return (
     <Modal
-      //   title="Basic Modal"
       open={isModalPaymentOpen}
       onOk={handleOk}
       onCancel={handleCancel}
       footer={null}
     >
-      <Tabs
-        // defaultActiveKey="1"
-        activeKey={activeTab}
-        items={items}
-        onChange={onChange}
-      />
+      <Tabs activeKey={activeTab} items={items} onChange={onChange} />
     </Modal>
   );
 }

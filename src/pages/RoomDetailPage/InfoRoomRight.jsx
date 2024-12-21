@@ -67,7 +67,6 @@ export default function InfoRoomRight() {
           : null;
         listIdBooking.push(infoRoom.id);
         const listIdJSON = JSON.stringify(listIdBooking);
-
         localStorage.setItem("LIST_ID_BOOKING", listIdJSON);
         dispatch(setIsModalPaymentOpen(false));
         message.success("Đặt phòng thành công");
