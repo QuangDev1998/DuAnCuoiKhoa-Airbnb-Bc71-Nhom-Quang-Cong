@@ -78,3 +78,8 @@
   color: white;
   border-color: white;
 }
+
+/* đè css của react-date-range */
+.rdrMonth {
+  width: 100% !important;
+}

@@ -27,6 +27,7 @@ const detailRoomSlice = createSlice({
     });
     builder.addCase(fetchDetailRoomAction.rejected, (state, action) => {
       console.error(action.error);
+      window.location.href = "/";
     });
     // fetchListCommentByIdRoomAction
     builder.addCase(

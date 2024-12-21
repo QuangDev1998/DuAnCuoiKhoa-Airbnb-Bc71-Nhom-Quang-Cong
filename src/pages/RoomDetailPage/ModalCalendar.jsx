@@ -44,16 +44,15 @@ export default function ModalCalendar() {
       onOk={handleOk}
       onCancel={handleCancel}
       footer={null}
-      width="600px"
     >
       <DateRange
+        className="w-full"
         onChange={onchangeDate}
         showSelectionPreview={true}
         moveRangeOnFirstSelection={false}
         months={1}
         rangeColors={["rgb(254, 107, 110)"]}
         ranges={dateRange}
-        direction="horizontal"
         minDate={new Date()} // sớm nhất hôm nay
         locale={vi}
         maxDate={addDays(new Date(), 180)} // max 6 tháng

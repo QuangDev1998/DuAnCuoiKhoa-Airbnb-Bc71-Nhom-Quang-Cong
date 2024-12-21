@@ -141,6 +141,7 @@ export default function SelectForm(props) {
   const dateContent = (
     <div className="p-4">
       <DateRange
+        className="w-full"
         ranges={dateRange}
         onChange={handleDateChange}
         months={1}
