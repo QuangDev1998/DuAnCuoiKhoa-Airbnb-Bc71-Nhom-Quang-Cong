@@ -49,14 +49,6 @@ export default function SelectForm(props) {
       .catch((err) => console.error("Lỗi khi gọi API:", err));
   }, []);
 
-  const handleSelectLocation = (id) => {
-    setSelectedLocationId(id);
-    if (isRoompage) {
-      handleSelectRoomByLocation(id);
-    }
-    setOpenLocation(false);
-  };
-
   const handleDateChange = (item) => {
     setDateRange([item.selection]);
     let { startDate, endDate } = item.selection;
@@ -67,17 +59,41 @@ export default function SelectForm(props) {
   };
 
   const handleSearch = () => {
-    if (isRoompage && selectedLocationId === null) {
-      // Hiển thị thông báo nếu đang ở trang rooms mà chưa chọn địa điểm
-      message.warning("Vui lòng chọn địa điểm trước khi tìm kiếm!");
-      return;
+    // Kiểm tra nếu không chọn địa điểm hoặc chọn "None"
+    if (selectedLocationId === null) {
+      if (window.location.pathname === "/") {
+        // Trường hợp 1: Người dùng ở trang Home (/)
+        navigate("/rooms"); // Điều hướng tới trang /rooms
+        return;
+      }
+
+      if (window.location.pathname.startsWith("/rooms")) {
+        // Trường hợp 2 và 3: Người dùng ở trang /rooms hoặc /rooms/:id
+        message.warning("Vui lòng chọn địa điểm trước khi tìm kiếm!");
+        return;
+      }
     }
 
-    if (selectedLocationId === null) {
-      navigate("/rooms");
-    } else {
-      navigate(`/rooms/${selectedLocationId}`);
+    // Trường hợp đã chọn địa điểm
+    navigate(`/rooms/${selectedLocationId}`); // Điều hướng tới trang /rooms/:id
+  };
+
+  const handleSelectLocation = (id) => {
+    // Nếu chọn "None"
+    if (id === null) {
+      setSelectedLocationId(null); // Đặt selectedLocationId về null
+      setOpenLocation(false); // Đóng ô chọn địa điểm
+      return; // Không xử lý thêm
     }
+
+    // Nếu người dùng chọn một địa điểm hợp lệ
+    setSelectedLocationId(id);
+
+    if (isRoompage) {
+      handleSelectRoomByLocation(id); // Lọc danh sách phòng theo địa điểm
+    }
+
+    setOpenLocation(false); // Đóng ô chọn địa điểm
   };
 
   const locationContent = (
