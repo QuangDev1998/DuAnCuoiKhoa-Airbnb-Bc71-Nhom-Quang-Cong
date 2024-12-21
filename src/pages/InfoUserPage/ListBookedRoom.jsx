@@ -48,19 +48,6 @@ export default function ListBookedRoom({ idUser }) {
       return listViTri[index].tinhThanh;
     }
   };
-  // từ maPhong => ngayDen,ngayDi
-  const renderDateBookRoom = (maPhong) => {
-    let index = listBookedRoom.findIndex((room) => room.id === maPhong);
-    if (index !== -1) {
-      const ngayDen = dayjs(listBooked[index].ngayDen).format("DD/MM/YYYY");
-      const ngayDi = dayjs(listBooked[index].ngayDi).format("DD/MM/YYYY");
-      return (
-        <span className="text-sm block">
-          {ngayDen} - {ngayDi}
-        </span>
-      );
-    }
-  };
 
   const renderListBookedRoom = () => {
     return listBookedRoom?.map((room, index) => {
@@ -85,7 +72,6 @@ export default function ListBookedRoom({ idUser }) {
                 <div>
                   <h1 className="text-lg font-bold">{room.tenPhong}</h1>
                   <p className="text-sm">
-                    {renderDateBookRoom(room.id)}
                     <EnvironmentOutlined className="mr-1" />
                     {renderTinhThanh(room.maViTri)}
                   </p>
@@ -93,7 +79,6 @@ export default function ListBookedRoom({ idUser }) {
 
                 <div className="mt-2 flex justify-start gap-5 text-gray-500">
                   <ul>
-                    <li>{room.khach} khách</li>
                     <li>{room.phongNgu} phòng ngủ</li>
                     <li>{room.giuong} giường</li>
                     <li>{room.phongTam} phòng tắm</li>
@@ -102,7 +87,6 @@ export default function ListBookedRoom({ idUser }) {
                     <li>{room.dieuHoa ? "v" : "x"} Điều hòa</li>
                     <li>{room.bep ? "v" : "x"} Bếp</li>
                     <li>{room.hoBoi ? "v" : "x"} Hồ bơi</li>
-                    <li>{room.mayGiat ? "v" : "x"} Máy giặt</li>
                   </ul>
                 </div>
                 <div className="mt-2">

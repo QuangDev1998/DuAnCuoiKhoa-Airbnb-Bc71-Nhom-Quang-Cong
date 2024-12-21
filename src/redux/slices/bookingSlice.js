@@ -7,6 +7,7 @@ const initialState = {
   ngayDi: addDays(new Date(), 7),
   soLuongKhach: 1,
   isModalCalendarOpen: false,
+  isModalPaymentOpen: false,
 };
 
 const bookingSlice = createSlice({
@@ -28,6 +29,9 @@ const bookingSlice = createSlice({
     setNgayDi: (state, action) => {
       state.ngayDi = action.payload;
     },
+    setIsModalPaymentOpen: (state, action) => {
+      state.isModalPaymentOpen = action.payload;
+    },
   },
 });
 
@@ -37,6 +41,7 @@ export const {
   setSoLuongKhach,
   setNgayDen,
   setNgayDi,
+  setIsModalPaymentOpen,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

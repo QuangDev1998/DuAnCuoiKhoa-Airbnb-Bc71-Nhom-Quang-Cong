@@ -8,6 +8,7 @@ import InfoRoomLeft from "./InfoRoomLeft";
 import InfoRoomRight from "./InfoRoomRight";
 import Comment from "./Comment";
 import ModalCalendar from "./ModalCalendar";
+import ModalPayment from "./ModalPayment";
 
 export default function RoomDetailPage() {
   const { infoRoom } = useSelector((state) => state.detailRoomSlice);
@@ -85,6 +86,7 @@ export default function RoomDetailPage() {
           <Comment idRoom={idRoom} />
         </div>
         <ModalCalendar />
+        <ModalPayment />
       </div>
     </div>
   );

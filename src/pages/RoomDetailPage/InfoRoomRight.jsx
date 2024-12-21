@@ -50,6 +50,15 @@ export default function InfoRoomRight() {
     bookingServices
       .createBooking(body)
       .then((result) => {
+        // add id phòng mới đặt vào localStorage để đối chiếu
+        let listIdBookingJson = localStorage.getItem("LIST_ID_BOOKING");
+        const listIdBooking = listIdBookingJson
+          ? JSON.parse(listIdBookingJson)
+          : null;
+        listIdBooking.push(infoRoom.id);
+        const listIdJSON = JSON.stringify(listIdBooking);
+
+        localStorage.setItem("LIST_ID_BOOKING", listIdJSON);
         message.success("Đặt phòng thành công");
         message.info("Vào To Page User để kiểm tra");
       })
