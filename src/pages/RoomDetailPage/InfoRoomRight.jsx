@@ -4,19 +4,21 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setIsModalCalendarOpen,
+  setIsModalPaymentOpen,
   setSoLuongKhach,
+  setTienTruocThue,
 } from "../../redux/slices/bookingSlice";
 import dayjs from "dayjs";
 import { bookingServices } from "../../services/bookingServices";
 import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
+import ModalPayment from "./ModalPayment";
 
 export default function InfoRoomRight() {
   const { infoRoom, listComment } = useSelector(
     (state) => state.detailRoomSlice
   );
-  const { soLuongKhach, totalDay, ngayDen, ngayDi } = useSelector(
-    (state) => state.bookingSlice
-  );
+  const { soLuongKhach, totalDay, ngayDen, ngayDi, tienTruocThue } =
+    useSelector((state) => state.bookingSlice);
   const loginData = useSelector((state) => state.userSlice?.loginData);
   const user = loginData?.user;
   const dispatch = useDispatch();
@@ -35,10 +37,16 @@ export default function InfoRoomRight() {
   };
 
   const bookingAction = () => {
+    // đăng nhập để book
     if (!user) {
       dispatch(setModalContent("login"));
       dispatch(setIsModalOpen(true));
       return message.warning("Đăng nhập để đặt phòng");
+    }
+    // phòng đã đặt
+
+    if (isBooked()) {
+      return message.warning("Bạn đã đặt phòng này");
     }
     let body = {
       maPhong: infoRoom.id,
@@ -59,6 +67,7 @@ export default function InfoRoomRight() {
         const listIdJSON = JSON.stringify(listIdBooking);
 
         localStorage.setItem("LIST_ID_BOOKING", listIdJSON);
+        dispatch(setIsModalPaymentOpen(false));
         message.success("Đặt phòng thành công");
         message.info("Vào To Page User để kiểm tra");
       })
@@ -88,15 +97,9 @@ export default function InfoRoomRight() {
     }
     dispatch(setSoLuongKhach(totalKhach));
   };
-  const confirm = (e) => {
-    if (isBooked()) {
-      return message.warning("Bạn đã đặt phòng này");
-    }
-    bookingAction();
-  };
 
   let tienNgay = infoRoom.giaTien * totalDay;
-  let tienTruocThue = tienNgay + 8;
+  dispatch(setTienTruocThue(tienNgay + 8));
   return (
     <div className="basis-1/3 sticky top-0 w-full lg:h-80">
       <div className="p-5 space-y-5 divide-y-2 border rounded-lg shadow-lg">
@@ -181,25 +184,21 @@ export default function InfoRoomRight() {
             <p className="font-bold">$ {tienTruocThue}</p>
           </div>
           <div>
-            <Popconfirm
-              title="Xác nhận"
-              description="Bạn có muốn đặt phòng?"
-              onConfirm={confirm}
-              okText="Có"
-              cancelText="Không"
+            <button
+              className=" button-primary w-full font-bold "
+              style={{
+                padding: "12px 0px",
+              }}
+              onClick={() => {
+                dispatch(setIsModalPaymentOpen(true));
+              }}
             >
-              <button
-                className=" button-primary w-full font-bold "
-                style={{
-                  padding: "12px 0px",
-                }}
-              >
-                Đặt phòng
-              </button>
-            </Popconfirm>
+              Đặt phòng
+            </button>
           </div>
         </div>
       </div>
+      <ModalPayment bookingAction={bookingAction} />
     </div>
   );
 }

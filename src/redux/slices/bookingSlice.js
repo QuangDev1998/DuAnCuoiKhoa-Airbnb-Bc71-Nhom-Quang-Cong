@@ -6,6 +6,7 @@ const initialState = {
   ngayDen: new Date(),
   ngayDi: addDays(new Date(), 7),
   soLuongKhach: 1,
+  tienTruocThue: null,
   isModalCalendarOpen: false,
   isModalPaymentOpen: false,
 };
@@ -19,6 +20,9 @@ const bookingSlice = createSlice({
     },
     setTotalDay: (state, action) => {
       state.totalDay = action.payload;
+    },
+    setTienTruocThue: (state, action) => {
+      state.tienTruocThue = action.payload;
     },
     setSoLuongKhach: (state, action) => {
       state.soLuongKhach = action.payload;
@@ -38,6 +42,7 @@ const bookingSlice = createSlice({
 export const {
   setIsModalCalendarOpen,
   setTotalDay,
+  setTienTruocThue,
   setSoLuongKhach,
   setNgayDen,
   setNgayDi,
