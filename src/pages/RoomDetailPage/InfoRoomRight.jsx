@@ -1,5 +1,5 @@
 import { StarFilled } from "@ant-design/icons";
-import { message, Popconfirm } from "antd";
+import { message } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -52,8 +52,8 @@ export default function InfoRoomRight() {
     }
     let body = {
       maPhong: infoRoom.id,
-      ngayDen,
-      ngayDi,
+      ngayDen: dayjs(ngayDen.setDate(ngayDen.getDate() + 1)),
+      ngayDi: dayjs(ngayDi.setDate(ngayDi.getDate() + 1)),
       soLuongKhach,
       maNguoiDung: user.id,
     };

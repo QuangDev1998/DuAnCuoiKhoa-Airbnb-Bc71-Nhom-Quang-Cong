@@ -48,6 +48,19 @@ export default function ListBookedRoom({ idUser }) {
       return listViTri[index].tinhThanh;
     }
   };
+  // từ maPhong => ngayDen,ngayDi
+  const renderDateBookRoom = (maPhong) => {
+    let index = listBookedRoom.findIndex((room) => room.id === maPhong);
+    if (index !== -1) {
+      const ngayDen = dayjs(listBooked[index].ngayDen).format("DD/MM/YYYY");
+      const ngayDi = dayjs(listBooked[index].ngayDi).format("DD/MM/YYYY");
+      return (
+        <span className="text-sm block">
+          {ngayDen} - {ngayDi}
+        </span>
+      );
+    }
+  };
 
   const renderListBookedRoom = () => {
     return listBookedRoom?.map((room, index) => {
@@ -71,6 +84,10 @@ export default function ListBookedRoom({ idUser }) {
               <div className="divide-y-2">
                 <div>
                   <h1 className="text-lg font-bold">{room.tenPhong}</h1>
+                  <div className=" text-gray-400">
+                    {renderDateBookRoom(room.id)}
+                  </div>
+
                   <p className="text-sm">
                     <EnvironmentOutlined className="mr-1" />
                     {renderTinhThanh(room.maViTri)}

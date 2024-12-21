@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setIsModalPaymentOpen } from "../../redux/slices/bookingSlice";
-import { Flex, Input, Modal, Radio, Space, Tabs } from "antd";
+import { Input, Modal, Radio, Space, Tabs } from "antd";
 
 export default function ModalPayment({ bookingAction }) {
   const { isModalPaymentOpen, tienTruocThue } = useSelector(
@@ -11,9 +11,7 @@ export default function ModalPayment({ bookingAction }) {
   const [activeTab, setActiveTab] = useState("1");
   const [optionTab1, setOptionTab] = useState("online");
   const dispatch = useDispatch();
-  const showModal = () => {
-    dispatch(setIsModalPaymentOpen(true));
-  };
+
   const handleOk = () => {
     dispatch(setIsModalPaymentOpen(false));
   };
@@ -21,11 +19,9 @@ export default function ModalPayment({ bookingAction }) {
     dispatch(setIsModalPaymentOpen(false));
   };
   const onChange = (key) => {
-    console.log(key);
     setActiveTab(key);
   };
   const onChangeRadio = (e) => {
-    console.log("radio checked", e.target.value);
     setValue(e.target.value);
     setOptionTab(e.target.value);
   };
@@ -35,18 +31,22 @@ export default function ModalPayment({ bookingAction }) {
         <Radio.Group onChange={onChangeRadio} value={value}>
           <Space direction="vertical">
             <Radio value={"online"}>
-              <div className="flex justify-center items-center gap-3 text-xl">
+              <div className="grid grid-cols-1 md:flex justify-center items-center gap-3 text-xl">
                 <p>Thanh toán bằng thẻ</p>
-                <i class="fab fa-cc-visa"></i>
-                <i class="fab fa-cc-mastercard"></i>
-                <i class="fab fa-cc-amazon-pay"></i>
-                <i class="fa fa-credit-card"></i>
+                <div>
+                  <i class="fab fa-cc-visa"></i>
+                  <i class="fab fa-cc-mastercard"></i>
+                  <i class="fab fa-cc-amazon-pay"></i>
+                  <i class="fa fa-credit-card"></i>
+                </div>
               </div>
             </Radio>
             <Radio value={"offline"}>
-              <div className="flex justify-center items-center gap-3 text-xl">
+              <div className="grid grid-cols-1 md:flex justify-center items-center gap-3 text-xl">
                 <p>Thanh toán bằng tiền mặt</p>
-                <i class="fa fa-money-bill"></i>
+                <div>
+                  <i class="fa fa-money-bill"></i>
+                </div>
               </div>
             </Radio>
           </Space>
