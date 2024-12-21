@@ -35,16 +35,18 @@ export default function InfoRoomRight() {
     }
     return false;
   };
-
-  const bookingAction = () => {
+  const isLogin = () => {
     // đăng nhập để book
     if (!user) {
       dispatch(setModalContent("login"));
       dispatch(setIsModalOpen(true));
       return message.warning("Đăng nhập để đặt phòng");
+    } else {
+      dispatch(setIsModalPaymentOpen(true));
     }
+  };
+  const bookingAction = () => {
     // phòng đã đặt
-
     if (isBooked()) {
       return message.warning("Bạn đã đặt phòng này");
     }
@@ -190,7 +192,7 @@ export default function InfoRoomRight() {
                 padding: "12px 0px",
               }}
               onClick={() => {
-                dispatch(setIsModalPaymentOpen(true));
+                isLogin();
               }}
             >
               Đặt phòng
