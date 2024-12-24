@@ -107,6 +107,7 @@ export default function ModalUpHinh({ idUser }) {
             listType="picture"
             maxCount={1}
             accept="image/png, image/jpeg"
+            customRequest={({ onSuccess }) => onSuccess("ok")}
           >
             <button className="button-primary" type="button">
               <PlusOutlined />
