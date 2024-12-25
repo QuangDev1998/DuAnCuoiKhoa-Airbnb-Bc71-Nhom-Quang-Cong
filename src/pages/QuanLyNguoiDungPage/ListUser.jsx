@@ -33,7 +33,7 @@ export default function ListUser({ valueInput }) {
         dispatch(setListUserAction(result.data.content.data));
       })
       .catch((err) => {
-        console.err(err);
+        console.error(err);
       });
   };
   // Table data
@@ -106,7 +106,7 @@ export default function ListUser({ valueInput }) {
                     dispatch(setIsModalEditOpenAction(true));
                   })
                   .catch((err) => {
-                    console.err(err);
+                    console.error(err);
                   });
               }}
               className=" text-2xl hover:cursor-pointer mr-2"
@@ -150,7 +150,7 @@ export default function ListUser({ valueInput }) {
         message.success("Xóa thành công");
       })
       .catch((err) => {
-        console.err(err);
+        console.error(err);
         message.error("Xóa thất bại");
       });
   };

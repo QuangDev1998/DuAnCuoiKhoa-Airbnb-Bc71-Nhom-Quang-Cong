@@ -44,7 +44,7 @@ export default function ListPhong({ valueInput }) {
         dispatch(setListPhongAction(result.data.content.data));
       })
       .catch((err) => {
-        console.err(err);
+        console.error(err);
       });
   };
 

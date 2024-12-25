@@ -32,7 +32,6 @@ export default function ModalQLNguoiDung({ valueInput }) {
   };
   // hàm submit form
   const handleOk = (values) => {
-    console.log(values);
     values.birthday = dayjs(values.birthday);
     // gọi api tạo
     nguoiDungServices

@@ -35,7 +35,7 @@ export default function TempFormLogin({ onLoginSuccess }) {
             localStorage.setItem("LIST_ID_BOOKING", listIdBookingJson);
           })
           .catch((err) => {
-            console.err(err);
+            console.error(err);
           });
 
         // Gọi hàm đóng Modal

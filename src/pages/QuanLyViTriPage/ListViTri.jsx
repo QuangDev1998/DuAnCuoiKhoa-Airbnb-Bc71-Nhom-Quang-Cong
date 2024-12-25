@@ -33,7 +33,7 @@ export default function ListViTri({ valueInput }) {
         dispatch(setListViTriAction(result.data.content.data));
       })
       .catch((err) => {
-        console.err(err);
+        console.error(err);
       });
   };
   // Table data
