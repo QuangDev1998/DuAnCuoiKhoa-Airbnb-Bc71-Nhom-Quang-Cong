@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userSlice from "./slices/userSlice";
+import quanLySoLieuSlice from "./slices/quanLySoLieuSlice";
 import quanLyNguoiDungSlice from "./slices/quanLyNguoiDungSlice";
 import quanLyViTriSlice from "./slices/quanLyViTriSlice";
 import quanLyPhongSlice from "./slices/quanLyPhongSlice";
@@ -13,6 +14,7 @@ import darkModeSlice from "./slices/darkModeSlice";
 export const store = configureStore({
   reducer: {
     userSlice,
+    quanLySoLieuSlice,
     quanLyNguoiDungSlice,
     quanLyViTriSlice,
     quanLyPhongSlice,

@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import {
   AimOutlined,
+  BarChartOutlined,
   CalendarOutlined,
   HomeOutlined,
   MenuFoldOutlined,
@@ -10,6 +11,7 @@ import {
 import { Button, Layout, Menu, message } from "antd";
 import { NavLink, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 const { Content, Sider } = Layout;
 function getItem(label, key, icon, children) {
   return {
@@ -40,6 +42,11 @@ export default function Slider({ content }) {
   const location = useLocation(); // lấy location.pathname để cập nhật state cho defaultSelectedKeys của Menu
   // data cho component Menu
   const items = [
+    getItem(
+      <NavLink to="/admin/QuanLySoLieu">Quản lý người dùng</NavLink>,
+      "/admin/QuanLySoLieu",
+      <BarChartOutlined />
+    ),
     getItem(
       <NavLink to="/admin/QuanLyNguoiDung">Quản lý người dùng</NavLink>,
       "/admin/QuanLyNguoiDung",

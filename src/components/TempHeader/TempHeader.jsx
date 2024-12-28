@@ -255,7 +255,7 @@ export default function TempHeader() {
                     {user.user.role === "ADMIN" ? (
                       <li>
                         <a
-                          href="/admin/QuanLyNguoiDung"
+                          href="/admin/QuanLySoLieu"
                           className="block px-4 py-2 text-gray-700 hover:bg-gray-100"
                         >
                           To Page Admin

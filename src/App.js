@@ -18,6 +18,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import RoomsPage from "./pages/RoomsPage/RoomsPage";
 import RoomsVitri from "./pages/RoomsPage/RoomsVitri";
 import ScrollToTop from "./pages/ScrollToTop/ScrollToTop";
+import QuanLySoLieu from "./pages/QuanLySoLieu/QuanLySoLieu";
 
 AOS.init();
 function App() {
@@ -40,6 +41,10 @@ function App() {
           <Route
             path="/info-user"
             element={<Layout content={<InfoUserPage />} />}
+          />
+          <Route
+            path="/admin/QuanLySoLieu"
+            element={<AdminLayout content={<QuanLySoLieu />} />}
           />
           <Route
             path="/admin/QuanLyNguoiDung"
