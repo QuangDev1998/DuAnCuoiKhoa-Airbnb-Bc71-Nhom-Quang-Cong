@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setIsModalCalendarOpen,
   setIsModalPaymentOpen,
+  setIsModalReBookingOpen,
   setSoLuongKhach,
   setTienTruocThue,
 } from "../../redux/slices/bookingSlice";
@@ -12,6 +13,7 @@ import dayjs from "dayjs";
 import { bookingServices } from "../../services/bookingServices";
 import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 import ModalPayment from "./ModalPayment";
+import ModalReBooking from "./ModalReBooking";
 
 export default function InfoRoomRight() {
   const { infoRoom, listComment } = useSelector(
@@ -29,9 +31,11 @@ export default function InfoRoomRight() {
     const listIdBooking = listIdBookingJson
       ? JSON.parse(listIdBookingJson)
       : null;
-    let index = listIdBooking.findIndex((id) => id === infoRoom.id);
-    if (index !== -1) {
-      return true;
+    let index = listIdBooking?.findIndex((id) => id === infoRoom.id);
+    if (index) {
+      if (index !== -1) {
+        return true;
+      }
     }
     return false;
   };
@@ -44,7 +48,7 @@ export default function InfoRoomRight() {
     } else {
       // phòng đã đặt
       if (isBooked()) {
-        return message.warning("Bạn đã đặt phòng này");
+        return dispatch(setIsModalReBookingOpen(true));
       }
       dispatch(setIsModalPaymentOpen(true));
     }
@@ -200,6 +204,7 @@ export default function InfoRoomRight() {
         </div>
       </div>
       <ModalPayment bookingAction={bookingAction} />
+      <ModalReBooking />
     </div>
   );
 }

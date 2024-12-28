@@ -9,6 +9,7 @@ const initialState = {
   tienTruocThue: null,
   isModalCalendarOpen: false,
   isModalPaymentOpen: false,
+  isModalReBookingOpen: false,
 };
 
 const bookingSlice = createSlice({
@@ -36,6 +37,9 @@ const bookingSlice = createSlice({
     setIsModalPaymentOpen: (state, action) => {
       state.isModalPaymentOpen = action.payload;
     },
+    setIsModalReBookingOpen: (state, action) => {
+      state.isModalReBookingOpen = action.payload;
+    },
   },
 });
 
@@ -47,6 +51,7 @@ export const {
   setNgayDen,
   setNgayDi,
   setIsModalPaymentOpen,
+  setIsModalReBookingOpen,
 } = bookingSlice.actions;
 
 export default bookingSlice.reducer;

@@ -36,7 +36,7 @@ export default function ModalEditQLNguoiDung({ valueInput }) {
   };
   // hàm submit form
   const handleOk = (values) => {
-    values.birthday = dayjs(values.birthday).format("DD-MM-YYYY");
+    values.birthday = dayjs(values.birthday);
     // gọi api edit
     nguoiDungServices
       .editUser(userInfo.id, values)
