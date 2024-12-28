@@ -4,7 +4,7 @@ import { authServices } from "../../services/authServices";
 import { useNavigate } from "react-router-dom";
 import { setLoginData, setModalContent } from "../../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
-import { bookingServices } from "../../services/bookingServices";
+import { getListIdBookingAction } from "../../redux/thunks/bookingThunks";
 
 export default function TempFormLogin({ onLoginSuccess }) {
   let navigate = useNavigate();
@@ -20,24 +20,8 @@ export default function TempFormLogin({ onLoginSuccess }) {
         // lưu thông tin đăng nhập vào localStorage
         let loginJson = JSON.stringify(userData);
         localStorage.setItem("USER_LOGIN", loginJson);
-
         // dùng id user để lấy list phòng đã book => set localStorage
-        bookingServices
-          .searchBooking(userData.user.id)
-          .then((result) => {
-            const bookingData = result.data.content;
-            // tạo array chứa id phòng đã book
-            let listIdBookingClone = [];
-            bookingData.map((room) => {
-              return listIdBookingClone.push(room.maPhong);
-            });
-            let listIdBookingJson = JSON.stringify(listIdBookingClone);
-            localStorage.setItem("LIST_ID_BOOKING", listIdBookingJson);
-          })
-          .catch((err) => {
-            console.error(err);
-          });
-
+        dispatch(getListIdBookingAction(userData.user.id));
         // Gọi hàm đóng Modal
         if (onLoginSuccess) {
           onLoginSuccess();

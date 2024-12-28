@@ -14,31 +14,18 @@ import { bookingServices } from "../../services/bookingServices";
 import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 import ModalPayment from "./ModalPayment";
 import ModalReBooking from "./ModalReBooking";
+import { useNavigate } from "react-router-dom";
 
 export default function InfoRoomRight() {
   const { infoRoom, listComment } = useSelector(
     (state) => state.detailRoomSlice
   );
-  const { soLuongKhach, totalDay, ngayDen, ngayDi, tienTruocThue } =
+  const { isBooked, soLuongKhach, totalDay, ngayDen, ngayDi, tienTruocThue } =
     useSelector((state) => state.bookingSlice);
-  const loginData = useSelector((state) => state.userSlice?.loginData);
+  const loginData = useSelector((state) => state.userSlice.loginData);
   const user = loginData?.user;
   const dispatch = useDispatch();
 
-  const isBooked = () => {
-    // lấy list id từ localeStorage để tham chiếu phòng khi booking
-    let listIdBookingJson = localStorage.getItem("LIST_ID_BOOKING");
-    const listIdBooking = listIdBookingJson
-      ? JSON.parse(listIdBookingJson)
-      : null;
-    let index = listIdBooking?.findIndex((id) => id === infoRoom.id);
-    if (index) {
-      if (index !== -1) {
-        return true;
-      }
-    }
-    return false;
-  };
   const isLogin = () => {
     // đăng nhập để book
     if (!user) {
@@ -47,7 +34,7 @@ export default function InfoRoomRight() {
       return message.warning("Đăng nhập để đặt phòng");
     } else {
       // phòng đã đặt
-      if (isBooked()) {
+      if (isBooked) {
         return dispatch(setIsModalReBookingOpen(true));
       }
       dispatch(setIsModalPaymentOpen(true));
@@ -75,6 +62,7 @@ export default function InfoRoomRight() {
         dispatch(setIsModalPaymentOpen(false));
         message.success("Đặt phòng thành công");
         message.info("Vào To Page User để kiểm tra");
+        window.location.reload();
       })
       .catch((err) => {
         message.error("Đặt phòng thất bại");
@@ -83,9 +71,9 @@ export default function InfoRoomRight() {
   };
   const calculateRating = () => {
     let total = 0;
-    listComment.map((cmt) => {
-      total += cmt.saoBinhLuan;
-    });
+    for (let i = 0; i < listComment.length; i++) {
+      total += listComment[i].saoBinhLuan;
+    }
     let num = total / listComment.length;
     return parseFloat(num.toFixed(2));
   };
@@ -120,7 +108,7 @@ export default function InfoRoomRight() {
                 <span className="font-bold">{calculateRating()}</span>
               </p>
               <a className="underline text-gray-500" href="">
-                ({listComment.length}) đánh giá
+                {listComment.length} đánh giá
               </a>
             </div>
           </div>
@@ -200,6 +188,16 @@ export default function InfoRoomRight() {
             >
               Đặt phòng
             </button>
+          </div>
+          <div>
+            <p
+              className="text-primary underline hover:cursor-pointer"
+              onClick={() => {
+                window.location.href = "/info-user";
+              }}
+            >
+              * Vào trang User để xem thông tin phòng đã đặt
+            </p>
           </div>
         </div>
       </div>

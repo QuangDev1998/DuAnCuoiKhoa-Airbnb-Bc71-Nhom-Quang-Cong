@@ -1,7 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addDays } from "date-fns";
+import {
+  getListIdBookingAction,
+  checkIsBookedAction,
+} from "../thunks/bookingThunks";
+
+let listIdBookingJson = localStorage.getItem("LIST_ID_BOOKING");
 
 const initialState = {
+  listIdBooking: listIdBookingJson ? JSON.parse(listIdBookingJson) : null,
+  isBooked: false,
   totalDay: 7,
   ngayDen: new Date(),
   ngayDi: addDays(new Date(), 7),
@@ -16,6 +24,12 @@ const bookingSlice = createSlice({
   name: "bookingSlice",
   initialState,
   reducers: {
+    setListIdBooking: (state, action) => {
+      state.listIdBooking = action.payload;
+    },
+    setIsBooked: (state, action) => {
+      state.isBooked = action.payload;
+    },
     setIsModalCalendarOpen: (state, action) => {
       state.isModalCalendarOpen = action.payload;
     },
@@ -41,9 +55,27 @@ const bookingSlice = createSlice({
       state.isModalReBookingOpen = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    // getListIdBookingAction
+    builder.addCase(getListIdBookingAction.fulfilled, (state, action) => {
+      state.listIdBooking = action.payload;
+    });
+    builder.addCase(getListIdBookingAction.rejected, (state, action) => {
+      console.error(action.error);
+    });
+    // checkIsBookedAction
+    builder.addCase(checkIsBookedAction.fulfilled, (state, action) => {
+      state.isBooked = action.payload;
+    });
+    builder.addCase(checkIsBookedAction.rejected, (state, action) => {
+      console.error(action.error);
+    });
+  },
 });
 
 export const {
+  setListIdBooking,
+  setIsBooked,
   setIsModalCalendarOpen,
   setTotalDay,
   setTienTruocThue,

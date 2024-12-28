@@ -8,9 +8,12 @@ import InfoRoomLeft from "./InfoRoomLeft";
 import InfoRoomRight from "./InfoRoomRight";
 import Comment from "./Comment";
 import ModalCalendar from "./ModalCalendar";
+import { checkIsBookedAction } from "../../redux/thunks/bookingThunks";
 
 export default function RoomDetailPage() {
   const { infoRoom } = useSelector((state) => state.detailRoomSlice);
+  const { listIdBooking } = useSelector((state) => state.bookingSlice);
+
   const dispatch = useDispatch();
   const params = useParams();
   const idRoom = params.id;
@@ -18,6 +21,9 @@ export default function RoomDetailPage() {
   useEffect(() => {
     dispatch(fetchDetailRoomAction(idRoom));
   }, []);
+  useEffect(() => {
+    dispatch(checkIsBookedAction({ listIdBooking, idRoom: infoRoom.id }));
+  }, [infoRoom]);
   const renderTienIch = () => {
     let tienIchContent = [];
     // mapping tên và icon cho key

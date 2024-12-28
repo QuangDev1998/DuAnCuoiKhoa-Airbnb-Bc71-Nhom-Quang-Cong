@@ -4,11 +4,11 @@ import { fetchListCommentByIdRoomAction } from "../../redux/thunks/detailRoomThu
 import { Form, Input, Rate, message } from "antd";
 import dayjs from "dayjs";
 import { binhLuanServices } from "../../services/binhLuanServices";
-import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 
 export default function Comment({ idRoom }) {
   const { listComment } = useSelector((state) => state.detailRoomSlice);
-  const loginData = useSelector((state) => state.userSlice?.loginData);
+  const { isBooked } = useSelector((state) => state.bookingSlice);
+  const loginData = useSelector((state) => state.userSlice.loginData);
   const token = loginData?.token;
   const user = loginData?.user;
 
@@ -22,7 +22,7 @@ export default function Comment({ idRoom }) {
       ...values,
       maPhong: idRoom,
       maNguoiBinhLuan: user.id,
-      ngayBinhLuan: dayjs().format("DD-MM-YY hh:mm"),
+      ngayBinhLuan: dayjs(),
     };
     binhLuanServices
       .addComment(token, valuesClone)
@@ -38,55 +38,63 @@ export default function Comment({ idRoom }) {
   const onFinishFailed = (errorInfo) => {
     console.error("Failed:", errorInfo);
   };
-  const renderListComment = () => {
-    return listComment.map(
-      ({
-        id,
-        avatar,
-        tenNguoiBinhLuan,
-        saoBinhLuan,
-        ngayBinhLuan,
-        noiDung,
-      }) => (
-        <div key={id}>
-          <div className="flex items-center gap-3">
-            <div>
-              {avatar ? (
-                <img
-                  src={avatar}
-                  alt=""
-                  className="mx-auto h-12 w-12 object-cover rounded-full"
-                />
-              ) : (
-                <img
-                  src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
-                  alt=""
-                  className="mx-auto h-12 w-12 object-cover rounded-full"
-                />
-              )}
-            </div>
 
-            <div>
-              <div className="flex items-center gap-2">
-                <h1 className="text-lg font-bold">{tenNguoiBinhLuan}</h1>
-                <Rate
-                  disabled
-                  defaultValue={saoBinhLuan}
-                  className="bg-white"
-                />
+  const renderListComment = () => {
+    if (listComment.length > 0) {
+      return listComment.map(
+        ({
+          id,
+          avatar,
+          tenNguoiBinhLuan,
+          saoBinhLuan,
+          ngayBinhLuan,
+          noiDung,
+        }) => (
+          <div key={id}>
+            <div className="flex items-center gap-3">
+              <div>
+                {avatar ? (
+                  <img
+                    src={avatar}
+                    alt=""
+                    className="mx-auto h-12 w-12 object-cover rounded-full"
+                  />
+                ) : (
+                  <img
+                    src="https://cdn-icons-png.flaticon.com/512/6596/6596121.png"
+                    alt=""
+                    className="mx-auto h-12 w-12 object-cover rounded-full"
+                  />
+                )}
               </div>
-              <p className="text-sm text-gray-500">{ngayBinhLuan}</p>
+
+              <div>
+                <div className="flex items-center gap-2">
+                  <h1 className="text-lg font-bold">{tenNguoiBinhLuan}</h1>
+                  <Rate
+                    disabled
+                    defaultValue={saoBinhLuan}
+                    className="bg-white"
+                  />
+                </div>
+                <p className="text-sm text-gray-500">
+                  {dayjs(ngayBinhLuan).format("DD-MM-YY hh:mm")}
+                </p>
+              </div>
             </div>
+            <p className="mt-3">{noiDung}</p>
           </div>
-          <p className="mt-3">{noiDung}</p>
-        </div>
-      )
-    );
+        )
+      );
+    } else {
+      return <p>Hiện không có bình luận nào</p>;
+    }
   };
   return (
     <div className="py-5 divide-y-2">
       {/* comment */}
-      {user ? (
+      {/* đã đặt phòng mới đc cmt */}
+      {isBooked ? (
         <div>
           <div className="flex gap-3 items-center ">
             <div>
@@ -149,16 +157,10 @@ export default function Comment({ idRoom }) {
           </Form>
         </div>
       ) : (
-        <div
-          onClick={() => {
-            dispatch(setModalContent("login"));
-            dispatch(setIsModalOpen(true));
-          }}
-          className="mb-5"
-        >
+        <div className="mb-5">
           {" "}
-          <p className="hover:underline text-primary cursor-pointer">
-            Đăng nhập để bình luận
+          <p className=" text-primary ">
+            Bạn chỉ có thể đánh giá sau khi đã trải nghiệm phòng
           </p>{" "}
         </div>
       )}

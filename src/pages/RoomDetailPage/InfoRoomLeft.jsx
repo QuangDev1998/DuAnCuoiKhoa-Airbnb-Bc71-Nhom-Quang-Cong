@@ -1,8 +1,5 @@
 import React, { useState } from "react";
-import { InfoCircleOutlined } from "@ant-design/icons";
 import { useSelector } from "react-redux";
-import { format } from "date-fns";
-import { Typography } from "antd";
 import winner from "../../assets/image/winner.png";
 
 export default function InfoRoomLeft() {
@@ -15,14 +12,14 @@ export default function InfoRoomLeft() {
   };
   const calculateAverageRating = () => {
     let total = 0;
-    listComment.map((cmt) => {
-      total += cmt.saoBinhLuan;
-    });
+    for (let i = 0; i < listComment.length; i++) {
+      total += listComment[i].saoBinhLuan;
+    }
     let num = total / listComment.length;
     let avg = parseFloat(num.toFixed(2));
     return avg;
   };
-  const renderratingAward = () => {
+  const renderRatingAward = () => {
     let finalNum = calculateAverageRating();
     if (finalNum >= 4) {
       return (
@@ -88,7 +85,7 @@ export default function InfoRoomLeft() {
               src="https://avatars.githubusercontent.com/u/93591100?v=4"
               alt=""
             />
-            {renderratingAward()}
+            {renderRatingAward()}
           </div>
         </div>
         {renderFavorite()}
