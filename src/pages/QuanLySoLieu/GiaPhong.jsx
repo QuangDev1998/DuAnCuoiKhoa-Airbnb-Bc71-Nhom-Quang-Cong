@@ -40,8 +40,7 @@ export default function GiaPhong() {
       {
         label: "$",
         data: [giaMin, calculateAverage(), giaMax],
-
-        backgroundColor: "red",
+        backgroundColor: "rgb(254, 107, 110)",
       },
     ],
   };
@@ -54,7 +53,7 @@ export default function GiaPhong() {
         text: "Giá phòng / đêm",
       },
       legend: {
-        position: "bottom",
+        display: false,
       },
       datalabels: {
         color: "black",
@@ -64,7 +63,7 @@ export default function GiaPhong() {
           size: 18,
         },
         formatter: (value) => {
-          return `${value} $`;
+          return `${value}`;
         },
       },
     },
@@ -72,10 +71,17 @@ export default function GiaPhong() {
       x: {
         grid: { display: false }, // Ẩn lưới X
       },
+      y: {
+        display: true,
+        title: {
+          display: true,
+          text: "Giá phòng ($)",
+        },
+      },
     },
   };
   return (
-    <div style={{ width: "100%", height: "200px" }}>
+    <div className="h-52 w-full border-2 p-5 rounded-lg shadow-sm">
       <Bar data={barChartData} options={options} />
     </div>
   );

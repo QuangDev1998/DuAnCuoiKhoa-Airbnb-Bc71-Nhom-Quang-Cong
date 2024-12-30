@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   fetchListBinhLuanAction,
   fetchListDatPhongAction,
@@ -8,9 +8,10 @@ import {
 import GiaPhong from "./GiaPhong";
 import Rating from "./Rating";
 import RatingPercentage from "./RatingPercentage";
+import DoanhThu from "./DoanhThu";
+import TopPhong from "./TopPhong";
 
 export default function QuanLySoLieu() {
-  const { listPhong } = useSelector((state) => state.quanLySoLieuSlice);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchListPhongAction());
@@ -19,13 +20,17 @@ export default function QuanLySoLieu() {
   }, []);
 
   return (
-    <div>
+    <div className="space-y-5">
       <div className="md:grid grid-cols-2 gap-3">
         <RatingPercentage />
-        <div>
+        <div className="space-y-2">
           <Rating />
           <GiaPhong />
         </div>
+      </div>
+      <div className="md:grid grid-cols-2 gap-3">
+        <DoanhThu />
+        <TopPhong />
       </div>
     </div>
   );

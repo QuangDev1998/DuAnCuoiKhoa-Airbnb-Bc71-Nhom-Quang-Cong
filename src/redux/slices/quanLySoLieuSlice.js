@@ -15,18 +15,30 @@ const initialState = {
   threeStar: [],
   fourStar: [],
   fiveStar: [],
+  listIdGiaTien: [],
+
+  donDatPhong: null,
+  tongDoanhThu: null,
 };
 
 const quanLySoLieuSlice = createSlice({
   name: "quanLySoLieuSlice",
   initialState,
-  reducers: {},
+  reducers: {
+    setDonDatPhong: (state, action) => {
+      state.donDatPhong = action.payload;
+    },
+    setTongDoanhThu: (state, action) => {
+      state.tongDoanhThu = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     // fetchListPhongAction
     builder.addCase(fetchListPhongAction.fulfilled, (state, action) => {
-      const { listPhong, listGiaTien } = action.payload;
+      const { listPhong, listGiaTien, listIdGiaTien } = action.payload;
       state.listPhong = listPhong;
       state.listGiaTien = listGiaTien;
+      state.listIdGiaTien = listIdGiaTien;
     });
     builder.addCase(fetchListPhongAction.rejected, (state, action) => {
       console.error(action.error);
@@ -55,6 +67,6 @@ const quanLySoLieuSlice = createSlice({
   },
 });
 
-export const {} = quanLySoLieuSlice.actions;
+export const { setDonDatPhong, setTongDoanhThu } = quanLySoLieuSlice.actions;
 
 export default quanLySoLieuSlice.reducer;

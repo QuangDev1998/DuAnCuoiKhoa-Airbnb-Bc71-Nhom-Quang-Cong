@@ -10,11 +10,22 @@ export const fetchListPhongAction = createAsyncThunk(
     const listPhong = result.data.content;
     let listGiaTienTemp = [];
     for (let i = 0; i < listPhong.length; i++) {
-      listGiaTienTemp.push(listPhong[i].giaTien);
+      let giaTien = listPhong[i].giaTien;
+      if (giaTien > 0) {
+        listGiaTienTemp.push(giaTien);
+      }
+    }
+    let listIdGiaTien = [];
+    for (let i = 0; i < listPhong.length; i++) {
+      listIdGiaTien.push({
+        id: listPhong[i].id,
+        giaTien: listPhong[i].giaTien,
+      });
     }
     return {
       listPhong,
       listGiaTien: listGiaTienTemp,
+      listIdGiaTien,
     };
   }
 );

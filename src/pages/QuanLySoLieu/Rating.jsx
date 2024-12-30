@@ -39,7 +39,7 @@ export default function Rating() {
           twoStar.length,
           oneStar.length,
         ],
-        backgroundColor: "yellow",
+        backgroundColor: "rgb(255,255,102)",
         borderWidth: 1,
         barPercentage: 0.8,
         borderRadius: "32",
@@ -62,7 +62,7 @@ export default function Rating() {
         enabled: true,
       },
       datalabels: {
-        color: "white",
+        color: "black",
         anchor: "center",
         align: "middle",
         font: {
@@ -88,7 +88,7 @@ export default function Rating() {
     },
   };
   return (
-    <div style={{ width: "100%", height: "200px" }}>
+    <div className="h-52 w-full border-2 p-5 rounded-lg shadow-sm">
       <Bar data={barChartData} options={options} />
     </div>
   );

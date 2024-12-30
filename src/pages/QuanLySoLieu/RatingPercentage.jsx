@@ -11,7 +11,7 @@ export default function RatingPercentage() {
     (state) => state.quanLySoLieuSlice
   );
 
-  const barChartData = {
+  const pieChartData = {
     labels: ["5⭐", "4⭐", "3⭐", "2⭐", "1⭐"],
     datasets: [
       {
@@ -23,7 +23,13 @@ export default function RatingPercentage() {
           twoStar.length,
           oneStar.length,
         ],
-        backgroundColor: ["red", "blue", "orange", "green", "black"],
+        backgroundColor: [
+          "RGB(173, 216, 230)",
+          "RGB(106, 90, 205)",
+          "RGB(143, 188, 143)",
+          "RGB(70, 130, 180)",
+          "RGB(0, 139, 139)",
+        ],
         hoverOffset: 4,
       },
     ],
@@ -61,7 +67,7 @@ export default function RatingPercentage() {
   };
   return (
     <div style={{ width: "100%", height: "400px" }}>
-      <Pie data={barChartData} options={options} />;
+      <Pie data={pieChartData} options={options} />;
     </div>
   );
 }
