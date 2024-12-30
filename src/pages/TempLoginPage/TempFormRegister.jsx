@@ -11,7 +11,7 @@ export default function TempFormRegister({ onRegisterSuccess }) {
   // Hàm xử lý khi người dùng gửi form
   const handleSubmit = async (values) => {
     const { name, email, password, phone, birthday, gender } = values;
-
+    console.log(values);
     // Chuyển đổi giá trị giới tính cho API (true cho nam, false cho nữ)
     const genderValue =
       gender === "male" ? true : gender === "female" ? false : null;
@@ -105,7 +105,7 @@ export default function TempFormRegister({ onRegisterSuccess }) {
             </Form.Item>
             {/* Input số điện thoại */}
             <Form.Item
-              name="localPhone"
+              name="phone"
               noStyle
               dependencies={["countryCode"]}
               rules={[

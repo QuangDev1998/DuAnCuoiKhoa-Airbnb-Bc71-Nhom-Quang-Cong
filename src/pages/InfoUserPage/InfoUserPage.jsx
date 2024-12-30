@@ -26,7 +26,7 @@ export default function InfoUserPage() {
     if (!idUser) {
       dispatch(setModalContent("login"));
       dispatch(setIsModalOpen(true));
-      return message.warning("Đăng nhập để xem thông tin cá nhân");
+      message.warning("Đăng nhập để xem thông tin cá nhân");
     }
   };
   return (
