@@ -19,11 +19,15 @@ export default function RoomDetailPage() {
   const idRoom = params.id;
   const { themeMode } = useSelector((state) => state.darkModeSlice);
   useEffect(() => {
-    dispatch(fetchDetailRoomAction(idRoom));
+    dispatch(fetchDetailRoomAction(idRoom)).then((result) => {
+      dispatch(
+        checkIsBookedAction({ listIdBooking, idRoom: result.payload.id })
+      );
+    });
   }, []);
   useEffect(() => {
     dispatch(checkIsBookedAction({ listIdBooking, idRoom: infoRoom.id }));
-  }, [infoRoom]);
+  }, [listIdBooking]);
   const renderTienIch = () => {
     let tienIchContent = [];
     // mapping tên và icon cho key
@@ -71,7 +75,7 @@ export default function RoomDetailPage() {
         </div>
         <div className="divide-y-2 space-y-5">
           {/* info */}
-          <div>
+          <div className="space-y-5">
             <div className="grid grid-cols-1 lg:flex gap-5 ">
               {/* left */}
               <InfoRoomLeft />

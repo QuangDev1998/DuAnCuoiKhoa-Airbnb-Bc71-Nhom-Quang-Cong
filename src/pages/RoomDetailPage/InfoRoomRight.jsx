@@ -6,6 +6,7 @@ import {
   setIsModalCalendarOpen,
   setIsModalPaymentOpen,
   setIsModalReBookingOpen,
+  setListIdBooking,
   setSoLuongKhach,
   setTienTruocThue,
 } from "../../redux/slices/bookingSlice";
@@ -14,14 +15,19 @@ import { bookingServices } from "../../services/bookingServices";
 import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 import ModalPayment from "./ModalPayment";
 import ModalReBooking from "./ModalReBooking";
-import { useNavigate } from "react-router-dom";
-
 export default function InfoRoomRight() {
   const { infoRoom, listComment } = useSelector(
     (state) => state.detailRoomSlice
   );
-  const { isBooked, soLuongKhach, totalDay, ngayDen, ngayDi, tienTruocThue } =
-    useSelector((state) => state.bookingSlice);
+  const {
+    listIdBooking,
+    isBooked,
+    soLuongKhach,
+    totalDay,
+    ngayDen,
+    ngayDi,
+    tienTruocThue,
+  } = useSelector((state) => state.bookingSlice);
   const loginData = useSelector((state) => state.userSlice.loginData);
   const user = loginData?.user;
   const dispatch = useDispatch();
@@ -52,17 +58,15 @@ export default function InfoRoomRight() {
       .createBooking(body)
       .then((result) => {
         // add id phòng mới đặt vào localStorage để đối chiếu
-        let listIdBookingJson = localStorage.getItem("LIST_ID_BOOKING");
-        const listIdBooking = listIdBookingJson
-          ? JSON.parse(listIdBookingJson)
-          : null;
-        listIdBooking.push(infoRoom.id);
-        const listIdJSON = JSON.stringify(listIdBooking);
+
+        let listIdBookingClone = [...listIdBooking];
+        listIdBookingClone.push(infoRoom.id);
+        let listIdJSON = JSON.stringify(listIdBookingClone);
         localStorage.setItem("LIST_ID_BOOKING", listIdJSON);
+        dispatch(setListIdBooking(listIdBookingClone));
         dispatch(setIsModalPaymentOpen(false));
         message.success("Đặt phòng thành công");
         message.info("Vào To Page User để kiểm tra");
-        window.location.reload();
       })
       .catch((err) => {
         message.error("Đặt phòng thất bại");

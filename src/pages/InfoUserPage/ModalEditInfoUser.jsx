@@ -14,6 +14,7 @@ import { setIsModalEditOpenAction } from "../../redux/slices/infoUserSlice";
 import dayjs from "dayjs";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import { fetchInfoUserAction } from "../../redux/thunks/infoUserThunks";
+import { setLoginData } from "../../redux/slices/userSlice";
 
 export default function ModalEditInfoUser() {
   const { isModalEditOpen, infoUser } = useSelector(
@@ -33,11 +34,13 @@ export default function ModalEditInfoUser() {
     nguoiDungServices
       .editUser(infoUser.id, values)
       .then((result) => {
-        let loginJsonClone = { ...loginData, user: result.data.content };
-        let loginJson = JSON.stringify(loginJsonClone);
+        let userClone = result.data.content;
+        userClone.password = "";
+        let loginClone = { ...loginData, user: userClone };
+        let loginJson = JSON.stringify(loginClone);
         localStorage.setItem("USER_LOGIN", loginJson);
         dispatch(fetchInfoUserAction(infoUser.id));
-        window.location.reload();
+        dispatch(setLoginData(loginClone));
         message.success("Cập nhật thành công");
       })
       .catch((err) => {

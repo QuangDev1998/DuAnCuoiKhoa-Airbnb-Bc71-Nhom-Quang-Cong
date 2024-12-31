@@ -5,6 +5,7 @@ import { setIsModalUpHinhOpenAction } from "../../redux/slices/infoUserSlice";
 import { PlusOutlined } from "@ant-design/icons";
 import { nguoiDungServices } from "../../services/nguoiDungServices";
 import { fetchInfoUserAction } from "../../redux/thunks/infoUserThunks";
+import { setLoginData } from "../../redux/slices/userSlice";
 
 export default function ModalUpHinh({ idUser }) {
   const { isModalUpHinhOpen, infoUser } = useSelector(
@@ -31,11 +32,13 @@ export default function ModalUpHinh({ idUser }) {
     nguoiDungServices
       .uploadHinhUser(formData, token)
       .then((result) => {
-        let loginJsonClone = { ...loginData, user: result.data.content };
-        let loginJson = JSON.stringify(loginJsonClone);
+        let userClone = result.data.content;
+        userClone.password = "";
+        let loginClone = { ...loginData, user: userClone };
+        let loginJson = JSON.stringify(loginClone);
         localStorage.setItem("USER_LOGIN", loginJson);
         dispatch(fetchInfoUserAction(idUser));
-        window.location.reload();
+        dispatch(setLoginData(loginClone));
         message.success("Cập nhật thành công");
       })
       .catch((err) => {

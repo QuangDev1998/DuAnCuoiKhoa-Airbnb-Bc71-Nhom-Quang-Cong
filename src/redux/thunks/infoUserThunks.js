@@ -15,12 +15,13 @@ export const createListIdBookingAction = createAsyncThunk(
   async (idUser) => {
     const listIdBookingClone = [];
     const result = await bookingServices.searchBooking(idUser);
-    result.data.content.map((room) => {
-      return listIdBookingClone.push(room.maPhong);
-    });
+    const bookingArr = result.data.content;
+    for (let i = 0; i < bookingArr.length; i++) {
+      listIdBookingClone.push(bookingArr[i].maPhong);
+    }
     return {
       listId: listIdBookingClone,
-      listBooked: result.data.content,
+      listBooked: bookingArr,
     };
   }
 );
