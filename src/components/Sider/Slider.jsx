@@ -43,7 +43,7 @@ export default function Slider({ content }) {
   // data cho component Menu
   const items = [
     getItem(
-      <NavLink to="/admin/QuanLySoLieu">Quản lý người dùng</NavLink>,
+      <NavLink to="/admin/QuanLySoLieu">Thống kê</NavLink>,
       "/admin/QuanLySoLieu",
       <BarChartOutlined />
     ),

@@ -104,6 +104,7 @@ export default function ModalQLViTri({ valueInput }) {
             listType="picture"
             maxCount={1}
             accept="image/png, image/jpeg"
+            customRequest={({ onSuccess }) => onSuccess("ok")}
           >
             <button
               className="border-2 border-solid py-2 px-3 rounded-md"
