@@ -110,6 +110,7 @@ export default function ModalEditInfoUser() {
                 {
                   required: true,
                   message: "Vui lòng nhập email!",
+                  whitespace: true,
                 },
               ]}
               hasFeedback
@@ -124,6 +125,7 @@ export default function ModalEditInfoUser() {
                 {
                   required: true,
                   message: "Vui lòng nhập số điện thoại!",
+                  whitespace: true,
                 },
                 {
                   required: true,
