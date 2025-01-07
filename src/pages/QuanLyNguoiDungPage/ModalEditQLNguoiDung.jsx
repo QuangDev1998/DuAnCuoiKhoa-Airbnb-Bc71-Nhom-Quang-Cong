@@ -112,6 +112,7 @@ export default function ModalEditQLNguoiDung({ valueInput }) {
                 {
                   required: true,
                   message: "Vui lòng nhập số điện thoại!",
+                  whitespace: true,
                 },
                 {
                   required: true,
@@ -191,6 +192,7 @@ export default function ModalEditQLNguoiDung({ valueInput }) {
                 {
                   required: true,
                   message: "Vui lòng nhập email!",
+                  whitespace: true,
                 },
               ]}
               hasFeedback

@@ -55,7 +55,13 @@ export default function TempFormRegister({ onRegisterSuccess }) {
         <Form.Item
           label="Name"
           name="name"
-          rules={[{ required: true, message: "Vui lòng nhập tên của bạn!" }]}
+          rules={[
+            {
+              required: true,
+              whitespace: true,
+              message: "Vui lòng nhập tên của bạn!",
+            },
+          ]}
         >
           <Input placeholder="Điền tên vào đây..." />
         </Form.Item>
@@ -65,7 +71,11 @@ export default function TempFormRegister({ onRegisterSuccess }) {
           label="Email"
           name="email"
           rules={[
-            { required: true, message: "Vui lòng nhập email!" },
+            {
+              required: true,
+              whitespace: true,
+              message: "Vui lòng nhập email!",
+            },
             { type: "email", message: "Email không hợp lệ!" },
           ]}
         >
@@ -77,7 +87,11 @@ export default function TempFormRegister({ onRegisterSuccess }) {
           label="Password"
           name="password"
           rules={[
-            { required: true, message: "Vui lòng nhập mật khẩu!" },
+            {
+              required: true,
+              whitespace: true,
+              message: "Vui lòng nhập mật khẩu!",
+            },
             {
               pattern: /[a-zA-Z]/,
               message: "Mật khẩu phải chứa ít nhất một chữ cái!",
@@ -94,7 +108,13 @@ export default function TempFormRegister({ onRegisterSuccess }) {
             <Form.Item
               name="countryCode"
               noStyle
-              rules={[{ required: true, message: "Vui lòng chọn mã vùng!" }]}
+              rules={[
+                {
+                  required: true,
+                  whitespace: true,
+                  message: "Vui lòng chọn mã vùng!",
+                },
+              ]}
             >
               <Select placeholder="Mã vùng" style={{ width: "30%" }}>
                 <Select.Option value="+84">+84 (Vietnam)</Select.Option>

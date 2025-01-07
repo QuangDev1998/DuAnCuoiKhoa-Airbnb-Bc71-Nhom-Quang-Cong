@@ -15,13 +15,15 @@ export default function QuanLyViTriPage() {
   //  debounce tính năng search
   const handleChangeSearch = (e) => {
     let { value } = e.target;
-    setValueInput(value);
+    setValueInput(value.trimStart());
     // nếu đã có input search => xóa setTimeout cũ / tạo setTimeout mới
     if (searchRef.current) {
       clearTimeout(searchRef.current);
     }
     searchRef.current = setTimeout(() => {
-      dispatch(fetchListViTriAction({ currentPage: 1, valueInput: value }));
+      dispatch(
+        fetchListViTriAction({ currentPage: 1, valueInput: value.trimStart() })
+      );
     }, 1000);
   };
 

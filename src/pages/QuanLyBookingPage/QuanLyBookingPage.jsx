@@ -16,12 +16,12 @@ export default function QuanLyBookingPage() {
   //  debounce tính năng search
   const handleChangeSearch = (e) => {
     let { value } = e.target;
-    setvalueInput(value);
+    setvalueInput(value.trimStart());
     if (searchRef.current) {
       clearTimeout(searchRef.current);
     }
     searchRef.current = setTimeout(() => {
-      fetchSearchBooking(value);
+      fetchSearchBooking(value.trimStart());
     }, 1000);
   };
   const fetchSearchBooking = (keyword) => {

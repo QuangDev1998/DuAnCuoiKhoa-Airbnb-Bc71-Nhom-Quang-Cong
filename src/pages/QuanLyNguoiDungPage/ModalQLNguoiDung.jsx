@@ -105,6 +105,7 @@ export default function ModalQLNguoiDung({ valueInput }) {
                 {
                   required: true,
                   message: "Vui lòng nhập số điện thoại!",
+                  whitespace: true,
                 },
                 {
                   required: true,
@@ -168,6 +169,7 @@ export default function ModalQLNguoiDung({ valueInput }) {
                 {
                   required: true,
                   message: "Vui lòng nhập email!",
+                  whitespace: true,
                 },
               ]}
               hasFeedback
@@ -182,6 +184,7 @@ export default function ModalQLNguoiDung({ valueInput }) {
                 {
                   required: true,
                   message: "Vui lòng nhập mật khẩu!",
+                  whitespace: true,
                 },
                 {
                   pattern: new RegExp(/[A-Za-z]/),

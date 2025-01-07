@@ -15,13 +15,15 @@ export default function QuanLyPhongPage() {
   // debounce tính năng search
   const handleChangeSearch = (e) => {
     let { value } = e.target;
-    setValueInput(value);
+    setValueInput(value.trimStart());
     // nếu đã có input search => xóa setTimeout cũ / tạo setTimeout mới
     if (searchRef.current) {
       clearTimeout(searchRef.current);
     }
     searchRef.current = setTimeout(() => {
-      dispatch(fetchListPhongAction({ currentPage: 1, valueInput: value }));
+      dispatch(
+        fetchListPhongAction({ currentPage: 1, valueInput: value.trimStart() })
+      );
     }, 1000);
   };
 

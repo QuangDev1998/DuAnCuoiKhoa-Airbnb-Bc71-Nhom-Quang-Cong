@@ -53,12 +53,11 @@ export default function ListUser({ valueInput }) {
           <div className="md:flex items-center">
             {dataObject.avatar ? (
               <Avatar
-                src={
-                  <img src={dataObject.avatar} alt="avatar" className="mr-2" />
-                }
+                className="mr-2 h-8 w-8"
+                src={<img src={dataObject.avatar} alt="avatar" />}
               />
             ) : (
-              <Avatar icon={<UserOutlined />} className="mr-2" />
+              <Avatar icon={<UserOutlined />} className="mr-2 h-8 w-8" />
             )}
 
             <p className="truncate">{dataObject.name}</p>
