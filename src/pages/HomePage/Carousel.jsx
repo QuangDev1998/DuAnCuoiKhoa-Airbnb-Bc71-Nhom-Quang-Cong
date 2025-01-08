@@ -7,25 +7,27 @@ export default function Carousel() {
   return (
     <div className="w-full relative flex flex-col items-center h-[50vh] sm:h-[60vh] md:h-[70vh] lg:h-[80vh] xl:h-[90vh]">
       {/* Video Background */}
-      <div className="absolute w-full h-full">
+      <div className="relative w-full h-[500px] sm:h-[600px] md:h-[700px] lg:h-[800px]">
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute w-full h-full object-cover"
+          className="absolute top-0 left-0 w-full h-full object-cover"
         >
           <source src={videoBanner} type="video/mp4" />
           Your browser does not support the video tag.
         </video>
-        <div className="absolute w-full h-full bg-black opacity-50"></div>
+        <div className="absolute top-0 left-0 w-full h-full bg-black opacity-50"></div>
       </div>
 
       {/* Logo and Text */}
-      <div className="absolute z-10 md:block hidden text-white px-4 text-center lg:text-left lg:left-[10%] top-[30%] sm:top-[35%] md:top-[40%] lg:top-[45%]">
+      <div className="absolute z-10 md:block hidden text-white px-4 text-center lg:text-left lg:left-[10%] top-[20%] sm:top-[25%] md:top-[30%] lg:top-[35%]">
         <div className="flex flex-col items-center lg:items-start">
-          <div className="flex items-center space-x-4 mb-2">
+          <div className="flex items-center space-x-4">
             <img
+              data-aos="fade-up"
+              data-aos-duration="1000"
               src={airbnbLogo}
               alt="Airbnb Logo"
               className="h-12 sm:h-14 md:h-16 lg:h-20"
@@ -49,11 +51,12 @@ export default function Carousel() {
       </div>
 
       {/* Swoosh Hero Image */}
+
       <div className="absolute bottom-[-1px] left-0 w-full z-20">
         <img
           src={swooshHero}
           alt="Swoosh Hero"
-          className="w-full h-[200px] sm:h-[250px] md:h-[300px] object-cover translate-y-10"
+          className="w-full h-auto sm:h-[300px] md:h-[350px]  object-cover "
         />
       </div>
     </div>
