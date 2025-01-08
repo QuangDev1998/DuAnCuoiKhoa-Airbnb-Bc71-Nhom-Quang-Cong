@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchListCommentByIdRoomAction } from "../../redux/thunks/detailRoomThunks";
-import { Form, Input, Rate, message } from "antd";
+import { Form, Input, Rate, Select, message } from "antd";
 import dayjs from "dayjs";
 import { binhLuanServices } from "../../services/binhLuanServices";
+import { setListCommentAction } from "../../redux/slices/detailRoomSlice";
 
 export default function Comment({ idRoom }) {
   const { listComment } = useSelector((state) => state.detailRoomSlice);
@@ -90,6 +91,30 @@ export default function Comment({ idRoom }) {
       return <p>Hiện không có bình luận nào</p>;
     }
   };
+  const handleSortListComment = (order, key) => {
+    let listCommentClone = [...listComment];
+    if (order === "newest" || order === "highest") {
+      listCommentClone.sort((a, b) => b[key] - a[key]);
+    }
+    if (order === "oldest" || order === "lowest") {
+      listCommentClone.sort((a, b) => a[key] - b[key]);
+    }
+    dispatch(setListCommentAction(listCommentClone));
+  };
+  const handleSelectChange = (value) => {
+    if (value === "newest") {
+      return handleSortListComment("newest", "id");
+    }
+    if (value === "oldest") {
+      return handleSortListComment("oldest", "id");
+    }
+    if (value === "highest") {
+      return handleSortListComment("highest", "saoBinhLuan");
+    }
+    if (value === "lowest") {
+      return handleSortListComment("lowest", "saoBinhLuan");
+    }
+  };
   return (
     <div className="py-5 divide-y-2">
       {/* comment */}
@@ -167,7 +192,30 @@ export default function Comment({ idRoom }) {
 
       {/* list comment */}
       <div className="py-5">
-        <h1 className="text-xl font-bold">Bình luận</h1>
+        <h1 className="text-xl font-bold ">Bình luận</h1>
+        <Select
+          options={[
+            {
+              value: "newest",
+              label: "Mới nhất",
+            },
+            {
+              value: "oldest",
+              label: "Cũ nhất",
+            },
+            {
+              value: "highest",
+              label: "Cao nhất",
+            },
+            {
+              value: "lowest",
+              label: "Thấp nhất",
+            },
+          ]}
+          className="w-28 my-5"
+          onChange={handleSelectChange}
+          placeholder="Sắp xếp"
+        />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 h-80 overflow-y-scroll">
           {renderListComment()}
         </div>
