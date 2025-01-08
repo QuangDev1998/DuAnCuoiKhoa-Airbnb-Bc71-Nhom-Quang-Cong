@@ -35,6 +35,8 @@ export default function List() {
 
     return vitriArr.map((vitri) => (
       <Card
+        data-aos="zoom-in-up"
+        // data-aos-duration="1000"
         key={vitri.id}
         hoverable
         onClick={() => handleNavigation(vitri.id)}
@@ -45,15 +47,13 @@ export default function List() {
           <div className="w-16 h-16 flex-shrink-0">
             <img
               className="w-full h-full object-cover rounded-md"
-              alt={vitri.tenViTri}
               src={vitri.hinhAnh}
             />
           </div>
 
           {/* Phần nội dung bên phải */}
           <div className="flex flex-col justify-center">
-            <p className=" font-semibold text-gray-900">{vitri.tenViTri}</p>
-            <p className=" text-gray-500">{`${vitri.tinhThanh}, ${vitri.quocGia}`}</p>
+            <p className="font-semibold text-gray-900">{`${vitri.tinhThanh}`}</p>
           </div>
         </div>
       </Card>
