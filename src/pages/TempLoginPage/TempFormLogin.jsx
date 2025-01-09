@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { setLoginData, setModalContent } from "../../redux/slices/userSlice";
 import { useDispatch } from "react-redux";
 import { getListIdBookingAction } from "../../redux/thunks/bookingThunks";
-import FacebookButton from "./FacebookButton";
 
 export default function TempFormLogin({ onLoginSuccess }) {
   let navigate = useNavigate();
@@ -77,7 +76,6 @@ export default function TempFormLogin({ onLoginSuccess }) {
 
         {/* Button Đăng ký và Đăng nhập */}
         <div className="flex justify-between mt-4">
-          <FacebookButton />
           <Button
             className="bg-red-500 hover:bg-red-600 text-white font-medium px-6 rounded-md"
             onClick={() => {

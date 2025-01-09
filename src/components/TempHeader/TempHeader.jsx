@@ -8,6 +8,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import airbnbLogo from "../../assets/image/airbnb-1.aabeefedaf30b8c7011a022cdb5a6425.png";
 import { setIsModalOpen, setModalContent } from "../../redux/slices/userSlice";
 import DarkLightToggle from "../DarkLightToggle/DarkLightToggle";
+import FacebookButton from "../../pages/TempLoginPage/FacebookButton";
 export default function TempHeader() {
   const user = useSelector((state) => state.userSlice.loginData);
   const { isModalOpen, modalContent } = useSelector((state) => state.userSlice);
@@ -21,7 +22,7 @@ export default function TempHeader() {
   const { themeMode } = useSelector((state) => state.darkModeSlice);
   const isRoomDetailPage = location.pathname.includes("/room-detail/");
   const dispatch = useDispatch();
-  console.log(user);
+
   const handleLogout = () => {
     localStorage.removeItem("USER_LOGIN");
     localStorage.removeItem("LIST_ID_BOOKING");
@@ -388,21 +389,35 @@ export default function TempHeader() {
       </div>
       <Modal open={isModalOpen} onCancel={handleCloseModal} footer={null}>
         {modalContent === "login" ? (
-          <TempFormLogin
-            onLoginSuccess={() => {
-              dispatch(setIsModalOpen(false));
-              setShowDropdown(false);
-            }}
-            setModalContent={setModalContent}
-          />
+          <>
+            {/* Form đăng nhập */}
+            <TempFormLogin
+              onLoginSuccess={() => {
+                dispatch(setIsModalOpen(false)); // Đóng modal sau khi đăng nhập thành công
+                setShowDropdown(false); // Ẩn dropdown (nếu cần)
+              }}
+              setModalContent={setModalContent} // Đổi nội dung modal nếu cần
+            />
+
+            {/* Nút Facebook Login nằm dưới các input */}
+            <FacebookButton
+              onLoginSuccess={() => {
+                dispatch(setIsModalOpen(false)); // Đóng modal sau khi đăng nhập thành công
+                setShowDropdown(false); // Ẩn dropdown
+              }}
+            />
+          </>
         ) : (
-          <TempFormRegister
-            onRegisterSuccess={() => {
-              dispatch(setModalContent("login"));
-              setShowDropdown(false);
-            }}
-            setModalContent={setModalContent}
-          />
+          <>
+            {/* Form đăng ký */}
+            <TempFormRegister
+              onRegisterSuccess={() => {
+                dispatch(setModalContent("login")); // Chuyển modal sang trạng thái đăng nhập
+                setShowDropdown(false); // Ẩn dropdown (nếu cần)
+              }}
+              setModalContent={setModalContent} // Đổi nội dung modal nếu cần
+            />
+          </>
         )}
       </Modal>
     </header>

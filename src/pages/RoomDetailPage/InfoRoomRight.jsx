@@ -54,11 +54,14 @@ export default function InfoRoomRight() {
       soLuongKhach,
       maNguoiDung: user.id,
     };
+    // check xem dat hay chua
+    // true => warning
+    // false =>
     bookingServices
       .createBooking(body)
       .then((result) => {
         // add id phòng mới đặt vào localStorage để đối chiếu
-
+        console.log(result);
         let listIdBookingClone = [...listIdBooking];
         listIdBookingClone.push(infoRoom.id);
         let listIdJSON = JSON.stringify(listIdBookingClone);

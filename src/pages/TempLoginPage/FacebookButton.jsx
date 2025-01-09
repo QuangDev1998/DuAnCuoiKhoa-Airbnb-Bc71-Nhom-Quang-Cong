@@ -39,11 +39,11 @@ const FacebookButton = ({ onLoginSuccess }) => {
         if (data.message === "Authentication successful") {
           message.success(`Welcome, ${data.user.name}!`);
           const user = {
-            id: 43792,
-            birthday: "12-07-2023",
+            id: 44833,
+            birthday: "1998-12-22",
             gender: false,
-            phone: "0123456789",
-            role: "ADMIN",
+            phone: "0328984656",
+            role: "USER",
             email: data.user.email,
             name: data.user.name,
             avatar: data.user.picture,
@@ -51,15 +51,15 @@ const FacebookButton = ({ onLoginSuccess }) => {
 
           // Lưu thông tin người dùng vào Redux hoặc localStorage
           dispatch(setLoginData({ user }));
-
           localStorage.setItem("USER_LOGIN", JSON.stringify({ user }));
-          //   localStorage.setItem("USER_LOGIN", JSON.stringify(data.user));
-
           // Lấy danh sách phòng đã đặt
           dispatch(getListIdBookingAction(data.user.id));
 
           // Điều hướng về trang chính
           navigate("/");
+        }
+        if (onLoginSuccess) {
+          onLoginSuccess();
         } else {
           message.error(data.message || "Đăng nhập thất bại.");
         }
@@ -83,7 +83,7 @@ const FacebookButton = ({ onLoginSuccess }) => {
         onFailure={handleFailure}
         scope="public_profile,email" // Yêu cầu quyền
         buttonStyle={{
-          padding: "10px",
+          padding: "20px",
           background: "#4267B2",
           color: "#fff",
           border: "none",
