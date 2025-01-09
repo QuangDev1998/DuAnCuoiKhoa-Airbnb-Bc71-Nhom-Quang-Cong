@@ -21,7 +21,7 @@ export default function TempHeader() {
   const { themeMode } = useSelector((state) => state.darkModeSlice);
   const isRoomDetailPage = location.pathname.includes("/room-detail/");
   const dispatch = useDispatch();
-
+  console.log(user);
   const handleLogout = () => {
     localStorage.removeItem("USER_LOGIN");
     localStorage.removeItem("LIST_ID_BOOKING");
@@ -31,7 +31,6 @@ export default function TempHeader() {
       window.location.href = "/";
     }, 1000);
   };
-
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
