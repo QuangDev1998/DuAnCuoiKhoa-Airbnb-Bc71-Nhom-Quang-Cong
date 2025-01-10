@@ -115,7 +115,7 @@ export default function ModalEditInfoUser() {
               ]}
               hasFeedback
             >
-              <Input />
+              <Input disabled />
             </Form.Item>
             {/* phone */}
             <Form.Item
