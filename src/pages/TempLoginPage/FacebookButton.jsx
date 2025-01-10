@@ -6,6 +6,7 @@ import { message } from "antd";
 import { setLoginData } from "../../redux/slices/userSlice";
 import { getListIdBookingAction } from "../../redux/thunks/bookingThunks";
 import { authServices } from "../../services/authServices";
+import { nguoiDungServices } from "../../services/nguoiDungServices";
 
 const FacebookButton = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
@@ -18,77 +19,118 @@ const FacebookButton = ({ onLoginSuccess }) => {
     }
   }, []);
 
-  const handleSuccess = (response) => {
+  const handleSuccess = async (response) => {
     const { authResponse } = response || {};
     const accessToken = authResponse?.accessToken;
-
+    console.log(response);
     if (!accessToken) {
       message.error("Không thể lấy Access Token từ Facebook.");
       return;
     }
 
-    // Gọi Facebook Graph API để lấy thông tin người dùng
-    fetch(
-      `https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${accessToken}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          message.error("Không thể lấy thông tin từ Facebook.");
-          return;
-        }
+    try {
+      // Gọi Facebook Graph API để lấy thông tin người dùng
+      const fbResponse = await fetch(
+        `https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${accessToken}`
+      );
+      const data = await fbResponse.json();
 
-        // const user = {
-        //   id: data.id,
-        //   name: data.name,
-        //   email: data.email || "No email provided",
-        //   Có thể không có email nếu người dùng không cấp quyền
-        //   avatar: data.picture?.data?.url || "No avatar",
-        //   birthday: "1998-12-22",
-        //   Có thể tùy chỉnh nếu cần thêm thông tin khác
-        //   gender: false,
-        //   Thay thế bằng dữ liệu phù hợp nếu có
-        //   phone: "0328984656",
-        //   role: "USER",
-        // };
-        authServices
-          .login({ email: "quangleminhdev999@gmail.com", password: "123a" })
-          .then((result) => {
+      if (!data || !data.name || !data.picture?.data?.url) {
+        throw new Error("Không thể lấy dữ liệu từ Facebook.");
+      }
+
+      const avatarUrl = data.picture.data.url;
+
+      // Kiểm tra người dùng trong hệ thống
+      const result = await nguoiDungServices.findUser(1, 10, data.name);
+      const userData = result.data.content.data[0];
+
+      if (userData) {
+        // Người dùng đã tồn tại, thực hiện đăng nhập
+        const userLogin = {
+          email: userData.email,
+          password: userData.password,
+        };
+
+        try {
+          const loginResult = await authServices.login(userLogin);
+          message.success("Đăng nhập thành công!");
+
+          const loggedInUser = loginResult.data.content;
+
+          // Thêm avatar vào thông tin người dùng
+          const userWithAvatar = { ...loggedInUser, avatar: avatarUrl };
+
+          // Lưu thông tin vào state và localStorage
+          dispatch(setLoginData(userWithAvatar));
+          localStorage.setItem("USER_LOGIN", JSON.stringify(userWithAvatar));
+
+          // Lấy danh sách phòng đã đặt
+          dispatch(getListIdBookingAction(loggedInUser.user.id));
+
+          // Gọi hàm đóng Modal
+          if (onLoginSuccess) {
+            onLoginSuccess();
+          }
+
+          // Điều hướng đến trang cần
+          navigate();
+        } catch (err) {
+          message.error("Đăng nhập thất bại, vui lòng thử lại!");
+        }
+      } else {
+        // Người dùng không tồn tại, thực hiện đăng ký
+        const userRegister = {
+          id: 0,
+          name: data.name,
+          email: data.email,
+          password: "123a",
+          phone: "0328984656",
+          birthday: "1998-12-22",
+          gender: true,
+          role: "user",
+        };
+
+        try {
+          const registerResult = await authServices.register(userRegister);
+
+          if (registerResult.data.content) {
+            const userLogin = {
+              email: userRegister.email,
+              password: userRegister.password,
+            };
+
+            const loginResult = await authServices.login(userLogin);
             message.success("Đăng nhập thành công!");
-            let userDataTemp = result.data.content;
-            userDataTemp.user.avatar = data.picture?.data?.url;
-            let userData = { ...userDataTemp };
-            dispatch(setLoginData(userData));
-            // lưu thông tin đăng nhập vào localStorage
-            let loginJson = JSON.stringify(userData);
-            localStorage.setItem("USER_LOGIN", loginJson);
-            // dùng id user để lấy list phòng đã book => set localStorage
-            dispatch(getListIdBookingAction(userData.user.id));
+
+            const loggedInUser = loginResult.data.content;
+
+            // Thêm avatar vào thông tin người dùng
+            const userWithAvatar = { ...loggedInUser, avatar: avatarUrl };
+
+            // Lưu thông tin vào state và localStorage
+            dispatch(setLoginData(userWithAvatar));
+            localStorage.setItem("USER_LOGIN", JSON.stringify(userWithAvatar));
+
+            // Lấy danh sách phòng đã đặt
+            dispatch(getListIdBookingAction(loggedInUser.user.id));
+
+            // Gọi hàm đóng Modal
+            if (onLoginSuccess) {
+              onLoginSuccess();
+            }
+
+            // Điều hướng đến trang cần
             navigate();
-          })
-          .catch((err) => {
-            message.error("Đăng nhập thất bại, vui lòng thử lại!");
-            console.error(err);
-          });
-
-        // Lưu thông tin người dùng vào Redux hoặc localStorage
-        // dispatch(setLoginData({ user }));
-        // localStorage.setItem("USER_LOGIN", JSON.stringify({ user }));
-        // Lấy danh sách phòng đã đặt
-        // dispatch(getListIdBookingAction(user.id));
-
-        // Điều hướng về trang chính
-        // navigate("/");
-
-        // message.success(`Welcome, ${user.name}!`);
-        if (onLoginSuccess) {
-          onLoginSuccess();
+          }
+        } catch (err) {
+          message.error("Đăng nhập thất bại, vui lòng thử lại!");
         }
-      })
-      .catch((error) => {
-        console.error("Error during login:", error);
-        message.error("Đăng nhập thất bại. Vui lòng thử lại.");
-      });
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      message.error("Đăng nhập thất bại. Vui lòng thử lại.");
+    }
   };
 
   const handleFailure = (error) => {
