@@ -61,7 +61,6 @@ export default function InfoRoomRight() {
       .createBooking(body)
       .then((result) => {
         // add id phòng mới đặt vào localStorage để đối chiếu
-        console.log(result);
         let listIdBookingClone = [...listIdBooking];
         listIdBookingClone.push(infoRoom.id);
         let listIdJSON = JSON.stringify(listIdBookingClone);

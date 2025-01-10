@@ -18,7 +18,8 @@ import dayjs from "dayjs";
 import { bookingServices } from "../../services/bookingServices";
 import { getListIdBookingAction } from "../../redux/thunks/bookingThunks";
 
-export default function ListBookedRoom({ idUser }) {
+export default function ListBookedRoom() {
+  const idUser = useSelector((state) => state.userSlice.loginData?.user.id);
   const { listIdBooking, listBookedRoom, listBooked } = useSelector(
     (state) => state.infoUserSlice
   );

@@ -152,7 +152,7 @@ export default function InfoUserPage() {
               Chỉnh sửa hồ sơ
             </button>
             {/* list phòng đã book */}
-            <ListBookedRoom idUser={infoUser.id} />
+            <ListBookedRoom />
           </div>
         </div>
         {/* modal up avatar */}
