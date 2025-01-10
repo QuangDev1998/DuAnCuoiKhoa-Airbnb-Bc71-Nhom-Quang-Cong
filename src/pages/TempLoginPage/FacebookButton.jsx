@@ -38,19 +38,19 @@ const FacebookButton = ({ onLoginSuccess }) => {
           return;
         }
 
-        const user = {
-          // id: data.id,
-          // name: data.name,
-          // email: data.email || "No email provided",
-          // Có thể không có email nếu người dùng không cấp quyền
-          avatar: data.picture?.data?.url || "No avatar",
-          // birthday: "1998-12-22",
-          // Có thể tùy chỉnh nếu cần thêm thông tin khác
-          // gender: false,
-          // Thay thế bằng dữ liệu phù hợp nếu có
-          // phone: "0328984656",
-          // role: "USER",
-        };
+        // const user = {
+        //   id: data.id,
+        //   name: data.name,
+        //   email: data.email || "No email provided",
+        //   Có thể không có email nếu người dùng không cấp quyền
+        //   avatar: data.picture?.data?.url || "No avatar",
+        //   birthday: "1998-12-22",
+        //   Có thể tùy chỉnh nếu cần thêm thông tin khác
+        //   gender: false,
+        //   Thay thế bằng dữ liệu phù hợp nếu có
+        //   phone: "0328984656",
+        //   role: "USER",
+        // };
         authServices
           .login({ email: "quangleminhdev999@gmail.com", password: "123a" })
           .then((result) => {

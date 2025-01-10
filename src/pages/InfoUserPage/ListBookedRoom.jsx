@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Button, Card, message, Popconfirm } from "antd";
+import React, { useEffect, useState } from "react";
+import { Button, Card, message, Popconfirm, Pagination } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import {
   createListBookedRoomAction,
@@ -25,6 +25,11 @@ export default function ListBookedRoom({ idUser }) {
   const { listViTri } = useSelector((state) => state.quanLyViTriSlice);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // State for pagination
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5; // Fixed items per page
+
   useEffect(() => {
     viTriServices
       .getListViTri()
@@ -35,26 +40,23 @@ export default function ListBookedRoom({ idUser }) {
         console.error(err);
       });
   }, []);
-  // tạo list chứa ID phòng
   useEffect(() => {
     dispatch(createListIdBookingAction(idUser));
   }, [dispatch, idUser]);
-  // từ list ID phòng => list phòng đã đặt
   useEffect(() => {
     dispatch(createListBookedRoomAction(listIdBooking));
   }, [dispatch, listIdBooking]);
-
   useEffect(() => {
     dispatch(fetchListViTriAction());
   }, []);
-  // từ maViTri => tinhThanh
+
   const renderTinhThanh = (id) => {
     let index = listViTri.findIndex((viTri) => viTri.id === id);
     if (index !== -1) {
       return listViTri[index].tinhThanh;
     }
   };
-  // từ maPhong => ngayDen,ngayDi
+
   const renderDateBookRoom = (maPhong) => {
     let index = listBookedRoom.findIndex((room) => room.id === maPhong);
     if (index !== -1) {
@@ -67,6 +69,7 @@ export default function ListBookedRoom({ idUser }) {
       );
     }
   };
+
   const renderRoomInfo = (maPhong, idBooking) => {
     let index = listBookedRoom.findIndex((room) => room.id === maPhong);
     if (index !== -1) {
@@ -143,66 +146,20 @@ export default function ListBookedRoom({ idUser }) {
       );
     }
   };
+
   const renderListBookedRoom = () => {
-    return listBooked?.map((room) => {
-      return (
-        <div className="mt-5 duration-300" key={room.id}>
-          {renderRoomInfo(room.maPhong, room.id)}
-          {/* <Card
-            hoverable
-            onClick={() => {
-              navigate(`/room-detail/${room.id}`);
-            }}
-            data-aos="zoom-in"
-          >
-            <div className="grid grid-cols1 md:grid-cols-2 gap-5 relative">
-              <Button className="h-8 w-8  absolute top-0 right-0 text-red-500">
-                <DeleteOutlined />
-              </Button>
-              <div className="h-48">
-                <img
-                  src={room.hinhAnh}
-                  alt=""
-                  className="h-full object-cover rounded-md"
-                />
-              </div>
-              <div className="divide-y-2">
-                <div>
-                  <h1 className="text-lg font-bold">{room.tenPhong}</h1>
-                  <div className=" text-gray-400">
-                    {renderDateBookRoom(room.id)}
-                  </div>
-
-                  <p className="text-sm">
-                    <EnvironmentOutlined className="mr-1" />
-                    {renderTinhThanh(room.maViTri)}
-                  </p>
-                </div>
-
-                <div className="mt-2 flex justify-start gap-5 text-gray-500">
-                  <ul>
-                    <li>{room.phongNgu} phòng ngủ</li>
-                    <li>{room.giuong} giường</li>
-                    <li>{room.phongTam} phòng tắm</li>
-                  </ul>
-                  <ul>
-                    <li>{room.dieuHoa ? "v" : "x"} Điều hòa</li>
-                    <li>{room.bep ? "v" : "x"} Bếp</li>
-                    <li>{room.hoBoi ? "v" : "x"} Hồ bơi</li>
-                  </ul>
-                </div>
-                <div className="mt-2">
-                  <p>
-                    <span className="font-bold">$ {room.giaTien}</span> / đêm
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Card> */}
-        </div>
-      );
-    });
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const currentRooms = listBooked.slice(
+      startIndex,
+      startIndex + itemsPerPage
+    );
+    return currentRooms.map((room) => (
+      <div className="mt-5 duration-300" key={room.id}>
+        {renderRoomInfo(room.maPhong, room.id)}
+      </div>
+    ));
   };
+
   const handleDeleteBookedRoom = (id) => {
     bookingServices
       .deleteBooking(id)
@@ -216,15 +173,27 @@ export default function ListBookedRoom({ idUser }) {
         console.error(err);
       });
   };
+
   const confirm = (id) => {
     handleDeleteBookedRoom(id);
   };
+
   return (
     <div>
-      {/* trường hợp khách chưa đặt phòng => dẫn về home */}
       {listBookedRoom.length > 0 ? (
         <div>
           <h1 className="text-xl font-bold">Phòng đã thuê</h1>
+          {/* Pagination ở trên */}
+          <Pagination
+            current={currentPage}
+            pageSize={itemsPerPage}
+            total={listBooked.length}
+            showSizeChanger={false}
+            onChange={(page) => {
+              setCurrentPage(page);
+            }}
+            className="my-4"
+          />
           <div className="relative">{renderListBookedRoom()}</div>
         </div>
       ) : (
