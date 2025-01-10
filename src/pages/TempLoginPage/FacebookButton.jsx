@@ -37,20 +37,6 @@ const FacebookButton = ({ onLoginSuccess }) => {
           message.error("Không thể lấy thông tin từ Facebook.");
           return;
         }
-
-        // const user = {
-        //   id: data.id,
-        //   name: data.name,
-        //   email: data.email || "No email provided",
-        //   Có thể không có email nếu người dùng không cấp quyền
-        //   avatar: data.picture?.data?.url || "No avatar",
-        //   birthday: "1998-12-22",
-        //   Có thể tùy chỉnh nếu cần thêm thông tin khác
-        //   gender: false,
-        //   Thay thế bằng dữ liệu phù hợp nếu có
-        //   phone: "0328984656",
-        //   role: "USER",
-        // };
         authServices
           .login({ email: "quangleminhdev999@gmail.com", password: "123a" })
           .then((result) => {
@@ -71,16 +57,6 @@ const FacebookButton = ({ onLoginSuccess }) => {
             console.error(err);
           });
 
-        // Lưu thông tin người dùng vào Redux hoặc localStorage
-        // dispatch(setLoginData({ user }));
-        // localStorage.setItem("USER_LOGIN", JSON.stringify({ user }));
-        // Lấy danh sách phòng đã đặt
-        // dispatch(getListIdBookingAction(user.id));
-
-        // Điều hướng về trang chính
-        // navigate("/");
-
-        // message.success(`Welcome, ${user.name}!`);
         if (onLoginSuccess) {
           onLoginSuccess();
         }
@@ -97,7 +73,7 @@ const FacebookButton = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div>
+    <div className="mt-3">
       <FacebookLogin
         appId="8939394042796946" // Thay bằng App ID của bạn
         onSuccess={handleSuccess}
@@ -111,8 +87,9 @@ const FacebookButton = ({ onLoginSuccess }) => {
           borderRadius: "5px",
           cursor: "pointer",
         }}
+        btnText="Đăng nhập bằng Facebook"
       >
-        Sign in with Facebook
+        Đăng nhập bằng Facebook
       </FacebookLogin>
     </div>
   );
