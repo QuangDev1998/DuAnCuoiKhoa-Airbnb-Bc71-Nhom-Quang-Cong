@@ -22,7 +22,7 @@ export default function Carousel() {
       </div>
 
       {/* Logo and Text */}
-      <div className="absolute z-10 md:block hidden text-white px-4 text-center lg:text-left lg:left-[10%] top-[20%] sm:top-[25%] md:top-[30%] lg:top-[35%]">
+      <div className="absolute z-10 md:block hidden text-white px-4 text-center lg:text-left lg:left-[10%] top-[16%] sm:top-[21%] md:top-[26%] lg:top-[31%]">
         <div className="flex flex-col items-center lg:items-start">
           <div className="flex items-center space-x-4">
             <img
@@ -56,7 +56,7 @@ export default function Carousel() {
         <img
           src={swooshHero}
           alt="Swoosh Hero"
-          className="w-full h-auto sm:h-[300px] md:h-[350px]  object-cover "
+          className="w-full h-[20vh] sm:h-[25vh] md:h-[30vh] object-cover"
         />
       </div>
     </div>
