@@ -197,7 +197,7 @@ export default function ModalEditQLNguoiDung({ valueInput }) {
               ]}
               hasFeedback
             >
-              <Input />
+              <Input disabled />
             </Form.Item>
 
             {/* birthday */}
