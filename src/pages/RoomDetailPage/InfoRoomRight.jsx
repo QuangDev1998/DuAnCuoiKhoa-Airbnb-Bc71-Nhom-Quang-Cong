@@ -47,10 +47,12 @@ export default function InfoRoomRight() {
     }
   };
   const bookingAction = () => {
+    let ngayDenClone = new Date(ngayDen.getTime());
+    let ngayDiClone = new Date(ngayDi.getTime());
     let body = {
       maPhong: infoRoom.id,
-      ngayDen: dayjs(ngayDen.setDate(ngayDen.getDate() + 1)),
-      ngayDi: dayjs(ngayDi.setDate(ngayDi.getDate() + 1)),
+      ngayDen: dayjs(ngayDenClone.setDate(ngayDenClone.getDate() + 1)),
+      ngayDi: dayjs(ngayDiClone.setDate(ngayDiClone.getDate() + 1)),
       soLuongKhach,
       maNguoiDung: user.id,
     };
