@@ -6,6 +6,7 @@ import { message } from "antd";
 import { setLoginData } from "../../redux/slices/userSlice";
 import { getListIdBookingAction } from "../../redux/thunks/bookingThunks";
 import { authServices } from "../../services/authServices";
+import { nguoiDungServices } from "../../services/nguoiDungServices";
 
 const FacebookButton = ({ onLoginSuccess }) => {
   const navigate = useNavigate();
@@ -14,11 +15,11 @@ const FacebookButton = ({ onLoginSuccess }) => {
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("user"));
     if (savedUser) {
-      console.log("User from session:", savedUser);
+      // console.log("User from session:", savedUser);
     }
   }, []);
 
-  const handleSuccess = (response) => {
+  const handleSuccess = async (response) => {
     const { authResponse } = response || {};
     const accessToken = authResponse?.accessToken;
 
@@ -27,44 +28,109 @@ const FacebookButton = ({ onLoginSuccess }) => {
       return;
     }
 
-    // Gọi Facebook Graph API để lấy thông tin người dùng
-    fetch(
-      `https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${accessToken}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.error) {
-          message.error("Không thể lấy thông tin từ Facebook.");
-          return;
-        }
-        authServices
-          .login({ email: "quangleminhdev999@gmail.com", password: "123a" })
-          .then((result) => {
-            message.success("Đăng nhập thành công!");
-            let userDataTemp = result.data.content;
-            userDataTemp.user.avatar = data.picture?.data?.url;
-            let userData = { ...userDataTemp };
-            dispatch(setLoginData(userData));
-            // lưu thông tin đăng nhập vào localStorage
-            let loginJson = JSON.stringify(userData);
-            localStorage.setItem("USER_LOGIN", loginJson);
-            // dùng id user để lấy list phòng đã book => set localStorage
-            dispatch(getListIdBookingAction(userData.user.id));
-            navigate();
-          })
-          .catch((err) => {
-            message.error("Đăng nhập thất bại, vui lòng thử lại!");
-            console.error(err);
-          });
+    try {
+      // Gọi Facebook Graph API để lấy thông tin người dùng
+      const fbResponse = await fetch(
+        `https://graph.facebook.com/me?fields=id,name,email,picture&access_token=${accessToken}`
+      );
+      const data = await fbResponse.json();
 
-        if (onLoginSuccess) {
-          onLoginSuccess();
+      if (!data || !data.name || !data.picture?.data?.url) {
+        throw new Error("Không thể lấy dữ liệu từ Facebook.");
+      }
+
+      const avatarUrl = data.picture.data.url;
+
+      // Kiểm tra người dùng trong hệ thống
+      const result = await nguoiDungServices.findUser(1, 10, data.name);
+      const userData = result.data.content.data[0];
+
+      if (userData) {
+        // Người dùng đã tồn tại, thực hiện đăng nhập
+        const userLogin = {
+          email: userData.email,
+          password: userData.password,
+        };
+
+        try {
+          const loginResult = await authServices.login(userLogin);
+          message.success("Đăng nhập thành công!");
+
+          const loggedInUser = loginResult.data.content;
+          loggedInUser.user.avatar = avatarUrl;
+          // Thêm avatar vào thông tin người dùng
+          const userWithAvatar = { ...loggedInUser };
+
+          // Lưu thông tin vào state và localStorage
+          dispatch(setLoginData(userWithAvatar));
+          localStorage.setItem("USER_LOGIN", JSON.stringify(userWithAvatar));
+
+          // Lấy danh sách phòng đã đặt
+          dispatch(getListIdBookingAction(loggedInUser.user.id));
+
+          // Gọi hàm đóng Modal
+          if (onLoginSuccess) {
+            onLoginSuccess();
+          }
+
+          // Điều hướng đến trang cần
+          navigate();
+        } catch (err) {
+          message.error("Đăng nhập thất bại, vui lòng thử lại!");
         }
-      })
-      .catch((error) => {
-        console.error("Error during login:", error);
-        message.error("Đăng nhập thất bại. Vui lòng thử lại.");
-      });
+      } else {
+        // Người dùng không tồn tại, thực hiện đăng ký
+        const userRegister = {
+          id: 0,
+          name: data.name,
+          email: data.email,
+          password: "123a",
+          phone: "0328984656",
+          birthday: "1998-12-22",
+          gender: true,
+          role: "user",
+        };
+
+        try {
+          const registerResult = await authServices.register(userRegister);
+
+          if (registerResult.data.content) {
+            const userLogin = {
+              email: userRegister.email,
+              password: userRegister.password,
+            };
+
+            const loginResult = await authServices.login(userLogin);
+            message.success("Đăng nhập thành công!");
+
+            const loggedInUser = loginResult.data.content;
+
+            // Thêm avatar vào thông tin người dùng
+            const userWithAvatar = { ...loggedInUser, avatar: avatarUrl };
+
+            // Lưu thông tin vào state và localStorage
+            dispatch(setLoginData(userWithAvatar));
+            localStorage.setItem("USER_LOGIN", JSON.stringify(userWithAvatar));
+
+            // Lấy danh sách phòng đã đặt
+            dispatch(getListIdBookingAction(loggedInUser.user.id));
+
+            // Gọi hàm đóng Modal
+            if (onLoginSuccess) {
+              onLoginSuccess();
+            }
+
+            // Điều hướng đến trang cần
+            navigate();
+          }
+        } catch (err) {
+          message.error("Đăng nhập thất bại, vui lòng thử lại!");
+        }
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      message.error("Đăng nhập thất bại. Vui lòng thử lại.");
+    }
   };
 
   const handleFailure = (error) => {
@@ -87,7 +153,7 @@ const FacebookButton = ({ onLoginSuccess }) => {
           borderRadius: "5px",
           cursor: "pointer",
         }}
-        btnText="Đăng nhập bằng Facebook"
+        btnText="Đăng Nhập Bằng Facebook"
       >
         Đăng nhập bằng Facebook
       </FacebookLogin>
