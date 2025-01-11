@@ -15,14 +15,14 @@ const FacebookButton = ({ onLoginSuccess }) => {
   useEffect(() => {
     const savedUser = JSON.parse(localStorage.getItem("user"));
     if (savedUser) {
-      console.log("User from session:", savedUser);
+      // console.log("User from session:", savedUser);
     }
   }, []);
 
   const handleSuccess = async (response) => {
     const { authResponse } = response || {};
     const accessToken = authResponse?.accessToken;
-    console.log(response);
+
     if (!accessToken) {
       message.error("Không thể lấy Access Token từ Facebook.");
       return;
@@ -57,9 +57,9 @@ const FacebookButton = ({ onLoginSuccess }) => {
           message.success("Đăng nhập thành công!");
 
           const loggedInUser = loginResult.data.content;
-
+          loggedInUser.user.avatar = avatarUrl;
           // Thêm avatar vào thông tin người dùng
-          const userWithAvatar = { ...loggedInUser, avatar: avatarUrl };
+          const userWithAvatar = { ...loggedInUser };
 
           // Lưu thông tin vào state và localStorage
           dispatch(setLoginData(userWithAvatar));
@@ -139,7 +139,7 @@ const FacebookButton = ({ onLoginSuccess }) => {
   };
 
   return (
-    <div>
+    <div className="mt-3">
       <FacebookLogin
         appId="8939394042796946" // Thay bằng App ID của bạn
         onSuccess={handleSuccess}
@@ -153,6 +153,7 @@ const FacebookButton = ({ onLoginSuccess }) => {
           borderRadius: "5px",
           cursor: "pointer",
         }}
+        btnText="Đăng Nhập Bằng Facebook"
       >
         Sign in with Facebook
       </FacebookLogin>
