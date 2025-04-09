@@ -37,7 +37,7 @@ export default function Carousel() {
               data-aos="fade-up"
               data-aos-duration="1000"
             >
-              airbnb
+              airpnp
             </h1>
           </div>
           <p
